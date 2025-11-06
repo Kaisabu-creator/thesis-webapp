@@ -12,8 +12,12 @@
 </form>
 
 <div th:if="${nachricht}">
-    <p th:text="${nachricht}" style="color: green; font-weight: bold;"></p>
+    <p th:text="${nachricht}">Error</p>
 </div>
+<div th:if="${maxUploadError}">
+    <p th:text="${maxUploadError}">Error</p>
+</div>
+
 
 </body>
 </html>
