@@ -1,7 +1,7 @@
 package com.awesome.thesis.profiles.profil;
 
 public class Profil {
-    private long id;
+    private Long id;
     private String name;
 
     public Profil(String name) {
@@ -16,7 +16,7 @@ public class Profil {
         this.name = name;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
