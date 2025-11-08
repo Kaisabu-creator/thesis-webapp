@@ -27,4 +27,8 @@ public class Profile {
         }
         profil.setId(database.save(profil));
     }
+
+    public void delete(long id) {
+        database.delete(id);
+    }
 }
