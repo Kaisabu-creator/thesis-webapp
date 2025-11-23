@@ -5,17 +5,17 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ProfilEditor {
-    Profile profile;
+    private final ProfileInterface profile;
 
-    public ProfilEditor(Profile profile) {
+    public ProfilEditor(ProfileInterface profile) {
         this.profile = profile;
     }
 
-    public void edit(String id) {
-        Profil profil = profile.get(id);
-        //TODO: implementation
-        profile.save(profil);
-    }
+//    public void edit(String id) {
+//        Profil profil = profile.get(id);
+//        TODO: implementation
+//        profile.save(profil);
+//    }
 
     public void add(Profil profil) {
         if (profil.getId() != null) {

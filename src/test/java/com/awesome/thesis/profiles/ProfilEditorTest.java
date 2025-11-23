@@ -15,7 +15,7 @@ class ProfilEditorTest {
     void testId() {
         //Arrange
         Profil profil = new Profil("test");
-        Profile profile = mock(Profile.class);
+        ProfileInterface profile = mock(ProfileInterface.class);
         when(profile.containsKey(any())).thenReturn(true);
         when(profile.save(any(Profil.class))).thenReturn("id");
         ProfilEditor editor = new ProfilEditor(profile);
@@ -33,7 +33,7 @@ class ProfilEditorTest {
         //Arrange
         Profil profil = new Profil("test");
         profil.setId("id");
-        Profile profile = mock(Profile.class);
+        ProfileInterface profile = mock(ProfileInterface.class);
         when(profile.containsKey(any())).thenReturn(true);
         ProfilEditor editor = new ProfilEditor(profile);
 
@@ -48,7 +48,7 @@ class ProfilEditorTest {
     @DisplayName("an existing Profil can be loaded from the database")
     void testGet() {
         //Arrange
-        Profile profile = mock(Profile.class);
+        ProfileInterface profile = mock(Profile.class);
         when(profile.containsKey(any())).thenReturn(true);
         ProfilEditor editor = new ProfilEditor(profile);
 
@@ -63,7 +63,7 @@ class ProfilEditorTest {
     @DisplayName("a non existing Profile can't be loaded from the Database")
     void testGetNotFound() {
         //Arrange
-        Profile profile = mock(Profile.class);
+        ProfileInterface profile = mock(ProfileInterface.class);
         when(profile.containsKey(any())).thenReturn(false);
         ProfilEditor editor = new ProfilEditor(profile);
 
