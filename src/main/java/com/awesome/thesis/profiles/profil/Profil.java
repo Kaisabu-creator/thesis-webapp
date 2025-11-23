@@ -1,12 +1,16 @@
 package com.awesome.thesis.profiles.profil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Profil {
     private String id;
     private String name;
-    private Kontakt kontakt;
+    private final List<Kontakt> kontakte;
 
     public Profil(String name) {
         this.name = name;
+        this.kontakte = new ArrayList<>();
     }
 
     public String getName() {
@@ -25,11 +29,11 @@ public class Profil {
         this.id = id;
     }
 
-    public Kontakt getKontakt() {
-        return kontakt;
+    public List<Kontakt> getKontakt() {
+        return kontakte;
     }
 
-    public void setKontakt(Kontakt kontakt) {
-        this.kontakt = kontakt;
+    public void addKontakt(Kontakt kontakt) {
+        kontakte.add(kontakt);
     }
 }
