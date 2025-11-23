@@ -1,9 +1,9 @@
 package com.awesome.thesis.profiles;
 
 import com.awesome.thesis.profiles.profil.Profil;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class ProfilEditor {
     Profile profile;
 
@@ -13,14 +13,23 @@ public class ProfilEditor {
 
     public void edit(long id) {
         Profil profil = profile.get(id);
-        //TODO: implemenation
-    }
-
-    public void add(Profil profil) {
+        //TODO: implementation
         profile.save(profil);
     }
 
+    public void add(Profil profil) {
+        if (profil.getId() != null) {
+            if (profile.containsKey(profil.getId())) {
+                profile.update(profil.getId(), profil);
+            }
+        }
+        profil.setId(profile.save(profil));
+    }
+
     public Profil get(long id) {
-        return  profile.get(id);
+        if(profile.containsKey(id)) {
+            return profile.get(id);
+        }
+        throw new IllegalArgumentException("No such id " + id);
     }
 }

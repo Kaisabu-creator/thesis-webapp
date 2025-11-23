@@ -9,19 +9,19 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
-class ProfileTest {
+class ProfilEditorTest {
     @Test
     @DisplayName("a non existing Profil that's saved to the database gets an id")
     void testId() {
         //Arrange
         Profil profil = new Profil("test");
-        Database database = mock(Database.class);
-        when(database.containsKey(anyLong())).thenReturn(true);
-        when(database.save(any(Profil.class))).thenReturn(1L);
-        Profile profile = new Profile(database);
+        Profile profile = mock(Profile.class);
+        when(profile.containsKey(anyLong())).thenReturn(true);
+        when(profile.save(any(Profil.class))).thenReturn(1L);
+        ProfilEditor editor = new ProfilEditor(profile);
 
         //Act
-        profile.save(profil);
+        editor.add(profil);
 
         //Assert
         assertThat(profil.getId()).isEqualTo(1L);
@@ -33,29 +33,29 @@ class ProfileTest {
         //Arrange
         Profil profil = new Profil("test");
         profil.setId(1L);
-        Database database = mock(Database.class);
-        when(database.containsKey(anyLong())).thenReturn(true);
-        Profile profile = new Profile(database);
+        Profile profile = mock(Profile.class);
+        when(profile.containsKey(anyLong())).thenReturn(true);
+        ProfilEditor editor = new ProfilEditor(profile);
 
         //Act
-        profile.save(profil);
+        editor.add(profil);
 
         //Assert
-        verify(database).update(anyLong(), any(Profil.class));
+        verify(profile).update(anyLong(), any(Profil.class));
     }
 
     @Test
     @DisplayName("an existing Profil can be loaded from the database")
     void testGet() {
         //Arrange
-        Database database = mock(Database.class);
-        when(database.containsKey(anyLong())).thenReturn(true);
-        Profile profile = new Profile(database);
+        Profile profile = mock(Profile.class);
+        when(profile.containsKey(anyLong())).thenReturn(true);
+        ProfilEditor editor = new ProfilEditor(profile);
 
         //Act
-        profile.get(1L);
+        editor.get(1L);
 
         //Assert
-        verify(database).get(1L);
+        verify(profile).get(1L);
     }
 }
