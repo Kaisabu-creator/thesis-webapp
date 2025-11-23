@@ -36,4 +36,8 @@ public class Profil {
     public void addKontakt(Kontakt kontakt) {
         kontakte.add(kontakt);
     }
+
+    public void removeKontakt(Kontakt kontakt) {
+        kontakte.remove(kontakt);
+    }
 }

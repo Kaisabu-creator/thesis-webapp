@@ -1,5 +1,6 @@
 package com.awesome.thesis.profiles;
 
+import com.awesome.thesis.profiles.profil.Kontakt;
 import com.awesome.thesis.profiles.profil.Profil;
 import org.springframework.stereotype.Service;
 
@@ -11,11 +12,23 @@ public class ProfilEditor {
         this.profile = profile;
     }
 
-//    public void edit(String id) {
-//        Profil profil = profile.get(id);
-//        TODO: implementation
-//        profile.save(profil);
-//    }
+    public void addKontakt(String id, Kontakt kontakt) {
+        Profil profil = profile.get(id);
+        profil.addKontakt(kontakt);
+        profile.save(profil);
+    }
+
+    public void editName(String id, String name) {
+        Profil profil = profile.get(id);
+        profil.setName(name);
+        profile.save(profil);
+    }
+
+    public void removeKontakt(String id, Kontakt kontakt) {
+        Profil profil = profile.get(id);
+        profil.removeKontakt(kontakt);
+        profile.save(profil);
+    }
 
     public void add(Profil profil) {
         if (profil.getId() != null) {
