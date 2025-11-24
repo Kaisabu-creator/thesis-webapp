@@ -1,7 +1,9 @@
 package com.awesome.thesis.profiles;
 
+import com.awesome.thesis.profiles.profil.Kontakt;
 import com.awesome.thesis.profiles.profil.Profil;
 import org.springframework.stereotype.Component;
+import com.awesome.thesis.profiles.profil.Kontaktart;
 
 import java.util.*;
 
@@ -9,12 +11,19 @@ import java.util.*;
 class FakeDatabase implements Database {
     Map<String, Profil> map = new HashMap<>();
 
+    public FakeDatabase() {
+        Profil profil1 = new Profil("max");
+        profil1.addKontakt(new Kontakt("Email", "max@mail.com", Kontaktart.EMAIL));
+        profil1.setId(save(profil1));
+    }
+
     public Profil get(String key) {
         return map.get(key);
     }
 
     public String save(Profil profil) {
         String id = UUID.randomUUID().toString();
+        System.out.println("Saving " + id);
         map.put(id, profil);
         return id;
     }
