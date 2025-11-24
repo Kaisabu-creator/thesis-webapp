@@ -12,6 +12,12 @@ public class ProfilController {
     @Autowired
     ProfilEditor editor;
 
+    @GetMapping("/profile")
+    public String getProfil(Model model) {
+        model.addAttribute("profile", editor.getAll());
+        return "profile";
+    }
+
     @GetMapping("/profil/{id}")
     public String getProfil(@PathVariable String id, Model model) {
         model.addAttribute("profil", editor.get(id));

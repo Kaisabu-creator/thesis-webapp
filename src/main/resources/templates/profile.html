@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <link rel="stylesheet" href="/bootstrap.min.css"/>
+</head>
+<body>
+<div class="container-fluid">
+    <h1>Tutoren</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <ul class="list-group" th:each="profil : ${profile}">
+                <li><a th:href="@{/profil/{id}(id=${profil.id})}" th:text="${profil.name}">Profil Name</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>
