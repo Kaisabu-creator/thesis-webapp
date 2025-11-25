@@ -18,4 +18,11 @@ public class ThemaRepository {
         return themen;
     }
 
+    public Thema getThema(String titel) {
+        return themen.stream()
+                .filter(e -> e.getTitel().equals(titel))
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException("Kein Thema mit Titel " + titel + " gefunden"));
+    }
+
 }
