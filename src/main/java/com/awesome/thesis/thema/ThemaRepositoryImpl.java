@@ -18,7 +18,7 @@ public class ThemaRepositoryImpl implements IThemaRepository {
 
     @Override
     public List<Thema> getThemen() {
-        return themen;
+        return new ArrayList<Thema>(themen);
     }
 
     @Override
