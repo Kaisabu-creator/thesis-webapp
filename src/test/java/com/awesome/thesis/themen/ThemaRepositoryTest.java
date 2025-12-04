@@ -1,7 +1,7 @@
 package com.awesome.thesis.themen;
 
 import com.awesome.thesis.logic.domain.model.themen.Thema;
-import com.awesome.thesis.persistence.themen.ThemaRepositoryImpl;
+import com.awesome.thesis.persistence.themen.ThemaRepoImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +19,7 @@ public class ThemaRepositoryTest {
     void test_1() {
         Thema thema = mock(Thema.class);
         when(thema.getTitel()).thenReturn("titel");
-        ThemaRepositoryImpl repository = new ThemaRepositoryImpl();
+        ThemaRepoImpl repository = new ThemaRepoImpl();
         repository.addThema(thema);
         assertThat(repository.getThema("titel")).isEqualTo(thema);
     }
@@ -28,7 +28,7 @@ public class ThemaRepositoryTest {
     void test_2() {
         Thema thema = mock(Thema.class);
         when(thema.getTitel()).thenReturn("titel");
-        ThemaRepositoryImpl repository = new ThemaRepositoryImpl();
+        ThemaRepoImpl repository = new ThemaRepoImpl();
         repository.addThema(thema);
         assertThrows(NoSuchElementException.class, () -> repository.getThema("other titel"));
     }

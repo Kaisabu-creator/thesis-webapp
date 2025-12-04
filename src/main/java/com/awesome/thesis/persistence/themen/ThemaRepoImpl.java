@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class ThemaRepositoryImpl implements IThemaRepo {
+public class ThemaRepoImpl implements IThemaRepo {
     private final List<Thema> themen = new ArrayList<>();
 
     @Override
