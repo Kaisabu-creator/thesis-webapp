@@ -1,7 +1,9 @@
 package com.awesome.thesis.files;
 
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+@Component
 public class DateiTypPruefer {
 
     public static boolean verify(MultipartFile datei){

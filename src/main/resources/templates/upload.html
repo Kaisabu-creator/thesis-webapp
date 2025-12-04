@@ -5,9 +5,11 @@
     <title>Datei-Upload</title>
 </head>
 <body>
-<form enctype="multipart/form-data" method="post" action="/upload">
+<form enctype="multipart/form-data" method="post" th:action="@{/upload}">
     <label for="datei">Datei hochladen</label>
     <input type="file" name="datei" id="datei"><br>
+    <label for="beschreibung">Beschreibung der Datei:</label>
+    <input type="text" name="beschreibung" id="beschreibung"><br>
     <input type="submit" value="Upload">
 </form>
 

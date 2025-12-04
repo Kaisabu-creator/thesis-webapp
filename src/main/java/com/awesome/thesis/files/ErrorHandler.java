@@ -1,4 +1,4 @@
-package com.awesome.thesis;
+package com.awesome.thesis.files;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
@@ -13,6 +13,6 @@ public class ErrorHandler {
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String handleException(MaxUploadSizeExceededException maxUploadSizeExceededExceptionException, Model model) {
-        model.addAttribute("maxUploadError","Maximale Dateigröße überschritten: max. 10MB");
+        model.addAttribute("maxUploadError","Maximale Dateigröße überschritten: max. 1ßMB");
         return "upload";
     }}

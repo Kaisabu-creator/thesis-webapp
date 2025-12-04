@@ -1,4 +1,4 @@
-package com.awesome.thesis;
+package com.awesome.thesis.files;
 
 import java.time.LocalDateTime;
 
@@ -6,7 +6,7 @@ public class DateiInfos {
     private  String uploader = "bob";
     private  LocalDateTime uploadTime = LocalDateTime.now();
     private  String title;
-    private String description;
+    private String description = "";
 
     public DateiInfos(String title, String description) {
         this.title = title;

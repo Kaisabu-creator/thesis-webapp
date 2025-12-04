@@ -1,5 +1,7 @@
-package com.awesome.thesis;
+package com.awesome.thesis.controller;
 
+import com.awesome.thesis.files.DateiInfos;
+import com.awesome.thesis.files.DateiTypPruefer;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,17 +15,27 @@ import java.nio.file.Path;
 @Controller
 public class DateiController {
 
-    @GetMapping("/")
+    @GetMapping("/upload")
     public String showForm() {
         return "upload";
     }
 
     @PostMapping("/upload")
-    public String annehmen(@RequestParam ("datei") MultipartFile multipartFile, Model model) {
+    public String annehmen(@RequestParam("datei") MultipartFile multipartFile,
+                           @RequestParam(value = "beschreibung", required = false) String beschreibung,
+                           Model model) {
+        if (!DateiTypPruefer.verify(multipartFile)) {
+            model.addAttribute("nachricht", "ungültiger Dateityp! Datei muss mit .zip, .pdf, oder .md enden.");
+            return "upload";
+        }
         try {
             String name = multipartFile.getOriginalFilename();
-            multipartFile.transferTo(Path.of("./upload_"+name));
-            model.addAttribute("nachricht", name + " wurde erfolgreich hochgeladen");
+
+            DateiInfos dateiInfos = new DateiInfos(name, beschreibung);
+            model.addAttribute("dateiInfos", dateiInfos);
+
+            multipartFile.transferTo(Path.of("./upload_" + name));
+            model.addAttribute("nachricht", name + " wurde erfolgreich hochgeladen.");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
