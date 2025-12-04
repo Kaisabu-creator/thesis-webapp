@@ -1,4 +1,4 @@
-package com.awesome.thesis.files;
+package com.awesome.thesis.logic.domain.model.files;
 
 import java.time.LocalDateTime;
 

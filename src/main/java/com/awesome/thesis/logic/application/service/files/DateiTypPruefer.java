@@ -1,4 +1,4 @@
-package com.awesome.thesis.files;
+package com.awesome.thesis.logic.application.service.files;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;

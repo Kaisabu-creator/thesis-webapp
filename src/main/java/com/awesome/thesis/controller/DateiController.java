@@ -1,7 +1,7 @@
 package com.awesome.thesis.controller;
 
-import com.awesome.thesis.files.DateiInfos;
-import com.awesome.thesis.files.DateiTypPruefer;
+import com.awesome.thesis.logic.domain.model.files.DateiInfos;
+import com.awesome.thesis.logic.application.service.files.DateiTypPruefer;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
