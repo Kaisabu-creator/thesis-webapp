@@ -1,4 +1,4 @@
-package com.awesome.thesis.themen;
+package com.awesome.thesis.logic.application.service.themen;
 
 import com.awesome.thesis.logic.domain.model.themen.Thema;
 import com.awesome.thesis.persistence.themen.ThemaRepoImpl;
