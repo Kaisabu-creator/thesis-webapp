@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Thema {
+    private String id;
     private String titel;
     private String beschreibung;
     private final List<Link> links;
@@ -40,6 +41,14 @@ public class Thema {
 
     public void removeUrl(Link link) {
         links.remove(link);
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override
