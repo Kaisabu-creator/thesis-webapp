@@ -7,7 +7,13 @@ import java.util.List;
 public class Thema {
     private String titel;
     private String beschreibung;
-    private final List<Link> links = new ArrayList<>();
+    private final List<Link> links;
+
+    public Thema(String titel, String beschreibung) {
+        this.titel = titel;
+        this.beschreibung = beschreibung;
+        this.links = new ArrayList<>();
+    }
 
     public void setTitel(String titel) { this.titel = titel; }
 
