@@ -62,7 +62,7 @@ public class Thema {
 
     @Override
     public int hashCode() {
-        return Objects.hash(titel, beschreibung);
+        return Objects.hash(id);
     }
 
 }
