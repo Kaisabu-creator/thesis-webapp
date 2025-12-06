@@ -20,9 +20,7 @@ public class ProfilEditor {
         profile.update(id, profil);
     }
 
-    public void editName(String id, String name) {
-        Profil profil = get(id);
-        profil.setName(name);
+    public void edit(String id, Profil profil) {
         profile.update(id, profil);
     }
 
