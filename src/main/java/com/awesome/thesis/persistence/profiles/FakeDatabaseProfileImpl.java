@@ -14,7 +14,8 @@ class FakeDatabaseProfileImpl implements IDatabaseProfile {
     public FakeDatabaseProfileImpl() {
         Profil profil1 = new Profil("max");
         profil1.addKontakt(new Kontakt("Email", "max@mail.com", Kontaktart.EMAIL));
-        profil1.setId(save(profil1));
+        profil1.setId("1");
+        update("1", profil1);
     }
 
     public Profil get(String key) {
