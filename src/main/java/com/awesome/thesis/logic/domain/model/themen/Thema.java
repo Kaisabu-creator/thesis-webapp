@@ -57,8 +57,7 @@ public class Thema {
         if (o == null || getClass() != o.getClass()) return false;
 
         Thema thema = (Thema) o;
-        return Objects.equals(titel, thema.titel)
-                && Objects.equals(beschreibung, thema.beschreibung);
+        return Objects.equals(id, thema.id);
     }
 
     @Override
