@@ -2,6 +2,7 @@ package com.awesome.thesis.logic.application.service.profiles;
 
 import com.awesome.thesis.logic.domain.model.profil.Kontakt;
 import com.awesome.thesis.logic.domain.model.profil.Profil;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +21,9 @@ public class ProfilEditor {
         profile.update(id, profil);
     }
 
-    public void edit(String id, Profil profil) {
+    public void editName(String id, String name) {
+        Profil profil = profile.get(id);
+        profil.setName(name);
         profile.update(id, profil);
     }
 
