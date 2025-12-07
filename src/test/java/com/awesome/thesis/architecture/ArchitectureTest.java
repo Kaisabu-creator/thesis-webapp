@@ -1,7 +1,6 @@
 package com.awesome.thesis.architecture;
 
 import com.awesome.thesis.ThesisApplication;
-import com.sun.tools.javac.Main;
 import com.tngtech.archunit.core.domain.JavaClasses;
 import com.tngtech.archunit.core.importer.ClassFileImporter;
 import com.tngtech.archunit.lang.ArchRule;
