@@ -23,8 +23,8 @@ public class ArchitectureTest {
                 .domainModels("com.awesome.thesis.logic.domain.model..")
                 .domainServices("com.awesome.thesis.logic.domain.service..")
                 .applicationServices("com.awesome.thesis.logic.application.service..")
-                .adapter("web", "com.awesome.thesis.web")
-                .adapter("persistence", "com.awesome.thesis.persistence");
+                .adapter("web", "com.awesome.thesis.controller")
+                .adapter("persistence", "com.awesome.thesis.persistence..");
         rule.check(klassen);
     }
 }
