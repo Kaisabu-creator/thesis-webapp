@@ -49,7 +49,7 @@ class ProfilEditorTest {
     @DisplayName("an existing Profil can be loaded from the database")
     void testGet() {
         //Arrange
-        IProfileRepo profile = mock(ProfileRepoImpl.class);
+        IProfileRepo profile = mock(IProfileRepo.class);
         when(profile.containsKey(any())).thenReturn(true);
         ProfilEditor editor = new ProfilEditor(profile);
 
