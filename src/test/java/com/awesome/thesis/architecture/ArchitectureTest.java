@@ -16,12 +16,12 @@ public class ArchitectureTest {
             new ClassFileImporter().importPackagesOf(ThesisApplication.class);
 
     @Test
-    @Disabled
     @DisplayName("Die Mwst Anwendung hat eine Onion Architektur")
     public void onionArchitektur() throws Exception {
+        //TODO: Fill domainServices with correct packages (Right now it is empty)
         ArchRule rule = onionArchitecture()
                 .domainModels("com.awesome.thesis.logic.domain.model..")
-                .domainServices("com.awesome.thesis.logic.domain.service..")
+                .domainServices("com.awesome.thesis.logic.application.service..")
                 .applicationServices("com.awesome.thesis.logic.application.service..")
                 .adapter("web", "com.awesome.thesis.controller")
                 .adapter("persistence", "com.awesome.thesis.persistence..");
