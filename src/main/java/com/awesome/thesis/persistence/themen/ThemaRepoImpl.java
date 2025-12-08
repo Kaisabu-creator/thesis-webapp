@@ -12,8 +12,8 @@ public class ThemaRepoImpl implements IThemaRepo {
     }
 
     @Override
-    public void save(Thema thema) {
-        database.save(thema);
+    public String save(Thema thema) {
+        return database.save(thema);
     }
 
     public boolean containsKey(String id) {
