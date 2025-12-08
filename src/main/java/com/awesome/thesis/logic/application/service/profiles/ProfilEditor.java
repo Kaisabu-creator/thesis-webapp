@@ -1,8 +1,8 @@
 package com.awesome.thesis.logic.application.service.profiles;
 
 import com.awesome.thesis.logic.domain.model.profil.Kontakt;
+import com.awesome.thesis.logic.domain.model.profil.Kontaktart;
 import com.awesome.thesis.logic.domain.model.profil.Profil;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,9 +15,9 @@ public class ProfilEditor {
         this.profile = profile;
     }
 
-    public void addKontakt(String id, Kontakt kontakt) {
+    public void addEmail(String id, String label, String wert) {
         Profil profil = get(id);
-        profil.addKontakt(kontakt);
+        profil.addEmail(label, wert);
         profile.update(id, profil);
     }
 
