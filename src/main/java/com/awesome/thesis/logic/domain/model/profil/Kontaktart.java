@@ -1,5 +1,8 @@
 package com.awesome.thesis.logic.domain.model.profil;
 
+import com.awesome.thesis.annotations.AggregatValue;
+
+@AggregatValue
 public enum Kontaktart {
     EMAIL("Email", "mailto:%s"),
     TEL("Phone", "tel:%");
