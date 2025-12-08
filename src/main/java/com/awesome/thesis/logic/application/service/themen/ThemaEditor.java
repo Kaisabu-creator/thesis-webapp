@@ -40,12 +40,6 @@ public class ThemaEditor {
         repository.update(id, thema);
     }
 
-    public void deleteThema(String id) {
-        if (repository.containsKey(id)) {
-            repository.delete(id);
-        }
-    }
-
     public void addThema(Thema thema) {
         if (thema.getId() != null) {
             if (repository.containsKey(thema.getId())) {
