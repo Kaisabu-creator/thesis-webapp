@@ -13,25 +13,25 @@ public class ThemaEditor {
     }
 
     public void addLink(String id, Link link) {
-        Thema thema = repository.get(id);
+        Thema thema = getThema(id);
         thema.addUrl(link);
         repository.update(id,thema);
     }
 
     public void removeLink(String id, Link link) {
-        Thema thema = repository.get(id);
+        Thema thema = getThema(id);
         thema.removeUrl(link);
         repository.update(id, thema);
     }
 
     public void editTitel(String id, String titel) {
-        Thema thema = repository.get(id);
+        Thema thema = getThema(id);
         thema.setTitel(titel);
         repository.update(id, thema);
     }
 
     public void editBeschreibung(String id, String beschreibung) {
-        Thema thema = repository.get(id);
+        Thema thema = getThema(id);
         thema.setBeschreibung(beschreibung);
         repository.update(id, thema);
     }
