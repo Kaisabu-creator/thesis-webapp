@@ -1,12 +1,15 @@
 package com.awesome.thesis.logic.application.service.themen;
 
+import com.awesome.thesis.logic.domain.model.profil.Profil;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
 
 import java.util.List;
 
 public interface IThemaRepo {
-    void addThema(Thema thema);
-    void removeThema (String id);
+    void save(Thema thema);
+    void delete (String id);
     List<Thema> getThemen();
-    Thema getThema(String id);
+    Thema get(String id);
+    void update(String key, Thema thema);
+
 }

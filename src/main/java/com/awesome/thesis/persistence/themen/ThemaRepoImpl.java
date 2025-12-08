@@ -12,12 +12,16 @@ public class ThemaRepoImpl implements IThemaRepo {
     }
 
     @Override
-    public void addThema(Thema thema) {
+    public void save(Thema thema) {
         database.save(thema);
     }
 
+    public boolean containsKey(String id) {
+        return database.containsKey(id);
+    }
+
     @Override
-    public void removeThema(String id) {
+    public void delete(String id) {
         database.delete(id);
     }
 
@@ -27,11 +31,15 @@ public class ThemaRepoImpl implements IThemaRepo {
     }
 
     @Override
-    public Thema getThema(String id) {
+    public Thema get(String id) {
         if (database.containsKey(id)) {
             return database.get(id);
         } else {
             throw new NoSuchElementException("Thema mit id" + id + "nicht gefunden");
         }
+    }
+
+    public void update(String id, Thema thema) {
+        database.update(id, thema);
     }
 }
