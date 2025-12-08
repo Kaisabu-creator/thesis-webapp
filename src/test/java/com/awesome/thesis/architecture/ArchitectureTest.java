@@ -4,7 +4,6 @@ import com.awesome.thesis.ThesisApplication;
 import com.tngtech.archunit.core.domain.JavaClasses;
 import com.tngtech.archunit.core.importer.ClassFileImporter;
 import com.tngtech.archunit.lang.ArchRule;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +16,6 @@ public class ArchitectureTest {
     @Test
     @DisplayName("Die Mwst Anwendung hat eine Onion Architektur")
     public void onionArchitektur() throws Exception {
-        //TODO: Fill domainServices with correct packages (Right now it is empty)
         ArchRule rule = onionArchitecture()
                 .domainModels("com.awesome.thesis.logic.domain.model..")
                 .domainServices("com.awesome.thesis.logic.application.service..")
