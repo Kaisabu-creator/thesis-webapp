@@ -3,6 +3,7 @@ package com.awesome.thesis.logic.application.service.themen;
 import com.awesome.thesis.logic.domain.model.links.Link;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 public class ThemaEditor {
@@ -56,6 +57,10 @@ public class ThemaEditor {
         } else {
             throw new NoSuchElementException("Thema with id " + id + "not found");
         }
+    }
+
+    public List<Thema> getAll() {
+        return repository.getThemen();
     }
 
 
