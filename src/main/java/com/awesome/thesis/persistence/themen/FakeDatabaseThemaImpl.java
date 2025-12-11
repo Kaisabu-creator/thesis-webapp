@@ -1,9 +1,11 @@
 package com.awesome.thesis.persistence.themen;
 import com.awesome.thesis.logic.domain.model.links.Link;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 
+@Component
 public class FakeDatabaseThemaImpl implements IDatabaseThema{
     Map<String, Thema> map = new HashMap<>();
 

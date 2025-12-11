@@ -1,9 +1,12 @@
 package com.awesome.thesis.persistence.themen;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
 import com.awesome.thesis.logic.application.service.themen.IThemaRepo;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 import java.util.NoSuchElementException;
 
+@Repository
 public class ThemaRepoImpl implements IThemaRepo {
     IDatabaseThema database;
 
