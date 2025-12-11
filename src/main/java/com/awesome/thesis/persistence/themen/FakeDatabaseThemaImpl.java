@@ -13,7 +13,8 @@ public class FakeDatabaseThemaImpl implements IDatabaseThema{
         Thema thema = new Thema("Programmierpraktikum 2", "Beispieltext");
         thema.addUrl(new Link("https://www.google.com/", "Google als Beispiel"));
         thema.addUrl(new Link("https://www.youtube.com/", "Youtube als Beispiel"));
-        save(thema);
+        thema.setId("propra");
+        update("propra", thema);
     }
     public Thema get(String id) {
         return map.get(id);
