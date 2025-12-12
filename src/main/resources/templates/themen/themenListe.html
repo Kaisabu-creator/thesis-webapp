@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Liste von den aufgelisteten Themen</title>
+    <title>Thema</title>
     <link href="/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+<h1>Verfügbare Themen</h1>
     <li th:each="thema: ${themenListe}">
         <a th:href="@{/thema/{id}(id=${thema.id})}" th:text="${thema.titel}"></a>
     </li>
