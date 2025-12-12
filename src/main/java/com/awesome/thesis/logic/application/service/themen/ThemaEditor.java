@@ -53,6 +53,10 @@ public class ThemaEditor {
         }
     }
 
+    public boolean containsThema(String id) {
+        return repository.containsKey(id);
+    }
+
     public Thema getThema(String id) {
         if (repository.containsKey(id)) {
             return repository.get(id);
