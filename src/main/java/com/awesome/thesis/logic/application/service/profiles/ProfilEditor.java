@@ -22,7 +22,7 @@ public class ProfilEditor {
     }
 
     public void editName(String id, String name) {
-        Profil profil = profile.get(id);
+        Profil profil = get(id);
         profil.setName(name);
         profile.update(id, profil);
     }
