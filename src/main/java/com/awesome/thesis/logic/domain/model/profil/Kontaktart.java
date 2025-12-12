@@ -5,7 +5,7 @@ import com.awesome.thesis.annotations.AggregateValue;
 @AggregateValue
 public enum Kontaktart {
     EMAIL("Email", "mailto:%s"),
-    TEL("Phone", "tel:%");
+    TEL("Phone", "tel:%s");
 
     private final String label;
     private final String href;
