@@ -1,6 +1,8 @@
 package com.awesome.thesis.controller;
 
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
+import com.awesome.thesis.logic.domain.model.profil.Kontakt;
+import com.awesome.thesis.logic.domain.model.profil.Kontaktart;
 import com.awesome.thesis.logic.domain.model.profil.Profil;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,7 +26,7 @@ class AdminControllerTest {
     ProfilEditor editor;
 
     @Test
-    @DisplayName("get auf /admin/profilEdit/{id}")
+    @DisplayName("get auf /admin/profilEdit/{id} funktioniert")
     void get_profilEdit() throws Exception {
         Profil profil = mock(Profil.class);
         when(editor.get(any())).thenReturn(profil);
@@ -35,7 +37,7 @@ class AdminControllerTest {
     }
 
     @Test
-    @DisplayName("post Name ändern")
+    @DisplayName("post Name ändern funktioniert")
     void post_Name() throws Exception {
         mockMvc.perform(post("/admin/profilEdit/1")
                 .param("name", "test"))
@@ -43,10 +45,92 @@ class AdminControllerTest {
     }
 
     @Test
-    @DisplayName("post Name ändern")
+    @DisplayName("post Name ändern funktioniert")
     void post_Name_BackEnd() throws Exception {
         mockMvc.perform(post("/admin/profilEdit/1")
                         .param("name", "test"));
         verify(editor).editName("1", "test");
+    }
+
+    @Test
+    @DisplayName("post Kontakt löschen")
+    void post_deleteKontakt() throws Exception {
+        mockMvc.perform(post("/admin/profilEdit/1/deleteKontakt")
+                .param("label", "test")
+                .param("wert", "test@icloud.com")
+                .param("kontaktart", Kontaktart.EMAIL.toString()))
+                .andExpect(status().is3xxRedirection());
+    }
+
+    @Test
+    @DisplayName("post Kontakt löschen")
+    void post_deleteKontakt_BackEnd() throws Exception {
+        mockMvc.perform(post("/admin/profilEdit/1/deleteKontakt")
+                .param("label", "test")
+                .param("wert", "test@icloud.com")
+                .param("kontaktart", Kontaktart.EMAIL.toString()));
+        verify(editor).removeKontakt("1", new Kontakt("test", "test@icloud.com", Kontaktart.EMAIL));
+    }
+
+    @Test
+    @DisplayName("post Kontakt hinzufügen funktioniert")
+    void post_addKontakt() throws Exception {
+        mockMvc.perform(post("/admin/profilEdit/1/addEmail")
+                        .param("label", "test")
+                        .param("wert", "test@icloud.com"))
+                .andExpect(status().is3xxRedirection());
+    }
+
+    @Test
+    @DisplayName("post Kontakt hinzufügen funktioniert")
+    void post_addKontakt_BackEnd() throws Exception {
+        mockMvc.perform(post("/admin/profilEdit/1/addEmail")
+                .param("label", "test")
+                .param("wert", "test@icloud.com"));
+        verify(editor).addEmail("1", "test", "test@icloud.com");
+    }
+
+    @Test
+    @DisplayName("post Kontakt hinzufügen funktioniert nicht bei fehlender Email")
+    void post_addKontakt_keinWert() throws Exception {
+        Profil profil = mock(Profil.class);
+        when(editor.get(any())).thenReturn(profil);
+        mockMvc.perform(post("/admin/profilEdit/1/addEmail")
+                        .param("label", "test")
+                        .param("wert", ""))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("post Kontakt hinzufügen funktioniert nicht bei fehlender Email")
+    void post_addKontakt_BackEnd_keinWert() throws Exception {
+        Profil profil = mock(Profil.class);
+        when(editor.get(any())).thenReturn(profil);
+        mockMvc.perform(post("/admin/profilEdit/1/addEmail")
+                .param("label", "test")
+                .param("wert", ""));
+        verify(editor, never()).addEmail(any(), any(), any());
+    }
+
+    @Test
+    @DisplayName("post Kontakt hinzufügen funktioniert nicht bei falscher Email")
+    void post_addKontakt_keineEmail() throws Exception {
+        Profil profil = mock(Profil.class);
+        when(editor.get(any())).thenReturn(profil);
+        mockMvc.perform(post("/admin/profilEdit/1/addEmail")
+                        .param("label", "test")
+                        .param("wert", "test"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("post Kontakt hinzufügen funktioniert nicht bei falscher Email")
+    void post_addKontakt_BackEnd_keineEmail() throws Exception {
+        Profil profil = mock(Profil.class);
+        when(editor.get(any())).thenReturn(profil);
+        mockMvc.perform(post("/admin/profilEdit/1/addEmail")
+                .param("label", "test")
+                .param("wert", "test"));
+        verify(editor, never()).addEmail(any(), any(), any());
     }
 }
