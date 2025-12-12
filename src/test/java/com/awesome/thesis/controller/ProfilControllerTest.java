@@ -33,6 +33,7 @@ class ProfilControllerTest {
         when(editor.get(any())).thenReturn(profil);
         mockMvc.perform(get("/profil/1"))
                 .andExpect(model().attribute("profil", profil))
+                .andExpect(view().name("profiles/profil"))
                 .andExpect(status().isOk());
     }
 
