@@ -20,8 +20,7 @@ public class ThemaEditorController {
     public String editThema(@PathVariable("id")String id, Model model) {
         Thema thema = editor.getThema(id);
         ThemaInfoDTO themaInfoDTO = new ThemaInfoDTO(thema.getTitel(), thema.getBeschreibung());
-        ThemaLinkDTO themaLinkDTO = new ThemaLinkDTO(thema.getLinks());
-        model.addAttribute("themaLinkDTO", themaLinkDTO);
+        model.addAttribute("themaLinkDTO", new ThemaLinkDTO("", ""));
         model.addAttribute("themaInfoDTO", themaInfoDTO);
         model.addAttribute("thema", thema);
         return "admin/themaEdit";
