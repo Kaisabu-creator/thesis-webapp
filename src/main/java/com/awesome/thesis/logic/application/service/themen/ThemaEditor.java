@@ -51,11 +51,6 @@ public class ThemaEditor {
         }
     }
 
-    public ThemaInfoDTO getThemaInfoDTO(String id) {
-        Thema thema = getThema(id);
-        return new ThemaInfoDTO(thema.getTitel(), thema.getBeschreibung());
-    }
-
     public Thema getThema(String id) {
         if (repository.containsKey(id)) {
             return repository.get(id);

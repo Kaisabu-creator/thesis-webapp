@@ -19,8 +19,10 @@ public class ThemaEditorController {
 
     @GetMapping("/themaEdit/{id}")
     public String editThema(@PathVariable("id")String id, Model model) {
+        Thema thema = editor.getThema(id);
+        ThemaInfoDTO info = new ThemaInfoDTO(thema.getTitel(), thema.getBeschreibung());
         model.addAttribute("themaLinkDTO", new ThemaLinkDTO("", ""));
-        model.addAttribute("themaInfoDTO", editor.getThemaInfoDTO(id));
+        model.addAttribute("themaInfoDTO", info);
         model.addAttribute("thema", editor.getThema(id));
         return "admin/themaEdit";
     }
@@ -40,7 +42,9 @@ public class ThemaEditorController {
     @PostMapping("/themaEdit/{id}/editLink")
     public String editThemaLink(@PathVariable String id, @Valid @ModelAttribute("themaLinkDTO")ThemaLinkDTO dto, BindingResult result, Model model) {
         if (result.hasErrors()){
-            model.addAttribute("themaInfoDTO", editor.getThemaInfoDTO(id));
+            Thema thema = editor.getThema(id);
+            ThemaInfoDTO info = new ThemaInfoDTO(thema.getTitel(), thema.getBeschreibung());
+            model.addAttribute("themaInfoDTO", info);
             model.addAttribute("thema", editor.getThema(id));
             return "admin/themaEdit";
         }
