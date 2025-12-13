@@ -1,6 +1,5 @@
 package com.awesome.thesis.logic.application.service.themen;
 
-import com.awesome.thesis.controller.dto.ThemaInfoDTO;
 import com.awesome.thesis.logic.domain.model.links.Link;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
 import org.springframework.stereotype.Service;
