@@ -4,9 +4,11 @@ import com.awesome.thesis.controller.dto.ThemaLinkDTO;
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
 import com.awesome.thesis.logic.domain.model.links.Link;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -26,14 +28,26 @@ public class ThemaEditorController {
     }
 
     @PostMapping("themaEdit/{id}/editInfo")
-    public String editThemaInfo(@PathVariable String id, @ModelAttribute ThemaInfoDTO info) {
-        editor.editTitel(id,info.titel());
-        editor.editBeschreibung(id, info.beschreibung());
+    public String editThemaInfo(@PathVariable String id,@Valid @ModelAttribute("themaInfoDTO") ThemaInfoDTO themaInfoDTO, BindingResult result, Model model) {
+        if(result.hasErrors()) {
+            model.addAttribute("themaLinkDTO", new ThemaLinkDTO("", ""));
+            model.addAttribute("thema", editor.getThema(id));
+            return "admin/themaEdit";
+        }
+        editor.editTitel(id,themaInfoDTO.titel());
+        editor.editBeschreibung(id, themaInfoDTO.beschreibung());
         return "redirect:/editThema/" + id;
     }
 
     @PostMapping("/themaEdit/{id}/editLink")
-    public String editThemaLink(@PathVariable String id, @ModelAttribute("themaLinkDTO")ThemaLinkDTO dto) {
+    public String editThemaLink(@PathVariable String id, @Valid @ModelAttribute("themaLinkDTO")ThemaLinkDTO dto, BindingResult result, Model model) {
+        if (result.hasErrors()){
+            Thema thema = editor.getThema(id);
+            ThemaInfoDTO info = new ThemaInfoDTO(thema.getTitel(), thema.getBeschreibung());
+            model.addAttribute("themaInfoDTO", info);
+            model.addAttribute("thema", editor.getThema(id));
+            return "admin/themaEdit";
+        }
         editor.addLink(id, dto.url(), dto.urlBeschreibung());
         return "redirect:/editThema/" + id;
     }

@@ -87,4 +87,22 @@ public class ThemaEditorControllerTest {
 
     }
 
+    @Test
+    @DisplayName("You cant set an empty title for the Thema object")
+    void test_7() throws Exception {
+        Thema thema = mock(Thema.class);
+        when(editor.getThema(any())).thenReturn(thema);
+        mvc.perform(post("/themaEdit/propra/editInfo").param("titel", "").param("beschreibung", "egal"));
+        verify(editor, never()).editTitel("propra", "");
+    }
+
+    @Test
+    @DisplayName("You cant add an empty link")
+    void test_8() throws Exception {
+        Thema thema = mock(Thema.class);
+        when(editor.getThema(any())).thenReturn(thema);
+        mvc.perform(post("/themaEdit/propra/editLink").param("url", "").param("urlBeschreibung", "egal"));
+        verify(editor, never()).addLink("propra", "", "egal");
+    }
+
 }
