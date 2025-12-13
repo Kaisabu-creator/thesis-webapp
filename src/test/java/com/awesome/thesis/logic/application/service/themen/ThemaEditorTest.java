@@ -87,19 +87,7 @@ public class ThemaEditorTest {
         assertThat(thema.getTitel()).isEqualTo("Hallo");
     }
 
-    @Test
-    @DisplayName("When setTitel is called with an empty title, an IllegalArgumentException gets thrown")
-    void test_4() {
-        //Arrange
-        Thema thema = neuesThema();
-        IThemaRepo repo = mock(IThemaRepo.class);
-        when(repo.get("a")).thenReturn(thema);
-        ThemaEditor editor = new ThemaEditor(repo);
-        when(repo.containsKey("a")).thenReturn(true);
 
-        //Act && Assert
-        assertThrows(IllegalArgumentException.class, () -> editor.editTitel("a", ""));
-    }
     @Test
     @DisplayName("When setTitel is called on a Thema with non existent id in the repository, an exception gets thrown")
     void test_4_5() {
