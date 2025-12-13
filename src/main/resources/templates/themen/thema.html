@@ -11,10 +11,13 @@
     Beschreibung des Themas:
     <p><span th:text="${thema.beschreibung}">Beschreibung</span></p>
 </div>
-<p>Links zu externen Ressourcen:</p>
+<div th:if="${thema.hasLinks}">
+    <p>Links zu externen Ressourcen:</p>
+</div>
 <ul th:each="link: ${thema.links}">
     <li><a th:href="@{{link}(link=${link.url})}" th:text="${link.url}"></a>
-    <div th:text="${link.text}">Beschreibung des Links</div></li>
+        <div th:text="${link.text}">Beschreibung des Links</div>
+    </li>
 </ul>
 <a th:href="@{/editThema/{id}(id=${thema.id})}" class="btn btn-primary">Thema editieren</a>
 </body>

@@ -52,6 +52,10 @@ public class Thema {
         this.id = id;
     }
 
+    public boolean hasLinks() {
+        return !links.isEmpty();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
