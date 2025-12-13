@@ -1,7 +1,6 @@
 package com.awesome.thesis.logic.application.service.profiles;
 
 import com.awesome.thesis.logic.domain.model.profil.Kontakt;
-import com.awesome.thesis.logic.domain.model.profil.Kontaktart;
 import com.awesome.thesis.logic.domain.model.profil.Profil;
 import org.springframework.stereotype.Service;
 
@@ -37,9 +36,12 @@ public class ProfilEditor {
         if (profil.getId() != null) {
             if (profile.containsKey(profil.getId())) {
                 profile.update(profil.getId(), profil);
+            } else {
+                profil.setId(profile.save(profil));
             }
+        } else {
+            profil.setId(profile.save(profil));
         }
-        profil.setId(profile.save(profil));
     }
 
     public Profil get(String id) {
