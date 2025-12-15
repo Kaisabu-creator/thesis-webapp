@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Profil</title>
+    <link rel="stylesheet" href="/bootstrap.min.css"/>
+</head>
+<body>
+<div class="container-fluid">
+    <h1>Admin Profil</h1>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Neue Betreuende Person</h2>
+            <form method="POST" action="/profileAdmin">
+                <div class="form-group">
+                    <label for="githubId">Github ID</label>
+                    <input type="number" class="form-control" id="githubId" name="id">
+                </div>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" name="name">
+                </div>
+                <button type="submit" class="btn btn-primary">Hinzufügen</button>
+            </form>
+        </div>
+        <div class="col-md-12">
+            <h2>Betreuende</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="profil : ${profile}">
+                        <td th:text="*{profil.id}">1</td>
+                        <td th:text="*{profil.name}">John</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
