@@ -23,13 +23,15 @@ public class AdminProfilCreator {
 
     @GetMapping("createProfile")
     public String createProfile(Model model) {
+        model.addAttribute("profil", new ProfilCreateDTO("", ""));
         model.addAttribute("profile", editor.getAll());
         return "admin/profileAdmin";
     }
 
     @PostMapping("createProfile")
-    public String createProfile(@Valid @ModelAttribute ProfilCreateDTO profil, BindingResult bindingResult) {
+    public String createProfile(@Valid @ModelAttribute("profil") ProfilCreateDTO profil, BindingResult bindingResult, Model model) {
         if  (bindingResult.hasErrors()) {
+            model.addAttribute("profile", editor.getAll());
             return "admin/profileAdmin";
         }
         editor.create(profil.id(), profil.name());
