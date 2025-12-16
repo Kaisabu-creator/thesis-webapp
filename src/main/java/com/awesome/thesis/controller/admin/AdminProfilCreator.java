@@ -27,6 +27,7 @@ public class AdminProfilCreator {
 
     @PostMapping("createProfile")
     public String createProfile(@ModelAttribute ProfilCreateDTO profil) {
+        editor.create(profil.id(), profil.name());
         return "redirect:/admin/createProfile";
     }
 }

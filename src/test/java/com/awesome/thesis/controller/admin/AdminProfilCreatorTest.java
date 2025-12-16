@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -75,5 +76,16 @@ class AdminProfilCreatorTest {
         mockMvc.perform(post("/admin/createProfile")
                         .with(csrf()))
                 .andExpect(status().is3xxRedirection());
+    }
+
+    @Test
+    @WithMockUser(roles = {"ADMIN"})
+    @DisplayName("Ein Admin kann ein post auf profilCreate ausführen")
+    void post_createProfil_backEnd() throws Exception {
+        mockMvc.perform(post("/admin/createProfile")
+                        .param("id", "1")
+                        .param("name", "test")
+                        .with(csrf()));
+        verify(editor).create("1", "test");
     }
 }
