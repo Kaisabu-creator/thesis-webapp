@@ -16,9 +16,10 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
@@ -56,5 +57,23 @@ class AdminProfilCreatorTest {
         mockMvc.perform(get("/admin/createProfile"))
                 .andExpect(model().attribute("profile", list))
         .andExpect(view().name("admin/profileAdmin"));
+    }
+
+    @Test
+    @WithMockUser()
+    @DisplayName("Ohne Admin-Rechte kann ein post nicht ausführen")
+    void post_createProfil_withoutRights() throws Exception {
+        mockMvc.perform(post("/admin/createProfile")
+                        .with(csrf()))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser(roles = {"ADMIN"})
+    @DisplayName("Ein Admin kann ein post auf profilCreate ausführen")
+    void post_createProfil() throws Exception {
+        mockMvc.perform(post("/admin/createProfile")
+                        .with(csrf()))
+                .andExpect(status().is3xxRedirection());
     }
 }
