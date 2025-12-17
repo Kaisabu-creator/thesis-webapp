@@ -15,11 +15,11 @@ class FakeDatabaseProfileImpl implements IDatabaseProfile {
         Profil janik = new Profil("janik");
         janik.addKontakt(new Kontakt("Email", "janik@mail.com", Kontaktart.EMAIL));
         janik.setId("182077829");
-        update("1", janik);
+        update("182077829", janik);
         Profil ryota = new Profil("ryota");
         ryota.addKontakt(new Kontakt("Email", "ryota@mail.com", Kontaktart.EMAIL));
         ryota.setId("180645494");
-        update("1", janik);
+        update("180645494", janik);
     }
 
     public Profil get(String key) {
