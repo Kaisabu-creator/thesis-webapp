@@ -1,4 +1,4 @@
-package com.awesome.thesis.logic.application.service.security;
+package com.awesome.thesis.configurations;
 
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import org.springframework.beans.factory.annotation.Autowired;
