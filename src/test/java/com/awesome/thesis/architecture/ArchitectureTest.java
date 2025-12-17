@@ -11,7 +11,9 @@ import static com.tngtech.archunit.library.Architectures.onionArchitecture;
 
 public class ArchitectureTest {
     private final JavaClasses klassen =
-            new ClassFileImporter().importPackagesOf(ThesisApplication.class);
+            new ClassFileImporter()
+                    .withImportOption(l -> !l.contains("/test/"))
+                    .importPackagesOf(ThesisApplication.class);
 
     @Test
     @DisplayName("Die Mwst Anwendung hat eine Onion Architektur")
@@ -21,7 +23,8 @@ public class ArchitectureTest {
                 .domainServices("com.awesome.thesis.logic.application.service..")
                 .applicationServices("com.awesome.thesis.logic.application.service..")
                 .adapter("web", "com.awesome.thesis.controller..")
-                .adapter("persistence", "com.awesome.thesis.persistence..");
+                .adapter("persistence", "com.awesome.thesis.persistence..")
+                .adapter("security", "com.awesome.thesis.configurations..");
         rule.check(klassen);
     }
 }
