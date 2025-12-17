@@ -56,6 +56,10 @@ public class ProfilEditor {
         throw new IllegalArgumentException("No such id " + id);
     }
 
+    public boolean contains(String id) {
+        return profile.containsKey(id);
+    }
+
     public List<Profil> getAll() {
         return profile.getAll();
     }
