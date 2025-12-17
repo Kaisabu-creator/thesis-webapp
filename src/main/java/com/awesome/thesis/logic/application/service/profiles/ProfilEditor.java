@@ -14,49 +14,45 @@ public class ProfilEditor {
         this.profile = profile;
     }
 
-    public void addEmail(String id, String label, String wert) {
+    public void addEmail(long id, String label, String wert) {
         Profil profil = get(id);
         profil.addEmail(label, wert);
         profile.update(id, profil);
     }
 
-    public void editName(String id, String name) {
+    public void editName(long id, String name) {
         Profil profil = get(id);
         profil.setName(name);
         profile.update(id, profil);
     }
 
-    public void removeKontakt(String id, Kontakt kontakt) {
+    public void removeKontakt(long id, Kontakt kontakt) {
         Profil profil = get(id);
         profil.removeKontakt(kontakt);
         profile.update(id, profil);
     }
 
     public void add(Profil profil) {
-        if (profil.getId() != null) {
-            if (profile.containsKey(profil.getId())) {
-                profile.update(profil.getId(), profil);
-            } else {
-                profile.save(profil.getId(), profil);
-            }
+        if (profile.containsKey(profil.getId())) {
+            profile.update(profil.getId(), profil);
         } else {
             profile.save(profil.getId(), profil);
         }
     }
 
-    public void create(String id, String name) {
+    public void create(long id, String name) {
         Profil profil = new Profil(id, name);
         profile.save(id, profil);
     }
 
-    public Profil get(String id) {
-        if(profile.containsKey(id)) {
+    public Profil get(long id) {
+        if (profile.containsKey(id)) {
             return profile.get(id);
         }
         throw new IllegalArgumentException("No such id " + id);
     }
 
-    public boolean contains(String id) {
+    public boolean contains(long id) {
         return profile.containsKey(id);
     }
 

@@ -5,15 +5,15 @@ import com.awesome.thesis.logic.domain.model.profil.Profil;
 import java.util.List;
 
 public interface IProfileRepo {
-    Profil get(String id);
+    Profil get(long id);
 
-    boolean containsKey(String id);
+    boolean containsKey(long id);
 
-    String save(String id, Profil profil);
+    void save(long id, Profil profil);
 
-    void update(String key, Profil profil);
+    void update(long id, Profil profil);
 
-    void delete(String id);
+    void delete(long id);
 
     List<Profil> getAll();
 }

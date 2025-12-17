@@ -20,7 +20,7 @@ public class BetreuendeController {
     @GetMapping("profil")
     public String getProfil(Model model, OAuth2AuthenticationToken auth) {
         Integer id = auth.getPrincipal().getAttribute("id");
-        model.addAttribute("profil", editor.get(String.valueOf(id)));
+        model.addAttribute("profil", editor.get(id));
         return "betreuendeProfil";
     }
 }

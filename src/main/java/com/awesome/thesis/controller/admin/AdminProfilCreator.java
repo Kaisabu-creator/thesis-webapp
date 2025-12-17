@@ -23,7 +23,7 @@ public class AdminProfilCreator {
 
     @GetMapping("createProfile")
     public String createProfile(Model model) {
-        model.addAttribute("profil", new ProfilCreateDTO("", ""));
+        model.addAttribute("profil", new ProfilCreateDTO(null, ""));
         model.addAttribute("profile", editor.getAll());
         return "admin/profileAdmin";
     }

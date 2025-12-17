@@ -31,16 +31,16 @@ class ProfilEditorTest {
     @DisplayName("an existing Profil that's saved gets updated")
     void testUpdate() {
         //Arrange
-        Profil profil = new Profil("1", "test");
+        Profil profil = new Profil(1, "test");
         IProfileRepo profile = mock(IProfileRepo.class);
-        when(profile.containsKey(any())).thenReturn(true);
+        when(profile.containsKey(anyLong())).thenReturn(true);
         ProfilEditor editor = new ProfilEditor(profile);
 
         //Act
         editor.add(profil);
 
         //Assert
-        verify(profile).update(any(), any(Profil.class));
+        verify(profile).update(anyLong(), any(Profil.class));
     }
 
     @Test
@@ -48,14 +48,14 @@ class ProfilEditorTest {
     void testGet() {
         //Arrange
         IProfileRepo profile = mock(IProfileRepo.class);
-        when(profile.containsKey(any())).thenReturn(true);
+        when(profile.containsKey(anyLong())).thenReturn(true);
         ProfilEditor editor = new ProfilEditor(profile);
 
         //Act
-        editor.get("id");
+        editor.get(1);
 
         //Assert
-        verify(profile).get("id");
+        verify(profile).get(1);
     }
 
     @Test
@@ -63,10 +63,10 @@ class ProfilEditorTest {
     void testGetNotFound() {
         //Arrange
         IProfileRepo profile = mock(IProfileRepo.class);
-        when(profile.containsKey(any())).thenReturn(false);
+        when(profile.containsKey(anyLong())).thenReturn(false);
         ProfilEditor editor = new ProfilEditor(profile);
 
         //Act + Assert
-        assertThrows(IllegalArgumentException.class, () -> editor.get("id"));
+        assertThrows(IllegalArgumentException.class, () -> editor.get(1));
     }
 }

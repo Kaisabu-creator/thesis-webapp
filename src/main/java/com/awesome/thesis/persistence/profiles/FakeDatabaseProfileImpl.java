@@ -9,36 +9,35 @@ import java.util.*;
 
 @Component
 class FakeDatabaseProfileImpl implements IDatabaseProfile {
-    Map<String, Profil> map = new HashMap<>();
+    Map<Long, Profil> map = new HashMap<>();
 
     public FakeDatabaseProfileImpl() {
-        Profil janik = new Profil("182077829","janik");
+        Profil janik = new Profil(182077829,"janik");
         janik.addKontakt(new Kontakt("Email", "janik@mail.com", Kontaktart.EMAIL));
-        update("182077829", janik);
-        Profil ryota = new Profil("180645494", "ryota");
+        update(182077829, janik);
+        Profil ryota = new Profil(180645494, "ryota");
         ryota.addKontakt(new Kontakt("Email", "ryota@mail.com", Kontaktart.EMAIL));
-        update("180645494", janik);
+        update(180645494, janik);
     }
 
-    public Profil get(String key) {
-        return map.get(key);
+    public Profil get(long id) {
+        return map.get(id);
     }
 
-    public String save(String id, Profil profil) {
+    public void save(long id, Profil profil) {
         map.put(id, profil);
-        return id;
     }
 
-    public boolean containsKey(String key) {
-        return map.containsKey(key);
+    public boolean containsKey(long id) {
+        return map.containsKey(id);
     }
 
-    public void update(String key, Profil profil) {
-        map.put(key, profil);
+    public void update(long id, Profil profil) {
+        map.put(id, profil);
     }
 
-    public void delete(String key) {
-        map.remove(key);
+    public void delete(long id) {
+        map.remove(id);
     }
 
     public List<Profil> getAll() {

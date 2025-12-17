@@ -19,7 +19,7 @@ public class ProfilController {
     }
 
     @GetMapping("/profil/{id}")
-    public String getProfil(@PathVariable String id, Model model) {
+    public String getProfil(@PathVariable Long id, Model model) {
         model.addAttribute("profil", editor.get(id));
         return "profiles/profil";
     }

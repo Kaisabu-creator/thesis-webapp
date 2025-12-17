@@ -7,11 +7,11 @@ import java.util.Set;
 
 @AggregateRoot
 public class Profil {
-    private final String id;
+    private final long id;
     private String name;
     private final Set<Kontakt> kontakte;
 
-    public Profil(String id, String name) {
+    public Profil(long id, String name) {
         this.id = id;
         this.name = name;
         this.kontakte = new HashSet<>();
@@ -25,7 +25,7 @@ public class Profil {
         this.name = name;
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 

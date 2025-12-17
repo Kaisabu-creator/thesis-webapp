@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -37,7 +38,7 @@ class ProfilControllerTest {
     @DisplayName("get auf /profil/{id}")
     void test_getProfilId() throws Exception {
         Profil profil = mock(Profil.class);
-        when(editor.get(any())).thenReturn(profil);
+        when(editor.get(anyLong())).thenReturn(profil);
         mockMvc.perform(get("/profil/1"))
                 .andExpect(model().attribute("profil", profil))
                 .andExpect(view().name("profiles/profil"))

@@ -19,26 +19,26 @@ public class AdminController {
     ProfilEditor editor;
 
     @GetMapping("profilEdit/{id}")
-    public String profilEdit(@PathVariable String id, Model model) {
+    public String profilEdit(@PathVariable Long id, Model model) {
         model.addAttribute("profil", editor.get(id));
         model.addAttribute("email", new EmailKontaktDTO("", ""));
         return "admin/profilEdit";
     }
 
     @PostMapping("profilEdit/{id}")
-    public String profilEdit(@PathVariable String id, @ModelAttribute("name") String name) {
+    public String profilEdit(@PathVariable Long id, @ModelAttribute("name") String name) {
         editor.editName(id, name);
         return "redirect:/admin/profilEdit/" + id;
     }
 
     @PostMapping("profilEdit/{id}/deleteKontakt")
-    public String deleteKontakt(@PathVariable String id, @ModelAttribute Kontakt kontakt) {
+    public String deleteKontakt(@PathVariable Long id, @ModelAttribute Kontakt kontakt) {
         editor.removeKontakt(id, kontakt);
         return "redirect:/admin/profilEdit/" + id;
     }
 
     @PostMapping("profilEdit/{id}/addEmail")
-    public String addEmail(@PathVariable String id, @Valid @ModelAttribute("email") EmailKontaktDTO email, BindingResult result, Model model) {
+    public String addEmail(@PathVariable Long id, @Valid @ModelAttribute("email") EmailKontaktDTO email, BindingResult result, Model model) {
         if  (result.hasErrors()) {
             model.addAttribute("profil", editor.get(id));
             return "admin/profilEdit";

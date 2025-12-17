@@ -37,7 +37,7 @@ class AdminControllerTest {
     @DisplayName("get auf /admin/profilEdit/{id} funktioniert")
     void get_profilEdit() throws Exception {
         Profil profil = mock(Profil.class);
-        when(editor.get(any())).thenReturn(profil);
+        when(editor.get(anyLong())).thenReturn(profil);
         mockMvc.perform(get("/admin/profilEdit/1"))
                 .andExpect(model().attribute("profil", profil))
                 .andExpect(view().name("admin/profilEdit"))
@@ -49,7 +49,7 @@ class AdminControllerTest {
     @DisplayName("get auf /admin/profilEdit/{id} funktioniert nicht ohne Rechte")
     void get_profilEdit_withoutRights() throws Exception {
         Profil profil = mock(Profil.class);
-        when(editor.get(any())).thenReturn(profil);
+        when(editor.get(anyLong())).thenReturn(profil);
         mockMvc.perform(get("/admin/profilEdit/1"))
                 .andExpect(status().isForbidden());
     }
@@ -71,7 +71,7 @@ class AdminControllerTest {
         mockMvc.perform(post("/admin/profilEdit/1")
                 .param("name", "test")
                 .with(csrf()));
-        verify(editor).editName("1", "test");
+        verify(editor).editName(1, "test");
     }
 
     @Test
@@ -95,7 +95,7 @@ class AdminControllerTest {
                 .param("wert", "test@icloud.com")
                 .param("kontaktart", Kontaktart.EMAIL.toString())
                 .with(csrf()));
-        verify(editor).removeKontakt("1", new Kontakt("test", "test@icloud.com", Kontaktart.EMAIL));
+        verify(editor).removeKontakt(1, new Kontakt("test", "test@icloud.com", Kontaktart.EMAIL));
     }
 
     @Test
@@ -117,7 +117,7 @@ class AdminControllerTest {
                 .param("label", "test")
                 .param("wert", "test@icloud.com")
                 .with(csrf()));
-        verify(editor).addEmail("1", "test", "test@icloud.com");
+        verify(editor).addEmail(1, "test", "test@icloud.com");
     }
 
     @Test
@@ -125,7 +125,7 @@ class AdminControllerTest {
     @DisplayName("post Kontakt hinzufügen funktioniert nicht bei fehlender Email")
     void post_addKontakt_keinWert() throws Exception {
         Profil profil = mock(Profil.class);
-        when(editor.get(any())).thenReturn(profil);
+        when(editor.get(anyLong())).thenReturn(profil);
         mockMvc.perform(post("/admin/profilEdit/1/addEmail")
                         .param("label", "test")
                         .param("wert", "")
@@ -137,13 +137,13 @@ class AdminControllerTest {
     @WithMockOAuth2User(roles = {"ADMIN"})
     @DisplayName("post Kontakt hinzufügen funktioniert nicht bei fehlender Email")
     void post_addKontakt_BackEnd_keinWert() throws Exception {
-        Profil profil = mock(Profil.class);
-        when(editor.get(any())).thenReturn(profil);
+        Profil profil = new Profil(1, "test");
+        when(editor.get(anyLong())).thenReturn(profil);
         mockMvc.perform(post("/admin/profilEdit/1/addEmail")
                 .param("label", "test")
                 .param("wert", "")
                 .with(csrf()));
-        verify(editor, never()).addEmail(any(), any(), any());
+        verify(editor, never()).addEmail(anyLong(), any(), any());
     }
 
     @Test
@@ -151,7 +151,7 @@ class AdminControllerTest {
     @DisplayName("post Kontakt hinzufügen funktioniert nicht bei falscher Email")
     void post_addKontakt_keineEmail() throws Exception {
         Profil profil = mock(Profil.class);
-        when(editor.get(any())).thenReturn(profil);
+        when(editor.get(anyLong())).thenReturn(profil);
         mockMvc.perform(post("/admin/profilEdit/1/addEmail")
                         .param("label", "test")
                         .param("wert", "test")
@@ -164,11 +164,11 @@ class AdminControllerTest {
     @DisplayName("post Kontakt hinzufügen funktioniert nicht bei falscher Email")
     void post_addKontakt_BackEnd_keineEmail() throws Exception {
         Profil profil = mock(Profil.class);
-        when(editor.get(any())).thenReturn(profil);
+        when(editor.get(anyLong())).thenReturn(profil);
         mockMvc.perform(post("/admin/profilEdit/1/addEmail")
                 .param("label", "test")
                 .param("wert", "test")
                 .with(csrf()));
-        verify(editor, never()).addEmail(any(), any(), any());
+        verify(editor, never()).addEmail(anyLong(), any(), any());
     }
 }

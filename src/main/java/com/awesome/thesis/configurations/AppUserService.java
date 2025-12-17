@@ -31,11 +31,11 @@ public class AppUserService implements OAuth2UserService<OAuth2UserRequest, OAut
         OAuth2User originalUser = defaultService.loadUser(userRequest);
         Set<GrantedAuthority> authorities = new HashSet<>(originalUser.getAuthorities());
 
-        Integer id = originalUser.getAttribute("id");
+        Long id = originalUser.getAttribute("id");
         if (ids.contains(id)) {
             authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         }
-        if (editor.contains(id.toString())) {
+        if (editor.contains(id)) {
             authorities.add(new SimpleGrantedAuthority("ROLE_BETREUENDE"));
         }
         return new DefaultOAuth2User(authorities, originalUser.getAttributes(), "id");

@@ -15,6 +15,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -35,7 +36,7 @@ class BetreuendeControllerTest {
     @WithMockOAuth2User(roles = {"BETREUENDE"}, id=1)
     @DisplayName("Ein Nutzer ohne Betreuende rechte kann kein get aufrufen")
     void get_betreuendeProfil() throws Exception {
-        when(editor.get(any())).thenReturn(new Profil("",""));
+        when(editor.get(anyLong())).thenReturn(new Profil(1,""));
         mockMvc.perform(get("/betreuende/profil"))
                 .andExpect(status().isOk());
     }
@@ -52,9 +53,9 @@ class BetreuendeControllerTest {
     @WithMockOAuth2User(roles = {"BETREUENDE"}, id=1)
     @DisplayName("Das passende Nutzer Profil wird geladen")
     void get_betreuendeProfil_backEnd() throws Exception {
-        when(editor.get(any())).thenReturn(new Profil("",""));
+        when(editor.get(anyLong())).thenReturn(new Profil(1,""));
         mockMvc.perform(get("/betreuende/profil"))
                 .andExpect(view().name("betreuendeProfil"));
-        verify(editor).get(String.valueOf(1));
+        verify(editor).get(1);
     }
 }
