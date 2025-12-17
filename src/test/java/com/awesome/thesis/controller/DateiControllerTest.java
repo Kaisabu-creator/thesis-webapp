@@ -5,12 +5,14 @@ import com.awesome.thesis.configurations.MethodSecurityConfig;
 import com.awesome.thesis.configurations.SecurityConfig;
 import com.awesome.thesis.helper.WithMockOAuth2User;
 import com.awesome.thesis.logic.application.service.files.DateiTypPruefer;
+import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -25,6 +27,9 @@ class DateiControllerTest {
 
     @Autowired
     MockMvc mockMvc;
+
+    @MockitoBean
+    ProfilEditor editor;
 
     @Test
     @WithMockOAuth2User()

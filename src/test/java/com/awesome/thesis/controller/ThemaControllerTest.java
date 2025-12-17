@@ -4,6 +4,7 @@ import com.awesome.thesis.configurations.AppUserService;
 import com.awesome.thesis.configurations.MethodSecurityConfig;
 import com.awesome.thesis.configurations.SecurityConfig;
 import com.awesome.thesis.helper.WithMockOAuth2User;
+import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
 import org.junit.jupiter.api.DisplayName;
@@ -31,6 +32,9 @@ public class ThemaControllerTest {
 
     @MockitoBean
     ThemaEditor themaEditor;
+
+    @MockitoBean
+    ProfilEditor editor;
 
     @Test
     @WithMockOAuth2User()

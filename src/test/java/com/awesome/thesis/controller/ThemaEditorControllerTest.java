@@ -5,6 +5,7 @@ import com.awesome.thesis.configurations.MethodSecurityConfig;
 import com.awesome.thesis.configurations.SecurityConfig;
 import com.awesome.thesis.controller.admin.ThemaEditorController;
 import com.awesome.thesis.helper.WithMockOAuth2User;
+import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
 import com.awesome.thesis.logic.domain.model.links.Link;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
@@ -31,14 +32,17 @@ public class ThemaEditorControllerTest {
     MockMvc mvc;
 
     @MockitoBean
-    ThemaEditor editor;
+    ThemaEditor themaEditor;
+
+    @MockitoBean
+    ProfilEditor editor;
 
     @Test
     @DisplayName("Tests that admin/themaEdit is reachable")
     @WithMockOAuth2User()
     void test_1() throws Exception {
         Thema thema = mock(Thema.class);
-        when(editor.getThema(any())).thenReturn(thema);
+        when(themaEditor.getThema(any())).thenReturn(thema);
         mvc.perform(get("/themaEdit/propra"))
                 .andExpect(status().isOk());
     }
@@ -48,7 +52,7 @@ public class ThemaEditorControllerTest {
     @WithMockOAuth2User()
     void test_2() throws Exception {
         Thema thema = mock(Thema.class);
-            when(editor.getThema(any())).thenReturn(thema);
+            when(themaEditor.getThema(any())).thenReturn(thema);
         mvc.perform(get("/themaEdit/propra"))
                     .andExpect(model().attribute("thema", thema))
                     .andExpect(view().name("admin/themaEdit"))
@@ -60,10 +64,10 @@ public class ThemaEditorControllerTest {
     @WithMockOAuth2User()
     void test_3() throws Exception {
         Thema thema = mock(Thema.class);
-        when(editor.getThema(any())).thenReturn(thema);
+        when(themaEditor.getThema(any())).thenReturn(thema);
         mvc.perform(post("/themaEdit/propra/editInfo").param("titel", "Changed Titel")
                 .with(csrf()));
-        verify(editor).editTitel("propra", "Changed Titel");
+        verify(themaEditor).editTitel("propra", "Changed Titel");
     }
 
     @Test
@@ -71,10 +75,10 @@ public class ThemaEditorControllerTest {
     @WithMockOAuth2User()
     void test_4() throws Exception {
         Thema thema = mock(Thema.class);
-        when(editor.getThema(any())).thenReturn(thema);
+        when(themaEditor.getThema(any())).thenReturn(thema);
         mvc.perform(post("/themaEdit/propra/editInfo").param("titel", "egal").param("beschreibung", "egal")
                 .with(csrf()));
-        verify(editor).editBeschreibung("propra", "egal");
+        verify(themaEditor).editBeschreibung("propra", "egal");
     }
 
     @Test
@@ -82,10 +86,10 @@ public class ThemaEditorControllerTest {
     @WithMockOAuth2User()
     void test_5() throws Exception {
         Thema thema = mock(Thema.class);
-        when(editor.getThema(any())).thenReturn(thema);
+        when(themaEditor.getThema(any())).thenReturn(thema);
         mvc.perform(post("/themaEdit/propra/editLink").param("url", "https://www.google.com/").param("urlBeschreibung", "egal")
                 .with(csrf()));
-        verify(editor).addLink("propra", "https://www.google.com/", "egal");
+        verify(themaEditor).addLink("propra", "https://www.google.com/", "egal");
     }
 
     @Test
@@ -93,13 +97,13 @@ public class ThemaEditorControllerTest {
     @WithMockOAuth2User()
     void test_6() throws Exception{
         Thema thema = mock(Thema.class);
-        when(editor.getThema(any())).thenReturn(thema);
+        when(themaEditor.getThema(any())).thenReturn(thema);
         mvc.perform(post("/themaEdit/propra/deleteLink")
                         .param("url", "https://www.google.com/")
                         .param("text","Google als Beispiel" )
                         .with(csrf()))
                 .andExpect(status().is3xxRedirection());
-        verify(editor).removeLink("propra", new Link("https://www.google.com/", "Google als Beispiel"));
+        verify(themaEditor).removeLink("propra", new Link("https://www.google.com/", "Google als Beispiel"));
 
     }
 
@@ -108,10 +112,10 @@ public class ThemaEditorControllerTest {
     @WithMockOAuth2User()
     void test_7() throws Exception {
         Thema thema = mock(Thema.class);
-        when(editor.getThema(any())).thenReturn(thema);
+        when(themaEditor.getThema(any())).thenReturn(thema);
         mvc.perform(post("/themaEdit/propra/editInfo").param("titel", "").param("beschreibung", "egal")
                 .with(csrf()));
-        verify(editor, never()).editTitel("propra", "");
+        verify(themaEditor, never()).editTitel("propra", "");
     }
 
     @Test
@@ -119,10 +123,10 @@ public class ThemaEditorControllerTest {
     @WithMockOAuth2User()
     void test_8() throws Exception {
         Thema thema = mock(Thema.class);
-        when(editor.getThema(any())).thenReturn(thema);
+        when(themaEditor.getThema(any())).thenReturn(thema);
         mvc.perform(post("/themaEdit/propra/editLink").param("url", "").param("urlBeschreibung", "egal")
                 .with(csrf()));
-        verify(editor, never()).addLink("propra", "", "egal");
+        verify(themaEditor, never()).addLink("propra", "", "egal");
     }
 
 }
