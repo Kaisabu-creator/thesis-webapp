@@ -33,10 +33,15 @@
     </div>
 </nav>
 
-<div class="container-fluid" th:object="${profil}">
-    <h1 th:text="*{name}">ProfilName</h1>
-    <div class="row">
-        <div class="col-md-6" th:each="kontakt: *{kontakte}">
+<div class="container-fluid py-3" th:object="${profil}">
+    <div class="row justify-content-center">
+        <div class="col-md-4 text-center mb-4">
+            <h1 class="display-4 fw-bold" th:text="*{name}">Profil Name</h1>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <h2 class="display-6" th:if="*{!kontakte.isEmpty()}">Kontakt</h2>
+        <div class="col-md-12" th:each="kontakt: *{kontakte}">
             <p>
                 <span th:text="${kontakt.label}">ProfilEmail:</span>
                 <a th:href="${kontakt.href}" th:text="${kontakt.wert}" href="muster@email.com">muster@email.com</a>
