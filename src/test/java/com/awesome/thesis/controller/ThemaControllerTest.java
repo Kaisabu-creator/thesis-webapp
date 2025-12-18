@@ -42,7 +42,7 @@ public class ThemaControllerTest {
     void test_1() throws Exception{
         Thema thema = mock(Thema.class);
         when(themaEditor.getThema(any())).thenReturn(thema);
-        mvc.perform(get("/themenListe"))
+        mvc.perform(get("/themen"))
                 .andExpect(status().isOk());
     }
 
