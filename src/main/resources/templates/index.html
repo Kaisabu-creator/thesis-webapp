@@ -24,7 +24,9 @@
                     <a class="nav-link active" href="#">Matching</a>
                 </li>
             </ul>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Anmelden</button>
+            <div th:object="${navButton}">
+            <a class="btn btn-primary" th:href="*{url}" th:text="*{label}">Anmelden</a>
+            </div>
         </div>
     </div>
 </nav>
