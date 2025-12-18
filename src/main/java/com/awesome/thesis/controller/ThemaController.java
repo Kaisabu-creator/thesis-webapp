@@ -16,7 +16,7 @@ public class ThemaController {
     @GetMapping("/themenListe")
     public String themenListe(Model model) {
         model.addAttribute("themenListe", editor.getAll());
-        return "themen";
+        return "themen/themen";
     }
 
     @GetMapping("/thema/{id}")
