@@ -1,6 +1,5 @@
 package com.awesome.thesis.controller.advice;
 
-import com.awesome.thesis.controller.StartController;
 import com.awesome.thesis.controller.dto.NavbarButtonDTO;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
