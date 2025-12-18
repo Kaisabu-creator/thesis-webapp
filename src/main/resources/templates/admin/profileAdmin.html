@@ -33,39 +33,48 @@
     </div>
 </nav>
 
-<div class="container-fluid">
-    <h1>Admin Profil</h1>
-    <div class="row">
-        <div class="col-md-12">
-            <h2>Neue Betreuende Person</h2>
-            <form method="POST" th:action="@{/admin}" th:object="${profil}">
-                <div class="form-group">
-                    <label for="githubId">Github ID</label>
-                    <input type="number" class="form-control" id="githubId" th:field="*{id}">
-                    <small class="text-danger" th:if="${#fields.hasErrors('id')}" th:errors="*{id}">Wert Error</small>
-                </div>
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" th:field="*{name}">
-                    <small class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Wert Error</small>
-                </div>
-                <button type="submit" class="btn btn-primary">Hinzufügen</button>
-            </form>
+<div class="container-fluid py-3">
+    <div class="row justify-content-center">
+        <div class="col-md-4 text-center mb-4">
+            <h1 class="display-4 fw-bold">Admin</h1>
         </div>
-        <div class="col-md-12">
-            <h2>Betreuende</h2>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="display-6">Neue Betreuende Person</h2>
+                </div>
+                <div class="card-body">
+                    <form method="POST" th:action="@{/admin}" th:object="${profil}">
+                        <div class="form-group">
+                            <label for="githubId">Github ID</label>
+                            <input type="number" class="form-control" id="githubId" th:field="*{id}">
+                            <small class="text-danger" th:if="${#fields.hasErrors('id')}" th:errors="*{id}">Wert Error</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" th:field="*{name}">
+                            <small class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Wert Error</small>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Hinzufügen</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
             <table class="table">
                 <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                    </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="profil : ${profile}">
-                        <td th:text="*{profil.id}">1</td>
-                        <td th:text="*{profil.name}">John</td>
-                    </tr>
+                <tr th:each="profil : ${profile}">
+                    <td th:text="*{profil.id}">1</td>
+                    <td th:text="*{profil.name}">John</td>
+                </tr>
                 </tbody>
             </table>
         </div>
