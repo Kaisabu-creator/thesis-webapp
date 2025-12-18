@@ -10,7 +10,8 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">Thesis is coming!</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
+                aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
@@ -26,10 +27,21 @@
                 </li>
             </ul>
             <div th:object="${navButton}">
-            <a class="btn btn-primary" th:href="*{url}" th:text="*{label}">Anmelden</a>
+                <a class="btn btn-primary" th:href="*{url}" th:text="*{label}">Anmelden</a>
             </div>
         </div>
     </div>
 </nav>
+
+<div class="container-fluid bg-light py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 text-center">
+            <h1 class="display-4 fw-bold">Das Portal für Deine Abschlussarbeit</h1>
+            <p class="lead">Diese Plattform gibt Dir eine effiziente Möglichkeit, eine passende Betreuung und
+                möglicherweise sogar ein passendes Thema für Deine Abschlussarbeit zu finden. Ziel ist es, sowohl
+                Studierende als auch Betreuende zu entlasten.</p>
+        </div>
+    </div>
+</div>
 </body>
 </html>
