@@ -1,10 +1,28 @@
 package com.awesome.thesis.controller;
 
+import com.awesome.thesis.controller.dto.ProfilFooterDTO;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Controller
 public class StartController {
+    @ModelAttribute("profilBanner")
+    public ProfilFooterDTO getBanner(Authentication token) {
+        if(!(token instanceof OAuth2AuthenticationToken auth)) {
+            return new ProfilFooterDTO("Fange jetzt an!", "Melde Dich an und finde eine/n Betreuer:in und ein Thema für deine Abschlussarbeit!", "/login", "Anmelden");
+        }
+        boolean isBetreuende = auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_BETREUENDE"));
+        String name = auth.getPrincipal().getAttribute("login");
+        String greeting = "Hallo " + name + "!";
+        if (isBetreuende) {
+            return new ProfilFooterDTO(greeting, "Bearbeite Dein Profil, füge Themen hinzu und hilf Studierenden ihre Abschlussarbeit zu finden!", "/betreuende/profilEdit", "Profil bearbeiten");
+        }
+        return new ProfilFooterDTO(greeting, "Füge Deine Interessen und bestandene Module hinzu und finde ein/n Betreuer:in und ein Thema für deine Abschlussarbeit!", "#", "Profil bearbeiten");
+    }
+
     @GetMapping("/")
     public String home() {
         return "index";

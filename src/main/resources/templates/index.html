@@ -78,9 +78,9 @@
 
 <div class="container-fluid py-5 bg-primary mt-auto">
     <div class="row justify-content-center">
-        <div class="col-lg-8 text-center text-white" th:object="${navButton}">
-            <h2 class="display-5">Jetzt Anfangen</h2>
-            <p>Melde Dich an und finde eine/n Betreuer:in und ein Thema für deine Abschlussarbeit!</p>
+        <div class="col-lg-8 text-center text-white" th:object="${profilBanner}">
+            <h2 class="display-5" th:text="*{greeting}">Jetzt Anfangen</h2>
+            <p th:text="*{description}">Melde Dich an und finde eine/n Betreuer:in und ein Thema für deine Abschlussarbeit!</p>
             <a class="btn btn-lg btn-light" th:href="*{url}" th:text="*{label}">Anmelden</a>
         </div>
     </div>
