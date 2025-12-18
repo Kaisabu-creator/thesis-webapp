@@ -55,7 +55,7 @@ class BetreuendeControllerTest {
     void get_betreuendeProfil_backEnd() throws Exception {
         when(editor.get(anyLong())).thenReturn(new Profil(1,""));
         mockMvc.perform(get("/betreuende/profil"))
-                .andExpect(view().name("betreuendeProfil"));
+                .andExpect(view().name("betreuende/betreuendeProfil"));
         verify(editor).get(1);
     }
 }

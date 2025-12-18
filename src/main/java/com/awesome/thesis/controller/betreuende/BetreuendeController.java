@@ -1,7 +1,6 @@
 package com.awesome.thesis.controller.betreuende;
 
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
-import com.awesome.thesis.logic.domain.model.profil.Profil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
@@ -21,6 +20,6 @@ public class BetreuendeController {
     public String getProfil(Model model, OAuth2AuthenticationToken auth) {
         Integer id = auth.getPrincipal().getAttribute("id");
         model.addAttribute("profil", editor.get(id));
-        return "betreuendeProfil";
+        return "betreuende/betreuendeProfil";
     }
 }
