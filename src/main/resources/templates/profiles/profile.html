@@ -17,13 +17,13 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" href="/profile">Betreuende</a>
+                    <a class="nav-link active" href="/betreuende">Betreuende</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="/themen">Themen</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">Matching</a>
+                    <a class="nav-link active" href="/matching">Matching</a>
                 </li>
             </ul>
             <div th:object="${navButton}">
@@ -45,7 +45,7 @@
                 <div class="card-body">
                     <h2 class="card-title fw-bold" th:text="${profil.name}">Profil Name</h2>
                     <p class="card-text"></p>
-                    <a class="stretched-link" th:href="@{/profil/{id}(id=${profil.id})}"></a>
+                    <a class="stretched-link" th:href="@{/betreuende/{id}(id=${profil.id})}"></a>
                 </div>
             </div>
         </div>

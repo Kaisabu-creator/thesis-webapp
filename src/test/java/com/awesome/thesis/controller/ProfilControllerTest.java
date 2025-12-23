@@ -35,11 +35,11 @@ class ProfilControllerTest {
 
     @Test
     @WithMockOAuth2User()
-    @DisplayName("get auf /profil/{id}")
+    @DisplayName("get auf /betreuende/{id}")
     void test_getProfilId() throws Exception {
         Profil profil = mock(Profil.class);
         when(editor.get(anyLong())).thenReturn(profil);
-        mockMvc.perform(get("/profil/1"))
+        mockMvc.perform(get("/betreuende/1"))
                 .andExpect(model().attribute("profil", profil))
                 .andExpect(view().name("profiles/profil"))
                 .andExpect(status().isOk());
@@ -51,7 +51,7 @@ class ProfilControllerTest {
     void test_getProfile() throws Exception {
         List<Profil> profile = new ArrayList<>();
         when(editor.getAll()).thenReturn(profile);
-        mockMvc.perform(get("/profile"))
+        mockMvc.perform(get("/betreuende"))
                 .andExpect(model().attribute("profile", profile))
                 .andExpect(status().isOk())
                 .andExpect(view().name("profiles/profile"));
