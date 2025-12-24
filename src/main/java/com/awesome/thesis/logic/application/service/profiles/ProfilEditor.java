@@ -2,6 +2,8 @@ package com.awesome.thesis.logic.application.service.profiles;
 
 import com.awesome.thesis.logic.domain.model.profil.Kontakt;
 import com.awesome.thesis.logic.domain.model.profil.Profil;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +19,12 @@ public class ProfilEditor {
     public void addEmail(long id, String label, String wert) {
         Profil profil = get(id);
         profil.addEmail(label, wert);
+        profile.update(id, profil);
+    }
+
+    public void addTel(long id, String label, String wert) {
+        Profil profil = get(id);
+        profil.addTel(label, wert);
         profile.update(id, profil);
     }
 

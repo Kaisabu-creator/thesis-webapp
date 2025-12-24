@@ -193,17 +193,17 @@ class BetreuendeProfilEditControllerTest {
                 .andExpect(status().is3xxRedirection());
     }
 
-//    @Test
-//    @WithMockOAuth2User(roles = {"BETREUENDE"}, id=1)
-//    @DisplayName("post Tel hinzufügen funktioniert")
-//    void post_addTel_BackEnd() throws Exception {
-//        mockMvc.perform(post("/betreuende/profilEdit/addKontakt")
-//                .param("type", "tel")
-//                .param("label", "test")
-//                .param("wert", "+4921159817524")
-//                .with(csrf()));
-//        verify(editor).addEmail(1, "test", "+4921159817524");
-//    }
+    @Test
+    @WithMockOAuth2User(roles = {"BETREUENDE"}, id=1)
+    @DisplayName("post Tel hinzufügen funktioniert")
+    void post_addTel_BackEnd() throws Exception {
+        mockMvc.perform(post("/betreuende/profilEdit/addKontakt")
+                .param("type", "tel")
+                .param("label", "test")
+                .param("wert", "+4921159817524")
+                .with(csrf()));
+        verify(editor).addTel(1, "test", "+4921159817524");
+    }
 
     @Test
     @WithMockOAuth2User(roles = {"BETREUENDE"}, id=1)

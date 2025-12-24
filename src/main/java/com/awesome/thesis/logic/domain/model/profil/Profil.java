@@ -45,4 +45,9 @@ public class Profil {
         Kontakt kontakt = new Kontakt(label, wert, Kontaktart.EMAIL);
         kontakte.add(kontakt);
     }
+
+    public void addTel(String label, String wert) {
+        Kontakt kontakt = new Kontakt(label, wert, Kontaktart.TEL);
+        kontakte.add(kontakt);
+    }
 }

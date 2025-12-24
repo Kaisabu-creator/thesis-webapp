@@ -60,6 +60,7 @@ public class BetreuendeProfilEditController {
             model.addAttribute("profil", editor.get(id));
             return "betreuende/profilEdit";
         }
+        editor.addTel(id, tel.label(), tel.wert());
         return "redirect:/betreuende/profilEdit";
     }
 }
