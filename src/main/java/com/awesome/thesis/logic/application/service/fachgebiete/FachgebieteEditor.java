@@ -1,7 +1,6 @@
 package com.awesome.thesis.logic.application.service.fachgebiete;
 
-import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.awesome.thesis.logic.application.service.profiles.IProfileRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -9,12 +8,11 @@ import java.util.Set;
 @Service
 public class FachgebieteEditor {
     private final IFachgebieteRepo repo;
+    private final IProfileRepo profileRepo;
 
-    @Autowired
-    ProfilEditor profilEditor;
-
-    public FachgebieteEditor(IFachgebieteRepo repo) {
+    public FachgebieteEditor(IFachgebieteRepo repo, IProfileRepo profileRepo) {
         this.repo = repo;
+        this.profileRepo = profileRepo;
     }
 
     public void add(String fachgebiet) {
@@ -26,7 +24,7 @@ public class FachgebieteEditor {
     }
 
     public void remove(String fachgebiet) {
-        boolean unused = profilEditor.getAll().stream()
+        boolean unused = profileRepo.getAll().stream()
                 .noneMatch(p -> p.hasFachgebiet(fachgebiet));
 
         if (unused) {
