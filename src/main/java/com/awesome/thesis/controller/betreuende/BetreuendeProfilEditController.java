@@ -1,6 +1,7 @@
 package com.awesome.thesis.controller.betreuende;
 
-import com.awesome.thesis.controller.dto.EmailKontaktDTO;
+import com.awesome.thesis.controller.dto.kontakt.EmailKontaktDTO;
+import com.awesome.thesis.controller.dto.kontakt.TelKontaktDTO;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import com.awesome.thesis.logic.domain.model.profil.Kontakt;
 import jakarta.validation.Valid;
@@ -23,7 +24,7 @@ public class BetreuendeProfilEditController {
     public String profilEdit(Model model, OAuth2AuthenticationToken auth) {
         Integer id = auth.getPrincipal().getAttribute("id");
         model.addAttribute("profil", editor.get(id));
-        model.addAttribute("email", new EmailKontaktDTO("", ""));
+        model.addAttribute("kontakt", new EmailKontaktDTO("email","", ""));
         return "betreuende/profilEdit";
     }
 
@@ -41,14 +42,24 @@ public class BetreuendeProfilEditController {
         return "redirect:/betreuende/profilEdit";
     }
 
-    @PostMapping("profilEdit/addEmail")
-    public String addEmail(@Valid @ModelAttribute("email") EmailKontaktDTO email, BindingResult result, Model model, OAuth2AuthenticationToken auth) {
+    @PostMapping(value="profilEdit/addKontakt", params="type=email")
+    public String addEmail(@Valid @ModelAttribute("kontakt") EmailKontaktDTO email, BindingResult result, Model model, OAuth2AuthenticationToken auth) {
         Integer id = auth.getPrincipal().getAttribute("id");
         if  (result.hasErrors()) {
             model.addAttribute("profil", editor.get(id));
             return "betreuende/profilEdit";
         }
         editor.addEmail(id, email.label(), email.wert());
+        return "redirect:/betreuende/profilEdit";
+    }
+
+    @PostMapping(value="profilEdit/addKontakt", params="type=tel")
+    public String addTel(@Valid @ModelAttribute("kontakt") TelKontaktDTO tel, BindingResult result, Model model, OAuth2AuthenticationToken auth) {
+        Integer id = auth.getPrincipal().getAttribute("id");
+        if  (result.hasErrors()) {
+            model.addAttribute("profil", editor.get(id));
+            return "betreuende/profilEdit";
+        }
         return "redirect:/betreuende/profilEdit";
     }
 }
