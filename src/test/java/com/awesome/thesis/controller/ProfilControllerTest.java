@@ -4,6 +4,7 @@ import com.awesome.thesis.configurations.AppUserService;
 import com.awesome.thesis.configurations.MethodSecurityConfig;
 import com.awesome.thesis.configurations.SecurityConfig;
 import com.awesome.thesis.helper.WithMockOAuth2User;
+import com.awesome.thesis.logic.application.service.fachgebiete.FachgebieteEditor;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import com.awesome.thesis.logic.domain.model.profil.Profil;
 import org.junit.jupiter.api.DisplayName;
@@ -31,14 +32,17 @@ class ProfilControllerTest {
     MockMvc mockMvc;
 
     @MockitoBean
-    ProfilEditor editor;
+    ProfilEditor profilEditor;
+
+    @MockitoBean
+    FachgebieteEditor fachgebieteEditor;
 
     @Test
     @WithMockOAuth2User()
     @DisplayName("get auf /betreuende/{id}")
     void test_getProfilId() throws Exception {
         Profil profil = mock(Profil.class);
-        when(editor.get(anyLong())).thenReturn(profil);
+        when(profilEditor.get(anyLong())).thenReturn(profil);
         mockMvc.perform(get("/betreuende/1"))
                 .andExpect(model().attribute("profil", profil))
                 .andExpect(view().name("profiles/profil"))
@@ -50,7 +54,7 @@ class ProfilControllerTest {
     @DisplayName("get auf /profile")
     void test_getProfile() throws Exception {
         List<Profil> profile = new ArrayList<>();
-        when(editor.getAll()).thenReturn(profile);
+        when(profilEditor.getAll()).thenReturn(profile);
         mockMvc.perform(get("/betreuende"))
                 .andExpect(model().attribute("profile", profile))
                 .andExpect(status().isOk())

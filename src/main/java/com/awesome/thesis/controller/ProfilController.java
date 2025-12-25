@@ -8,6 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Set;
 
 @Controller
 public class ProfilController {
@@ -18,9 +21,10 @@ public class ProfilController {
     FachgebieteEditor fachgebieteEditor;
 
     @GetMapping("/betreuende")
-    public String getProfil(Model model) {
+    public String getProfil(@RequestParam(required = false) Set<String> interessen, Model model) {
+        model.addAttribute("interessen", interessen);
         model.addAttribute("fachgebiete", fachgebieteEditor.getAll());
-        model.addAttribute("profile", profilEditor.getAll());
+        model.addAttribute("profile", profilEditor.getFitting(interessen));
         return "profiles/profile";
     }
 
