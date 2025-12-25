@@ -40,17 +40,24 @@
         </div>
     </div>
     <div class="row justify-content-center">
-        <div class="col-md-12 text-center mb-4">
-            <h2 class="display-6">Filtern</h2>
-            <form>
-                <div class="form-check" th:each="fachgebiet : ${fachgebiete}">
-                    <input class="form-check-input" type="checkbox" name="interessen" id="fachgebiet" value="" th:value="${fachgebiet}" th:id="${fachgebiet}">
-                    <label class="form-check-label" for="fachgebiet" th:text="${fachgebiet}" th:for="${fachgebiet}">
-                        Fachgebiete
-                    </label>
+        <div class="col-md-8 text-center mb-4">
+            <div class="card h-100 bg-light">
+                <div class="card-body">
+                    <h2 class="display-6">Filtern</h2>
+                    <form>
+                        <div class="form-check" th:each="fachgebiet : ${fachgebiete}">
+                            <input class="form-check-input" type="checkbox" name="interessen" id="fachgebiet" value=""
+                                   th:value="${fachgebiet}" th:id="${fachgebiet}"
+                                   th:checked="${interessen != null and interessen.contains(fachgebiet)}"/>
+                            <label class="form-check-label" for="fachgebiet" th:text="${fachgebiet}"
+                                   th:for="${fachgebiet}">
+                                Fachgebiete
+                            </label>
+                        </div>
+                        <button class="btn btn-primary">Filtern</button>
+                    </form>
                 </div>
-                <button class="btn btn-primary">Filtern</button>
-            </form>
+            </div>
         </div>
     </div>
     <div class="row justify-content-center">
@@ -58,7 +65,8 @@
             <div class="card h-100 bg-light">
                 <div class="card-body">
                     <h2 class="card-title fw-bold" th:text="${profil.name}">Profil Name</h2>
-                    <p class="card-text" th:if="${!profil.fachgebiete.isEmpty()}">Fachgebiete: <span th:text="${profil.fachgebieteString()}"></span></p>
+                    <p class="card-text" th:if="${!profil.fachgebiete.isEmpty()}">Fachgebiete: <span
+                            th:text="${profil.fachgebieteString()}"></span></p>
                     <a class="stretched-link" th:href="@{/betreuende/{id}(id=${profil.id})}"></a>
                 </div>
             </div>
