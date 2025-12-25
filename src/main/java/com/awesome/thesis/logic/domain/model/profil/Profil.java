@@ -57,6 +57,13 @@ public class Profil {
         return fachgebiete;
     }
 
+    public String fachgebieteString() {
+        if (fachgebiete.isEmpty()) {
+            return "";
+        }
+        return String.join(", ", fachgebiete);
+    }
+
     public void addFachgebiet(String fachgebiet) {
         fachgebiete.add(fachgebiet);
     }

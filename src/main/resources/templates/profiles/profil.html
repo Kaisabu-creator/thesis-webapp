@@ -39,13 +39,19 @@
             <h1 class="display-4 fw-bold" th:text="*{name}">Profil Name</h1>
         </div>
     </div>
-    <div class="row justify-content-center">
-        <h2 class="display-6" th:if="*{!kontakte.isEmpty()}">Kontakt</h2>
+    <div class="row justify-content-center" th:if="*{!kontakte.isEmpty()}">
+        <h2 class="display-6">Kontakt</h2>
         <div class="col-md-12" th:each="kontakt: *{kontakte}">
             <p>
                 <span th:text="${kontakt.label}">ProfilEmail:</span>
                 <a th:href="${kontakt.href}" th:text="${kontakt.wert}" href="muster@email.com">muster@email.com</a>
             </p>
+        </div>
+    </div>
+    <div class="row justify-content-center" th:if="*{!fachgebiete.isEmpty()}">
+        <h2 class="display-6">Fachgebiete</h2>
+        <div class="col-md-12" th:each="fachgebiet: *{fachgebiete}">
+            <p th:text="${fachgebiet}">Fachgebiet</p>
         </div>
     </div>
     <div class="row">

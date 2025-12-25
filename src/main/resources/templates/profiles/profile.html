@@ -44,7 +44,7 @@
             <div class="card h-100 bg-light">
                 <div class="card-body">
                     <h2 class="card-title fw-bold" th:text="${profil.name}">Profil Name</h2>
-                    <p class="card-text"></p>
+                    <p class="card-text" th:if="${!profil.fachgebiete.isEmpty()}">Fachgebiete: <span th:text="${profil.fachgebieteString()}"></span></p>
                     <a class="stretched-link" th:href="@{/betreuende/{id}(id=${profil.id})}"></a>
                 </div>
             </div>
