@@ -12,9 +12,11 @@ public class Thema {
     private String titel;
     private String beschreibung;
     private final List<Link> links;
+    private final long profilID;
 
-    public Thema(String titel) {
+    public Thema(String titel, long id) {
         this.titel = titel;
+        this.profilID = id;
         this.links = new ArrayList<>();
     }
 
@@ -58,6 +60,10 @@ public class Thema {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public long getProfilID() {
+        return profilID;
     }
 
     @Override
