@@ -7,6 +7,7 @@
     <script src="/bootstrap.min.js"></script>
 </head>
 <body>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-primary-subtle">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">Thesis is coming!</a>
@@ -91,30 +92,6 @@
             </div>
         </div>
         <div class="col-md-4 mb-4">
-            <div class="mb-4">
-                <table class="table table-striped">
-                    <tbody>
-                    <tr th:each="kontakt : *{kontakte}">
-                        <td class="w-50">
-                            <p>
-                                <span th:text="${kontakt.label}">ProfilEmail:</span>
-                                <a th:href="${kontakt.href}" th:text="${kontakt.wert}" href="muster@email.com">muster@email.com</a>
-                            </p>
-                        </td>
-                        <td class="w-50">
-                            <form method="post" th:action="@{/betreuende/profilEdit/deleteKontakt}">
-                                <input type="hidden" name="label" th:value="${kontakt.label}">
-                                <input type="hidden" name="wert" th:value="${kontakt.wert}">
-                                <input type="hidden" name="kontaktart" th:value="${kontakt.kontaktart}">
-                                <button type="submit" class="btn btn-primary">Kontakt löschen</button>
-                            </form>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="col-md-4 mb-4">
             <div class="card h-100 bg-light">
                 <div class="card-body">
                     <h2 class="card-title fw-bold">Fachgebiet hinzufügen</h2>
@@ -126,25 +103,6 @@
                         <button type="submit" class="btn btn-primary">Neues Fachgebiet hinzufügen</button>
                     </form>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-4 mb-4">
-            <div class="mb-4">
-                <table class="table table-striped">
-                    <tbody>
-                    <tr th:each="fachgebiet : *{fachgebiete}">
-                        <td class="w-50">
-                            <p th:text="${fachgebiet}">Fachgebiet</p>
-                        </td>
-                        <td class="w-50">
-                            <form method="post" th:action="@{/betreuende/profilEdit/removeFachgebiet}">
-                                <input type="hidden" name="fachgebiet" th:value="${fachgebiet}">
-                                <button type="submit" class="btn btn-primary">Fachgebiet entfernen</button>
-                            </form>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
             </div>
         </div>
         <div class="col-md-4 mb-4">
@@ -173,6 +131,57 @@
             </div>
         </div>
         <div class="col-md-4 mb-4">
+            <div class="card h-100 bg-light">
+                <div class="card-body">
+                    <h2 class="card-title fw-bold">Thema hinzufügen</h2>
+                    <a class="btn btn-primary" href="/thema/create">Neues Thema erstellen</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="mb-4">
+                <table class="table table-striped">
+                    <tbody>
+                    <tr th:each="kontakt : *{kontakte}">
+                        <td class="w-50">
+                            <p>
+                                <span th:text="${kontakt.label}">ProfilEmail:</span>
+                                <a th:href="${kontakt.href}" th:text="${kontakt.wert}" href="muster@email.com">muster@email.com</a>
+                            </p>
+                        </td>
+                        <td class="w-50">
+                            <form method="post" th:action="@{/betreuende/profilEdit/deleteKontakt}">
+                                <input type="hidden" name="label" th:value="${kontakt.label}">
+                                <input type="hidden" name="wert" th:value="${kontakt.wert}">
+                                <input type="hidden" name="kontaktart" th:value="${kontakt.kontaktart}">
+                                <button type="submit" class="btn btn-primary">Kontakt löschen</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="mb-4">
+                <table class="table table-striped">
+                    <tbody>
+                    <tr th:each="fachgebiet : *{fachgebiete}">
+                        <td class="w-50">
+                            <p th:text="${fachgebiet}">Fachgebiet</p>
+                        </td>
+                        <td class="w-50">
+                            <form method="post" th:action="@{/betreuende/profilEdit/removeFachgebiet}">
+                                <input type="hidden" name="fachgebiet" th:value="${fachgebiet}">
+                                <button type="submit" class="btn btn-primary">Fachgebiet entfernen</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
             <div class="mb-4">
                 <table class="table table-striped">
                     <tbody>
@@ -190,14 +199,6 @@
                         </td>
                     </tbody>
                 </table>
-            </div>
-        </div>
-        <div class="col-md-4 mb-4">
-            <div class="card h-100 bg-light">
-                <div class="card-body">
-                    <h2 class="card-title fw-bold">Thema hinzufügen</h2>
-                    <a class="btn btn-primary" href="/thema/create">Neues Thema erstellen</a>
-                </div>
             </div>
         </div>
     </div>
