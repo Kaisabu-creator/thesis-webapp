@@ -1,5 +1,6 @@
 package com.awesome.thesis.persistence.profiles;
 
+import com.awesome.thesis.logic.application.dto.ThemaDTO;
 import com.awesome.thesis.logic.domain.model.profil.Kontakt;
 import com.awesome.thesis.logic.domain.model.profil.Profil;
 import org.springframework.stereotype.Component;
@@ -14,6 +15,8 @@ class FakeDatabaseProfileImpl implements IDatabaseProfile {
     public FakeDatabaseProfileImpl() {
         Profil janik = new Profil(182077829,"Janik Daub");
         janik.addKontakt(new Kontakt("Email", "janik@mail.com", Kontaktart.EMAIL));
+        janik.addThema(new ThemaDTO("test", "BeispielThema"));
+        janik.addThema(new ThemaDTO("test2", "BeispielThema2"));
         update(182077829, janik);
         Profil ryota = new Profil(180645494, "Ryota Kariya");
         ryota.addKontakt(new Kontakt("Email", "ryota@mail.com", Kontaktart.EMAIL));

@@ -1,7 +1,7 @@
 package com.awesome.thesis.logic.application.service.profiles;
 
 import com.awesome.thesis.logic.application.service.fachgebiete.FachgebieteEditor;
-import com.awesome.thesis.logic.domain.model.ThemaDTO;
+import com.awesome.thesis.logic.application.dto.ThemaDTO;
 import com.awesome.thesis.logic.domain.model.links.Link;
 import com.awesome.thesis.logic.domain.model.profil.Kontakt;
 import com.awesome.thesis.logic.domain.model.profil.Profil;
