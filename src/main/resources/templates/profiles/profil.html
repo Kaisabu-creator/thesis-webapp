@@ -65,7 +65,7 @@
     <div class="row justify-content-center" th:if="*{!themen.isEmpty()}">
         <h2 class="display-6">Themen</h2>
         <ul class="ps-5" th:each="thema: *{themen}">
-            <li><a th:href="@{thema/{themaId}(themaId=${thema.id})}" th:text="${thema.name}"></a>
+            <li><a th:href="@{/thema/{themaId}(themaId=${thema.id})}" th:text="${thema.name}">Thema</a>
             </li>
         </ul>
     </div>
