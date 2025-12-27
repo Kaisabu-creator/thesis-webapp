@@ -15,8 +15,6 @@ class FakeDatabaseProfileImpl implements IDatabaseProfile {
     public FakeDatabaseProfileImpl() {
         Profil janik = new Profil(182077829,"Janik Daub");
         janik.addKontakt(new Kontakt("Email", "janik@mail.com", Kontaktart.EMAIL));
-        janik.addThema(new ThemaDTO("test", "BeispielThema"));
-        janik.addThema(new ThemaDTO("test2", "BeispielThema2"));
         update(182077829, janik);
         Profil ryota = new Profil(180645494, "Ryota Kariya");
         ryota.addKontakt(new Kontakt("Email", "ryota@mail.com", Kontaktart.EMAIL));
