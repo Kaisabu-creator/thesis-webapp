@@ -1,6 +1,7 @@
 package com.awesome.thesis.logic.domain.model.profil;
 
 import com.awesome.thesis.annotations.AggregateRoot;
+import com.awesome.thesis.logic.application.dto.DateiDTO;
 import com.awesome.thesis.logic.application.dto.ThemaDTO;
 import com.awesome.thesis.logic.domain.model.links.Link;
 
@@ -15,6 +16,7 @@ public class Profil {
     private final Set<String> fachgebiete;
     private final Set<Link> links;
     private final Set<ThemaDTO> themen;
+    private final Set<DateiDTO> dateien;
 
     public Profil(long id, String name) {
         this.id = id;
@@ -23,6 +25,7 @@ public class Profil {
         this.fachgebiete = new HashSet<>();
         this.links = new HashSet<>();
         this.themen = new HashSet<>();
+        this.dateien = new HashSet<>();
     }
 
     public String getName() {
@@ -86,6 +89,13 @@ public class Profil {
         return fachgebiete.containsAll(interessen);
     }
 
+    public long compRank(Set<String> interessen) {
+        long containing = interessen.stream()
+                .filter(fachgebiete::contains)
+                .count();
+        return 0;
+    }
+
     public Set<Link> getLinks() {
         return links;
     }
@@ -108,5 +118,17 @@ public class Profil {
 
     public void removeThema(ThemaDTO thema) {
         themen.remove(thema);
+    }
+
+    public void addDatei(DateiDTO datei) {
+        dateien.add(datei);
+    }
+
+    public void removeDatei(DateiDTO datei) {
+        dateien.remove(datei);
+    }
+
+    public Set<DateiDTO> getDateien() {
+        return dateien;
     }
 }
