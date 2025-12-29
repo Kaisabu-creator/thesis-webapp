@@ -220,7 +220,8 @@
                             </td>
                             <td class="text-end d-flex justify-content-end gap-2">
                                 <a th:href="@{/thema/{themaId}/edit(themaId=${thema.id})}" class="btn btn-primary">Bearbeiten</a>
-                                <a th:href="@{/thema/{themaId}/delete(themaId=${thema.id})}" class="btn-close" aria-label="Thema entfernen"></a>
+                                <a th:href="@{/thema/{themaId}/delete(themaId=${thema.id})}" class="btn-close"
+                                   aria-label="Thema entfernen"></a>
                             </td>
                         </tr>
                         </tbody>
@@ -228,10 +229,25 @@
                 </div>
             </div>
         </div>
+
         <div class="col-md-4 mb-4">
-            <div class="card h-100 bg-light">
+            <div class="card h-100 bg-light overflow-auto" style="max-height: 500px">
                 <div class="card-body">
-                    <h2 class="card-title fw-bold">Datei hochladen</h2>
+                    <h2 class="card-title fw-bold">Dateien</h2>
+                    <a class="btn btn-primary mb-4" href="/datei/create">Neue Datei hochladen</a>
+                    <table class="table table-striped mb-0">
+                        <tbody>
+                        <tr th:each="datei: *{dateien}">
+                            <td>
+                                <a th:href="@{/datei/{dateiId}(dateiId=${datei.id})}" th:text="${datei.name}">Datei</a>
+                            </td>
+                            <td class="text-end d-flex justify-content-end gap-2">
+                                <a th:href="@{/datei/{dateiId}/delete(dateiId=${datei.id})}" class="btn-close"
+                                   aria-label="Datei entfernen"></a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

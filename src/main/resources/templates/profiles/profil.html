@@ -69,6 +69,13 @@
             </li>
         </ul>
     </div>
+    <div class="row justify-content-center" th:if="*{!dateien.isEmpty()}">
+        <h2 class="display-6">Dateien</h2>
+        <ul class="ps-5" th:each="datei: *{dateien}">
+            <li><a th:href="@{/datei/{dateiId}(dateiId=${datei.id})}" th:text="${datei.name}">Datei</a>
+            </li>
+        </ul>
+    </div>
     <div class="row">
         <div class="col-md-12 mb-4">
             <a class="btn btn-primary" href="/betreuende">Zurück</a>
