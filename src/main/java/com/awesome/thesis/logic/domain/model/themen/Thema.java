@@ -72,7 +72,7 @@ public class Thema {
         if (o == null || getClass() != o.getClass()) return false;
 
         Thema thema = (Thema) o;
-        return Objects.equals(id, thema.id);
+        return Objects.equals(id, thema.id) && Objects.equals(profilID, thema.profilID);
     }
 
     @Override
