@@ -39,6 +39,26 @@
       <h1 class="display-4 fw-bold">Matching</h1>
     </div>
   </div>
+  <div class="row justify-content-center">
+    <div class="col-md-12">
+      <h2 class="display-6 fw-bold mb-4">Profile</h2>
+    </div>
+    <div class="col-md-3 text-center mb-4" th:each="profil : ${profile}">
+      <div class="card h-100 bg-light">
+        <div class="card-body">
+          <h2 class="card-title fw-bold" th:text="${profil.name}">Profil Name</h2>
+          <p class="card-text" th:if="${!profil.fachgebiete.isEmpty()}">Fachgebiete: <span
+                  th:text="${profil.fachgebieteString()}"></span></p>
+          <a class="stretched-link" th:href="@{/betreuende/{id}(id=${profil.id})}"></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-md-12">
+      <h2 class="display-6 fw-bold mb-4">Themen</h2>
+    </div>
+  </div>
 </div>
 
 </body>
