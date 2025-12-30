@@ -1,6 +1,8 @@
 package com.awesome.thesis.controller.betreuende;
 
 import com.awesome.thesis.controller.dto.ThemaInfoDTO;
+import com.awesome.thesis.logic.application.dto.ThemaDTO;
+import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
 import jakarta.validation.Valid;
@@ -20,7 +22,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class BetreuendeThemaCreateController {
 
     @Autowired
-    ThemaEditor editor;
+    ThemaEditor themaEditor;
+
+    @Autowired
+    ProfilEditor profilEditor;
 
     @GetMapping("/thema/create")
     public String getSite( Model model) {
@@ -35,9 +40,10 @@ public class BetreuendeThemaCreateController {
         }
         Integer id = auth.getPrincipal().getAttribute("id");
         Thema thema = new Thema(dto.titel(), id);
-        editor.addThema(thema);
+        themaEditor.addThema(thema);
         String themaId = thema.getId();
-        editor.editBeschreibung(themaId, dto.beschreibung());
+        profilEditor.addThema(id, new ThemaDTO(themaId, dto.titel()));
+        themaEditor.editBeschreibung(themaId, dto.beschreibung());
         redirect.addFlashAttribute("themaInfoDTO", dto);
         return "redirect:/themaEdit/" + themaId;
     }
