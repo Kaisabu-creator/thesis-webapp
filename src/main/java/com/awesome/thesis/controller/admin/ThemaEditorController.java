@@ -34,6 +34,7 @@ public class ThemaEditorController {
             model.addAttribute("themaLinkDTO", new LinkDTO("", ""));
             model.addAttribute("themaInfoDTO", info);
             model.addAttribute("thema", themaEditor.getThema(id));
+            model.addAttribute("profilID", profilID);
             return "admin/themaEdit";
         } else {
             return "redirect:/";
