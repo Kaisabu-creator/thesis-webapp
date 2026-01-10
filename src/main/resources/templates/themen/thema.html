@@ -32,6 +32,7 @@
     </div>
 </nav>
 <h1 th:text="${thema.titel}">Titel des Themas</h1>
+<a th:href="@{/betreuende/{profilID}(profilID=${profilID})}">Link zum Profil</a>
 <div th:if="${thema.hasBeschreibung}">
     Beschreibung des Themas:
     <p><span th:text="${thema.beschreibung}">Beschreibung</span></p>
