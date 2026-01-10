@@ -7,8 +7,10 @@ import com.awesome.thesis.controller.admin.ThemaEditorController;
 import com.awesome.thesis.helper.WithMockOAuth2User;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
+import com.awesome.thesis.logic.application.service.voraussetzungen.VoraussetzungenEditor;
 import com.awesome.thesis.logic.domain.model.links.Link;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
+import com.awesome.thesis.logic.domain.model.themen.Voraussetzung;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,9 @@ public class ThemaEditorControllerTest {
 
     @MockitoBean
     ProfilEditor editor;
+
+    @MockitoBean
+    VoraussetzungenEditor vorEditor;
 
     @Test
     @DisplayName("Tests that /themaEdit is reachable")
@@ -122,6 +127,18 @@ public class ThemaEditorControllerTest {
         mvc.perform(post("/themaEdit/2/editLink").param("url", "").param("urlBeschreibung", "egal")
                 .with(csrf()));
         verify(themaEditor, never()).addLink("2", "", "egal");
+    }
+
+    @Test
+    @DisplayName("You can add Voraussetzungen")
+    @WithMockOAuth2User(roles = {"BETREUENDE"}, id = 1)
+    void test_9() throws Exception {
+        Thema thema = mock(Thema.class);
+        when(themaEditor.getThema(any())).thenReturn(thema);
+        when(themaEditor.allowedEdit(anyLong(), any())).thenReturn(true);
+        mvc.perform(post("/themaEdit/2/addVoraussetzung").param( "voraussetzungen","bob")
+                .with(csrf()));
+        verify(themaEditor, times(1)).addVoraussetzung("2", new Voraussetzung("bob"));
     }
 
 }

@@ -4,8 +4,10 @@ import com.awesome.thesis.controller.dto.LinkDTO;
 import com.awesome.thesis.logic.application.dto.ThemaDTO;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
+import com.awesome.thesis.logic.application.service.voraussetzungen.VoraussetzungenEditor;
 import com.awesome.thesis.logic.domain.model.links.Link;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
+import com.awesome.thesis.logic.domain.model.themen.Voraussetzung;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -14,6 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Set;
 
 @Controller
 @Secured("ROLE_BETREUENDE")
@@ -25,6 +29,9 @@ public class ThemaEditorController {
     @Autowired
     ProfilEditor profilEditor;
 
+    @Autowired
+    VoraussetzungenEditor vorEditor;
+
     @GetMapping("/themaEdit/{id}")
     public String editThema(@PathVariable("id")String id, Model model, OAuth2AuthenticationToken auth) {
         Integer profilID = auth.getPrincipal().getAttribute("id");
@@ -35,6 +42,8 @@ public class ThemaEditorController {
             model.addAttribute("themaInfoDTO", info);
             model.addAttribute("thema", themaEditor.getThema(id));
             model.addAttribute("profilID", profilID);
+            model.addAttribute("themaVoraussetzungen", thema.getVoraussetzungen());
+            model.addAttribute("voraussetzungen", vorEditor.getAll());
             return "admin/themaEdit";
         } else {
             return "redirect:/";
@@ -95,5 +104,15 @@ public class ThemaEditorController {
         return "redirect:/thema/" + id;
     }
 
-
+    @PostMapping("/themaEdit/{id}/addVoraussetzung")
+    public String addVoraussetzung(@RequestParam Set<String> voraussetzungen, @PathVariable String id, OAuth2AuthenticationToken auth) {
+        Integer profilID = auth.getPrincipal().getAttribute("id");
+        Thema thema = themaEditor.getThema(id);
+        if (themaEditor.allowedEdit(profilID, thema)) {
+            voraussetzungen.stream().forEach(e -> themaEditor.addVoraussetzung(id, new Voraussetzung(e)));
+            return "redirect:/themaEdit/" + id;
+        } else {
+            return "redirect:/";
+        }
+    }
 }

@@ -36,6 +36,12 @@
     Beschreibung des Themas:
     <p><span th:text="${thema.beschreibung}">Beschreibung</span></p>
 </div>
+<div>
+    <span>Voraussetzungen:</span>
+    <div th:each="vor: ${thema.getVoraussetzungen()}">
+        <div th:text="${vor.voraussetzung()}"></div>
+    </div>
+</div>
 <div th:if="${thema.hasLinks}">
     <p>Links zu externen Ressourcen:</p>
     <ul th:each="link: ${thema.links}">
