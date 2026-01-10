@@ -96,7 +96,7 @@ public class ProfilEditor {
         }
         return profile.getAll().stream()
                 .filter(p -> p.fitsInterests(interessen))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public List<Profil> getMatching(Set<String> interessen) {
@@ -109,7 +109,7 @@ public class ProfilEditor {
                                 profil2.compRank(interessen),
                                 profil1.compRank(interessen)
                         ))
-                .collect(Collectors.toList());
+                .toList();
     }
     public void addLink(long id, String url, String urlBeschreibung) {
         Profil profil = get(id);
