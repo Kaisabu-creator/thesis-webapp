@@ -90,10 +90,9 @@ public class Profil {
     }
 
     public long compRank(Set<String> interessen) {
-        long containing = interessen.stream()
+        return interessen.stream()
                 .filter(fachgebiete::contains)
                 .count();
-        return 0;
     }
 
     public Set<Link> getLinks() {

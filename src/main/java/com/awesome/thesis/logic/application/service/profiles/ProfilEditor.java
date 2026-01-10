@@ -99,6 +99,18 @@ public class ProfilEditor {
                 .collect(Collectors.toList());
     }
 
+    public List<Profil> getMatching(Set<String> interessen) {
+        if (interessen == null || interessen.isEmpty()) {
+            return getAll();
+        }
+        return profile.getAll().stream()
+                .sorted((profil1, profil2) ->
+                        Long.compare(
+                                profil2.compRank(interessen),
+                                profil1.compRank(interessen)
+                        ))
+                .collect(Collectors.toList());
+    }
     public void addLink(long id, String url, String urlBeschreibung) {
         Profil profil = get(id);
         Link link = new Link(url, urlBeschreibung);

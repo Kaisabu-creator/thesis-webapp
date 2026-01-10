@@ -22,7 +22,7 @@ public class MatchingController {
     public String matching(Model model, @RequestParam(required = false) Set<String> interessen) {
         model.addAttribute("interessen", interessen);
         model.addAttribute("fachgebiete", fachgebieteEditor.getAll());
-        model.addAttribute("profile", profilEditor.getAll());
+        model.addAttribute("profile", profilEditor.getMatching(interessen));
         return "matching";
     }
 }
