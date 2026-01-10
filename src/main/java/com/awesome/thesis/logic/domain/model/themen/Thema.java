@@ -2,9 +2,8 @@ package com.awesome.thesis.logic.domain.model.themen;
 
 import com.awesome.thesis.annotations.AggregateRoot;
 import com.awesome.thesis.logic.domain.model.links.Link;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+
+import java.util.*;
 
 @AggregateRoot
 public class Thema {
@@ -13,13 +12,13 @@ public class Thema {
     private String beschreibung;
     private final List<Link> links;
     private final long profilID;
-    private final List<Voraussetzung> voraussetzungen;
+    private final Set<Voraussetzung> voraussetzungen;
 
     public Thema(String titel, long id) {
         this.titel = titel;
         this.profilID = id;
         this.links = new ArrayList<>();
-        this.voraussetzungen = new ArrayList<>();
+        this.voraussetzungen = new HashSet<>();
     }
 
     public void addVoraussetzung(Voraussetzung voraussetzung) {
@@ -30,7 +29,7 @@ public class Thema {
         voraussetzungen.remove(voraussetzung);
     }
 
-    public List<Voraussetzung> getVoraussetzungen() {
+    public Set<Voraussetzung> getVoraussetzungen() {
         return voraussetzungen;
     }
 

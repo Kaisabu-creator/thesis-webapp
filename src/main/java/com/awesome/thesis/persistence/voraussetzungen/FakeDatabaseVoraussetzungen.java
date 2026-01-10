@@ -4,11 +4,13 @@ import com.awesome.thesis.logic.domain.model.themen.Voraussetzung;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class FakeDatabaseVoraussetzungen implements IDatabaseVoraussetzungen {
-    List<Voraussetzung> voraussetzungen = new ArrayList<>();
+    Set<Voraussetzung> voraussetzungen = new HashSet<>();
 
     public FakeDatabaseVoraussetzungen() {
         voraussetzungen.add(new Voraussetzung("Algorithmen und Datenstrukturen"));
@@ -27,7 +29,7 @@ public class FakeDatabaseVoraussetzungen implements IDatabaseVoraussetzungen {
     }
 
     @Override
-    public List<Voraussetzung> getAll() {
+    public Set<Voraussetzung> getAll() {
         return voraussetzungen;
     }
 }

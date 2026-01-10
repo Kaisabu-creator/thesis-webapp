@@ -5,6 +5,7 @@ import com.awesome.thesis.logic.domain.model.themen.Voraussetzung;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public class VoraussetzungenRepoImpl implements IVoraussetzungenRepo {
@@ -26,7 +27,7 @@ public class VoraussetzungenRepoImpl implements IVoraussetzungenRepo {
     }
 
     @Override
-    public List<Voraussetzung> getAll() {
+    public Set<Voraussetzung> getAll() {
         return database.getAll();
     }
 }

@@ -19,7 +19,7 @@ public class VoraussetzungenEditor{
         repo.add(voraussetzung);
     }
 
-    public List<Voraussetzung> getAll() {
+    public Set<Voraussetzung> getAll() {
         return repo.getAll();
     }
 

@@ -3,9 +3,10 @@ package com.awesome.thesis.persistence.voraussetzungen;
 import com.awesome.thesis.logic.domain.model.themen.Voraussetzung;
 
 import java.util.List;
+import java.util.Set;
 
 public interface IDatabaseVoraussetzungen {
         void add(Voraussetzung voraussetzung);
         void delete(Voraussetzung voraussetzung);
-        List<Voraussetzung> getAll();
+        Set<Voraussetzung> getAll();
 }
