@@ -1,93 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
-  <title>Thesis</title>
-  <link rel="stylesheet" href="/bootstrap.min.css"/>
-  <script src="/bootstrap.min.js"></script>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+    <title>Thesis</title>
+    <link rel="stylesheet" href="/bootstrap.min.css"/>
+    <script src="/bootstrap.min.js"></script>
 </head>
 <body class="d-flex flex-column min-vh-100">
 <nav class="navbar navbar-expand-lg navbar-light bg-primary-subtle">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/">Thesis is coming!</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
-            aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" href="/betreuende">Betreuende</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="/themen">Themen</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="/matching">Matching</a>
-        </li>
-      </ul>
-      <div th:object="${navButton}">
-        <a class="btn btn-primary" th:href="*{url}" th:text="*{label}">Anmelden</a>
-      </div>
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">Thesis is coming!</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
+                aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/betreuende">Betreuende</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/themen">Themen</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/matching">Matching</a>
+                </li>
+            </ul>
+            <div th:object="${navButton}">
+                <a class="btn btn-primary" th:href="*{url}" th:text="*{label}">Anmelden</a>
+            </div>
+        </div>
     </div>
-  </div>
 </nav>
 
 <div class="container-fluid py-3">
-  <div class="row justify-content-center">
-    <div class="col-lg-8 text-center mb-4">
-      <h1 class="display-4 fw-bold">Matching</h1>
-      <p class="lead">Gib Deine Interessen und Module an und finde passende Betreuer:innen und Themen!</p>
+    <div class="row justify-content-center">
+        <div class="col-lg-8 text-center mb-4">
+            <h1 class="display-4 fw-bold">Matching</h1>
+            <p class="lead">Gib Deine Interessen und Module an und finde passende Betreuer:innen und Themen!</p>
+        </div>
     </div>
-  </div>
 
-  <div class="row justify-content-center">
-    <div class="col-md-8 text-center mb-4">
-      <div class="card h-100 bg-light">
-        <div class="card-body">
-          <h2 class="display-6">Interessen</h2>
-          <form>
-            <div class="row overflow-auto mb-4 text-start" style="max-height: 100px">
-              <div class="col-md-4" th:each="fachgebiet : ${fachgebiete}">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="interessen" id="fachgebiet"
-                         value=""
-                         th:value="${fachgebiet}" th:id="${fachgebiet}"
-                         th:checked="${interessen != null and interessen.contains(fachgebiet)}"/>
-                  <label class="form-check-label" for="fachgebiet" th:text="${fachgebiet}"
-                         th:for="${fachgebiet}">
-                    Fachgebiete
-                  </label>
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center mb-4">
+            <div class="card h-100 bg-light">
+                <div class="card-body">
+                    <h2 class="display-6">Interessen</h2>
+                    <form>
+                        <div class="row overflow-auto mb-4 text-start" style="max-height: 100px">
+                            <div class="col-md-4" th:each="fachgebiet : ${fachgebiete}">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="interessen" id="fachgebiet"
+                                           value=""
+                                           th:value="${fachgebiet}" th:id="${fachgebiet}"
+                                           th:checked="${interessen != null and interessen.contains(fachgebiet)}"/>
+                                    <label class="form-check-label" for="fachgebiet" th:text="${fachgebiet}"
+                                           th:for="${fachgebiet}">
+                                        Fachgebiete
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary">Match</button>
+                    </form>
                 </div>
-              </div>
             </div>
-            <button class="btn btn-primary">Match</button>
-          </form>
         </div>
-      </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col-md-12">
-      <h2 class="display-6 fw-bold mb-4">Profile</h2>
-    </div>
-    <div class="col-md-3 text-center mb-4" th:each="profil : ${profile}">
-      <div class="card h-100 bg-light">
-        <div class="card-body">
-          <h2 class="card-title fw-bold" th:text="${profil.name}">Profil Name</h2>
-          <p class="card-text" th:if="${!profil.fachgebiete.isEmpty()}">Fachgebiete: <span
-                  th:text="${profil.fachgebieteString()}"></span></p>
-          <a class="stretched-link" th:href="@{/betreuende/{id}(id=${profil.id})}"></a>
-        </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h2 class="display-6 fw-bold mb-4">Profile</h2>
       </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <h2 class="display-6 fw-bold mb-4">Themen</h2>
+    <div class="row overflow-auto" style="max-height: 400px">
+        <div class="col-md-3 text-center mb-4" th:each="profil, rank : ${profile}">
+            <div class="card h-100 bg-light">
+                <div class="card-body">
+                    <h2 class="card-title fw-bold"><span class="text-start" th:text="${rank.index + 1}">1</span>. <span
+                            th:text="${profil.name}">Profil Name</span></h2>
+                    <p class="card-text" th:if="${!profil.fachgebiete.isEmpty()}">Fachgebiete: <span
+                            th:text="${profil.fachgebieteString()}"></span></p>
+                    <a class="stretched-link" th:href="@{/betreuende/{id}(id=${profil.id})}"></a>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="display-6 fw-bold mb-4">Themen</h2>
+        </div>
+    </div>
 </div>
 
 </body>
