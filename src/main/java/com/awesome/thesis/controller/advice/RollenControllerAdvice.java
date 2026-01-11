@@ -20,7 +20,7 @@ public class RollenControllerAdvice {
         boolean isBetreuende = auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_BETREUENDE"));
         String name = auth.getPrincipal().getAttribute("login");
         if (isBetreuende) {
-            return new NavbarButtonDTO(name, "/betreuende");
+            return new NavbarButtonDTO(name, "/betreuende/profilEdit");
         }
         return new NavbarButtonDTO(name, "#");
     }
