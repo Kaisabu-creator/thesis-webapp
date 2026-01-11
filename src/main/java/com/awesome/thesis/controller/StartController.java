@@ -20,7 +20,7 @@ public class StartController {
         if (isBetreuende) {
             return new ProfilFooterDTO(greeting, "Bearbeite Dein Profil, füge Themen hinzu und unterstütze Studierende dabei, ihre Abschlussarbeit zu finden!", "/betreuende/profilEdit", "Profil bearbeiten");
         }
-        return new ProfilFooterDTO(greeting, "Füge Deine Interessen und bestandene Module hinzu und finde ein:n Betreuer:in sowie ein Thema für Deine Abschlussarbeit!", "#", "Profil bearbeiten");
+        return new ProfilFooterDTO(greeting, "Füge Deine Interessen und bestandene Module hinzu und finde ein:n Betreuer:in sowie ein Thema für Deine Abschlussarbeit!", null, null);
     }
 
     @GetMapping("/")

@@ -22,6 +22,6 @@ public class RollenControllerAdvice {
         if (isBetreuende) {
             return new NavbarButtonDTO(name, "/betreuende/profilEdit");
         }
-        return new NavbarButtonDTO(name, "#");
+        return null;
     }
 }
