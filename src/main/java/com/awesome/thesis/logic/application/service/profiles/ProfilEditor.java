@@ -70,6 +70,10 @@ public class ProfilEditor {
         }
     }
 
+    public void delete(long id) {
+        profile.delete(id);
+    }
+
     public void create(long id, String name) {
         Profil profil = new Profil(id, name);
         profile.save(id, profil);

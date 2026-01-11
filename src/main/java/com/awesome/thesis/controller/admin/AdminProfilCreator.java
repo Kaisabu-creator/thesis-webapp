@@ -28,13 +28,19 @@ public class AdminProfilCreator {
         return "admin/profileAdmin";
     }
 
-    @PostMapping()
+    @PostMapping("createBetreuende")
     public String createProfile(@Valid @ModelAttribute("profil") ProfilCreateDTO profil, BindingResult bindingResult, Model model) {
         if  (bindingResult.hasErrors()) {
             model.addAttribute("profile", editor.getAll());
-            return "admin/profileAdmin";
+            return "admin/createBetreuende";
         }
         editor.create(profil.id(), profil.name());
-        return "redirect:/admin/createProfile";
+        return "redirect:/admin";
+    }
+
+    @PostMapping("/betreuendeDelete")
+    public String deleteBetreuende(long id) {
+        editor.delete(id);
+        return "redirect:/admin";
     }
 }
