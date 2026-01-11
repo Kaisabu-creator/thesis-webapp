@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 import java.util.Set;
 
 @Controller
@@ -105,11 +106,11 @@ public class ThemaEditorController {
     }
 
     @PostMapping("/themaEdit/{id}/addVoraussetzung")
-    public String addVoraussetzung(@RequestParam Set<String> voraussetzungen, @PathVariable String id, OAuth2AuthenticationToken auth) {
+    public String addVoraussetzung(@RequestParam(required = false) Optional<Set<String>> voraussetzungen, @PathVariable String id, OAuth2AuthenticationToken auth) {
         Integer profilID = auth.getPrincipal().getAttribute("id");
         Thema thema = themaEditor.getThema(id);
         if (themaEditor.allowedEdit(profilID, thema)) {
-            voraussetzungen.stream().forEach(e -> themaEditor.addVoraussetzung(id, new Voraussetzung(e)));
+            voraussetzungen.orElse(Set.of()).stream().forEach(e -> themaEditor.addVoraussetzung(id, new Voraussetzung(e)));
             return "redirect:/themaEdit/" + id;
         } else {
             return "redirect:/";
