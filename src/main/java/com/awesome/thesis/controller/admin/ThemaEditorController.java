@@ -150,7 +150,7 @@ public class ThemaEditorController {
         if (themaEditor.allowedEdit(profilID, thema)) {
             profilEditor.removeThema(profilID, new ThemaDTO(id, thema.getTitel()));
             themaEditor.deleteThema(id);
-            return "redirect:/";
+            return "redirect:/betreuende/profilEdit";
         } else {
             return "redirect:/thema" + id;
         }
