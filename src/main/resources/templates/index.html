@@ -26,7 +26,7 @@
                     <a class="nav-link active" href="/matching">Matching</a>
                 </li>
             </ul>
-            <div th:object="${navButton}">
+            <div th:if="${navButton}" th:object="${navButton}">
                 <a class="btn btn-primary" th:href="*{url}" th:text="*{label}">Anmelden</a>
             </div>
         </div>
@@ -84,7 +84,7 @@
             <h2 class="display-5 fw-bold" th:text="*{greeting}">Jetzt anfangen</h2>
             <p th:text="*{description}">Melde Dich an und finde eine/n Betreuer:in und ein Thema für deine
                 Abschlussarbeit!</p>
-            <a class="btn btn-lg btn-light mx-2" th:href="*{url}" th:text="*{label}">Anmelden</a>
+            <a class="btn btn-lg btn-light mx-2" th:if="*{url}" th:href="*{url}" th:text="*{label}">Anmelden</a>
             <a class="btn btn-lg btn-secondary my-2" href="/logout" th:if="*{label != 'Anmelden'}">Abmelden</a>
         </div>
     </div>

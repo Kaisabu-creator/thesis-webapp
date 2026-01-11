@@ -26,7 +26,7 @@
                     <a class="nav-link active" href="/matching">Matching</a>
                 </li>
             </ul>
-            <div th:object="${navButton}">
+            <div th:if="${navButton}" th:object="${navButton}">
                 <a class="btn btn-primary" th:href="*{url}" th:text="*{label}">Anmelden</a>
             </div>
         </div>
