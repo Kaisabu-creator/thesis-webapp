@@ -110,7 +110,7 @@ public class ThemaEditorController {
         Integer profilID = auth.getPrincipal().getAttribute("id");
         Thema thema = themaEditor.getThema(id);
         if (themaEditor.allowedEdit(profilID, thema)) {
-            voraussetzungen.orElse(Set.of()).stream().forEach(e -> themaEditor.addVoraussetzung(id, new Voraussetzung(e)));
+            voraussetzungen.orElse(Set.of()).forEach(e -> themaEditor.addVoraussetzung(id, new Voraussetzung(e)));
             return "redirect:/themaEdit/" + id;
         } else {
             return "redirect:/";
@@ -126,6 +126,33 @@ public class ThemaEditorController {
             return "redirect:/themaEdit/" + id;
         } else {
             return "redirect:/";
+        }
+    }
+
+    @GetMapping("/thema/{id}/confirmDeletion")
+    public String checkDeleteThema(@PathVariable String id, OAuth2AuthenticationToken auth, Model model) {
+        Integer profilID = auth.getPrincipal().getAttribute("id");
+        Thema thema = themaEditor.getThema(id);
+        if (themaEditor.allowedEdit(profilID, thema)) {
+            boolean canEdit = themaEditor.allowedEdit(profilID, thema);
+            model.addAttribute("thema", thema);
+            model.addAttribute("canEdit", canEdit);
+            return "themen/confirmDeletion";
+        } else {
+            return "redirect:/thema" + id;
+        }
+    }
+
+    @PostMapping("/thema/{id}/deleteThema")
+    public String deleteThema(@PathVariable String id, OAuth2AuthenticationToken auth, Model model) {
+        Integer profilID = auth.getPrincipal().getAttribute("id");
+        Thema thema = themaEditor.getThema(id);
+        if (themaEditor.allowedEdit(profilID, thema)) {
+            profilEditor.removeThema(profilID, new ThemaDTO(id, thema.getTitel()));
+            themaEditor.deleteThema(id);
+            return "redirect:/";
+        } else {
+            return "redirect:/thema" + id;
         }
     }
 }

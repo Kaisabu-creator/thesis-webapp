@@ -78,6 +78,10 @@ public class ThemaEditor {
         return profilID == thema.getProfilID();
     }
 
+    public void deleteThema(String id) {
+        repository.delete(id);
+    }
+
 
 
 
