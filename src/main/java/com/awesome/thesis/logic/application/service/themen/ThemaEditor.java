@@ -82,6 +82,11 @@ public class ThemaEditor {
         repository.delete(id);
     }
 
+    public void removeAllVoraussetzung (Voraussetzung voraussetzung) {
+        List<Thema> list = repository.getThemen();
+        list.forEach(e -> e.removeVoraussetzung(voraussetzung));
+    }
+
 
 
 
