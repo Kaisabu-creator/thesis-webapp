@@ -1,5 +1,6 @@
 package com.awesome.thesis.controller.betreuende;
 
+import com.awesome.thesis.controller.dto.FachgebietDTO;
 import com.awesome.thesis.controller.dto.LinkDTO;
 import com.awesome.thesis.controller.dto.ProfilEditDTO;
 import com.awesome.thesis.controller.dto.kontakt.EmailKontaktDTO;
@@ -77,9 +78,15 @@ public class BetreuendeProfilEditController {
     }
 
     @PostMapping("profilEdit/addFachgebiet")
-    public String addFachgebiet(String fachgebiet, OAuth2AuthenticationToken auth) {
+    public String addFachgebiet(@Valid FachgebietDTO fachgebietDTO, BindingResult result, Model model, OAuth2AuthenticationToken auth) {
         Integer id = auth.getPrincipal().getAttribute("id");
-        editor.addFachgebiet(id, fachgebiet);
+        if (result.hasErrors()) {
+            model.addAttribute("profil", editor.get(id));
+            model.addAttribute("kontakt", new EmailKontaktDTO("email","", ""));
+            model.addAttribute("linkDTO", new LinkDTO("", ""));
+            return "betreuende/profilEdit";
+        }
+        editor.addFachgebiet(id, fachgebietDTO.fachgebiet());
         return "redirect:/betreuende/profilEdit";
     }
 
