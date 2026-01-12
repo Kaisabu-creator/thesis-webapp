@@ -32,7 +32,7 @@ public class AdminProfilCreator {
     public String createProfile(@Valid @ModelAttribute("profil") ProfilCreateDTO profil, BindingResult bindingResult, Model model) {
         if  (bindingResult.hasErrors()) {
             model.addAttribute("profile", editor.getAll());
-            return "admin/createBetreuende";
+            return "admin/profileAdmin";
         }
         editor.create(profil.id(), profil.name());
         return "redirect:/admin";
