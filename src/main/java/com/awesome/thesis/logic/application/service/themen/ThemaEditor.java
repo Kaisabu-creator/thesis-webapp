@@ -63,11 +63,13 @@ public class ThemaEditor {
     public void addVoraussetzung(String id, Voraussetzung voraussetzung) {
         Thema thema = getThema(id);
         thema.addVoraussetzung(voraussetzung);
+        repository.update(id, thema);
     }
 
     public void removeVoraussetzung(String id, Voraussetzung voraussetzung) {
         Thema thema = getThema(id);
         thema.removeVoraussetzung(voraussetzung);
+        repository.update(id, thema);
     }
 
     public List<Thema> getAll() {
@@ -84,7 +86,10 @@ public class ThemaEditor {
 
     public void removeAllVoraussetzung (Voraussetzung voraussetzung) {
         List<Thema> list = repository.getThemen();
-        list.forEach(e -> e.removeVoraussetzung(voraussetzung));
+        list.forEach(e -> {
+            e.removeVoraussetzung(voraussetzung);
+            repository.update(e.getId(), e);
+        });
     }
 
 
