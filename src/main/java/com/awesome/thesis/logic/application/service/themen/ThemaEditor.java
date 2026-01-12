@@ -1,6 +1,5 @@
 package com.awesome.thesis.logic.application.service.themen;
 
-import com.awesome.thesis.controller.dto.ThemaInfoDTO;
 import com.awesome.thesis.logic.domain.model.links.Link;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
 import com.awesome.thesis.logic.domain.model.themen.Voraussetzung;
@@ -8,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 @Service
 public class ThemaEditor {
@@ -60,18 +60,6 @@ public class ThemaEditor {
         }
     }
 
-    public void addVoraussetzung(String id, Voraussetzung voraussetzung) {
-        Thema thema = getThema(id);
-        thema.addVoraussetzung(voraussetzung);
-        repository.update(id, thema);
-    }
-
-    public void removeVoraussetzung(String id, Voraussetzung voraussetzung) {
-        Thema thema = getThema(id);
-        thema.removeVoraussetzung(voraussetzung);
-        repository.update(id, thema);
-    }
-
     public List<Thema> getAll() {
         return repository.getThemen();
     }
@@ -92,7 +80,8 @@ public class ThemaEditor {
         });
     }
 
-
-
-
+    public void updateVoraussetzungen(String id, Set<Voraussetzung> set) {
+        Thema thema = getThema(id);
+        thema.updateVoraussetzungen(set);
+    }
 }

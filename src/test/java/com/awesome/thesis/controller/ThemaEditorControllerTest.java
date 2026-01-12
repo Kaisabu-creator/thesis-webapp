@@ -19,6 +19,8 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Set;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -130,27 +132,16 @@ public class ThemaEditorControllerTest {
     }
 
     @Test
-    @DisplayName("You can add Voraussetzungen")
+    @DisplayName("You can edit Voraussetzungen")
     @WithMockOAuth2User(roles = {"BETREUENDE"}, id = 1)
     void test_9() throws Exception {
         Thema thema = mock(Thema.class);
         when(themaEditor.getThema(any())).thenReturn(thema);
         when(themaEditor.allowedEdit(anyLong(), any())).thenReturn(true);
-        mvc.perform(post("/themaEdit/2/addVoraussetzung").param( "voraussetzungen","bob")
-                .with(csrf()));
-        verify(themaEditor, times(1)).addVoraussetzung("2", new Voraussetzung("bob"));
-    }
-
-    @Test
-    @DisplayName("You can remove Voraussetzungen")
-    @WithMockOAuth2User(roles = {"BETREUENDE"}, id = 1)
-    void test_10() throws Exception {
-        Thema thema = mock(Thema.class);
-        when(themaEditor.getThema(any())).thenReturn(thema);
-        when(themaEditor.allowedEdit(anyLong(), any())).thenReturn(true);
-        mvc.perform(post("/themaEdit/2/removeVoraussetzung").param("voraussetzung", "bob")
-                .with(csrf()));
-        verify(themaEditor).removeVoraussetzung("2", new Voraussetzung("bob"));
+        mvc.perform(post("/themaEdit/2/editVoraussetzung").param( "voraussetzungen","bob")
+                .with(csrf()))
+                .andExpect(status().is3xxRedirection());;
+        verify(themaEditor, times(1)).updateVoraussetzungen("2", Set.of(new Voraussetzung("bob")));
     }
 
     @Test

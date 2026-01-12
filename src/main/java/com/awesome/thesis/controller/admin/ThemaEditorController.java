@@ -17,8 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 @Secured("ROLE_BETREUENDE")
@@ -105,24 +104,14 @@ public class ThemaEditorController {
         return "redirect:/thema/" + id;
     }
 
-    @PostMapping("/themaEdit/{id}/addVoraussetzung")
-    public String addVoraussetzung(@RequestParam(required = false) Optional<Set<String>> voraussetzungen, @PathVariable String id, OAuth2AuthenticationToken auth) {
+    @PostMapping("/themaEdit/{id}/editVoraussetzung")
+    public String editVoraussetzung(@RequestParam(required = false) Optional<Set<String>> voraussetzungen, @PathVariable String id, OAuth2AuthenticationToken auth) {
         Integer profilID = auth.getPrincipal().getAttribute("id");
         Thema thema = themaEditor.getThema(id);
         if (themaEditor.allowedEdit(profilID, thema)) {
-            voraussetzungen.orElse(Set.of()).forEach(e -> themaEditor.addVoraussetzung(id, new Voraussetzung(e)));
-            return "redirect:/themaEdit/" + id;
-        } else {
-            return "redirect:/";
-        }
-    }
-
-    @PostMapping("/themaEdit/{id}/removeVoraussetzung")
-    public String removeVoraussetzung(@RequestParam String voraussetzung, @PathVariable String id, OAuth2AuthenticationToken auth) {
-        Integer profilID = auth.getPrincipal().getAttribute("id");
-        Thema thema = themaEditor.getThema(id);
-        if (themaEditor.allowedEdit(profilID, thema)) {
-            themaEditor.removeVoraussetzung(id, new Voraussetzung(voraussetzung));
+            Set<Voraussetzung> list = new HashSet<>();
+            voraussetzungen.orElse(Set.of()).forEach(e -> list.add(new Voraussetzung(e)));
+            themaEditor.updateVoraussetzungen(id, list);
             return "redirect:/themaEdit/" + id;
         } else {
             return "redirect:/";

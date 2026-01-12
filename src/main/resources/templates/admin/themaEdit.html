@@ -120,44 +120,20 @@
                 <div class="card h-100 bg-light" style="max-height: 500px">
                     <div class="card-body">
                         <h1 class="card-title fw-bold">Voraussetzungen wählen</h1>
-                        <form method="post" th:action="@{/themaEdit/{id}/addVoraussetzung(id=${id})}">
+                        <form method="post" th:action="@{/themaEdit/{id}/editVoraussetzung(id=${id})}">
                             <div class="border p-3 overflow-auto" style="height: 200px; width: 500px;">
                                 <div th:each="vor: ${voraussetzungen}">
                                     <div class="form-check dropdown-item ms-3">
                                         <label for="modul" class="form-check-label" th:text="${vor.voraussetzung()}">Modul</label>
                                         <input id ="modul" class="form-check-input" type="checkbox"
                                                th:value="${vor.voraussetzung()}"
+                                               th:checked="${themaVoraussetzungen.contains(vor)}"
                                                name="voraussetzungen">
                                     </div>
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary mt-3">Auswahl abschicken</button>
                         </form>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4 mb-4">
-                <div class="card bg-light" style="max-height: 500px">
-                    <div class="card-body">
-                        <h1 class="card-title fw-bold">Voraussetzungen löschen</h1>
-                        <div style="height: 350px;" class="overflow-auto">
-                            <table class="table table-striped mb-0">
-                                <tbody>
-                                <tr th:each="vor: ${thema.getVoraussetzungen()}">
-                                    <td>
-                                        <span th:text="${vor.voraussetzung()}">Beschreibung der Url</span>
-                                    </td>
-                                    <td class="text-end">
-                                        <form method="post" th:action="@{/themaEdit/{id}/removeVoraussetzung(id=${id})}">
-                                            <input type="hidden" name="voraussetzung" th:value="${vor.voraussetzung()}">
-                                            <button type="submit" class="btn-close"></button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
                     </div>
                 </div>
             </div>

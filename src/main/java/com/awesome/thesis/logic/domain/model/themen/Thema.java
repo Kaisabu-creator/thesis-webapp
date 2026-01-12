@@ -21,8 +21,10 @@ public class Thema {
         this.voraussetzungen = new HashSet<>();
     }
 
-    public void addVoraussetzung(Voraussetzung voraussetzung) {
-        voraussetzungen.add(voraussetzung);
+
+    public void updateVoraussetzungen(Set<Voraussetzung> voraussetzungen) {
+        this.voraussetzungen.clear();
+        this.voraussetzungen.addAll(voraussetzungen);
     }
 
     public void removeVoraussetzung(Voraussetzung voraussetzung) {
