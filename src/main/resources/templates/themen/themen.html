@@ -31,9 +31,24 @@
         </div>
     </div>
 </nav>
-<h1>Verfügbare Themen</h1>
-    <ul th:each="thema: ${themenListe}">
-        <li><a th:href="@{/thema/{id}(id=${thema.id})}" th:text="${thema.titel}"></a></li>
-    </ul>
+<div class="row justify-content-center">
+    <div class="col-md-4 text-center mb-4">
+        <h1 class="display-4 fw-bold">Verfügbare Themen</h1>
+    </div>
+</div>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Titel</th>
+        <th>Betreuer</th>
+        <th style="max-width: 400px;">Beschreibung</th>
+    </tr>
+    </thead>
+    <tr th:each="thema: ${themenListe}">
+        <td><a th:href="@{/thema/{id}(id=${thema.id})}" th:text="${thema.titel}"></a></td>
+        <td><a th:href="@{/betreuende/{id}(id=${thema.profilID})}" th:text="'Link zum Betreuer'"></a></td>
+        <td style="max-width: 400px; word-wrap: break-word; white-space: normal;" th:text="${thema.beschreibung}"></td>
+    </tr>
+</table>
 </body>
 </html>
