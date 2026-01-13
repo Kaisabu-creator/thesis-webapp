@@ -48,6 +48,12 @@
             <div th:text="${vor.voraussetzung()}"></div>
         </div>
     </div>
+    <div>
+        <span>Fachgebiete:</span>
+        <div th:each="fach: ${thema.getFachgebiete()}">
+            <div th:text="${fach}"></div>
+        </div>
+    </div>
     <div th:if="${thema.hasLinks}">
         <p>Links zu externen Ressourcen:</p>
         <ul th:each="link: ${thema.links}">

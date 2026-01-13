@@ -42,7 +42,7 @@
                     <div class="card-body">
                         <div th:object="${themaInfoDTO}">
                             <h1 class="card-title fw-bold">Informationen bearbeiten</h1>
-                            <form th:action="@{/themaEdit/{id}/editInfo(id=${id})}" method="post">
+                            <form th:action="@{/themaEdit/{id}/editInfo(id=${thema.id})}" method="post">
                                 <div class="form-group">
                                     <label for="titel">Titel</label>
                                     <input type="text" class="form-control" id="titel" th:field="*{titel}">
@@ -67,7 +67,7 @@
                     <div class="card-body">
                         <div th:object="${themaLinkDTO}">
                             <h1 class="card-title fw-bold">Links hinzufügen</h1>
-                            <form th:action="@{/themaEdit/{id}/editLink(id=${id})}" method="post">
+                            <form th:action="@{/themaEdit/{id}/editLink(id=${thema.id})}" method="post">
                                 <div class="form-group">
                                     <label for="url">Url</label>
                                     <input type="text" class="form-control" id="url" th:field="*{url}" name="url">
@@ -101,7 +101,7 @@
                                         <span th:text="${link.text}">Beschreibung der Url</span>
                                     </td>
                                     <td class="text-end">
-                                        <form method="post" th:action="@{/themaEdit/{id}/deleteLink(id=${id})}">
+                                        <form method="post" th:action="@{/themaEdit/{id}/deleteLink(id=${thema.id})}">
                                             <input type="hidden" name="url" th:value="${link.url}">
                                             <input type="hidden" name="text" th:value="${link.text}">
                                             <button type="submit" class="btn-close"></button>
@@ -120,7 +120,7 @@
                 <div class="card h-100 bg-light" style="max-height: 500px">
                     <div class="card-body">
                         <h1 class="card-title fw-bold">Voraussetzungen wählen</h1>
-                        <form method="post" th:action="@{/themaEdit/{id}/editVoraussetzung(id=${id})}">
+                        <form method="post" th:action="@{/themaEdit/{id}/editVoraussetzung(id=${thema.id})}">
                             <div class="border p-3 overflow-auto" style="height: 200px; width: 500px;">
                                 <div th:each="vor: ${voraussetzungen}">
                                     <div class="form-check dropdown-item ms-3">
@@ -137,6 +137,52 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 bg-light overflow-auto" style="max-height: 500px">
+                    <div class="card-body">
+                        <div th:object="${fachgebietDTO}">
+                            <h1 class="card-title fw-bold">Fachgebiet hinzufügen</h1>
+                            <form th:action="@{/themaEdit/{id}/addFachgebiet(id=${thema.id})}" method="post">
+                                <div class="form-group">
+                                    <label for="fachgebiet">Titel</label>
+                                    <input type="text" class="form-control" id="fachgebiet" th:field="*{fachgebiet}">
+                                    <small class="text-danger" th:if="${#fields.hasErrors('fachgebiet')}" th:errors="*{fachgebiet}">Wert Error</small>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Fachgebiet hinzufügen</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-4 mb-4">
+                <div class="card bg-light" style="max-height: 500px">
+                    <div class="card-body">
+                        <h1 class="card-title fw-bold">Fachgebiet löschen</h1>
+                        <div style="height: 350px;" class="overflow-auto">
+                            <table class="table table-striped mb-0">
+                                <tbody>
+                                <tr th:each="fachgebiet: ${thema.fachgebiete}">
+                                    <td>
+                                        <span th:text="${fachgebiet}">Name des Fachgebiets</span>
+                                    </td>
+                                    <td class="text-end">
+                                        <form method="post" th:action="@{/themaEdit/{id}/removeFachgebiet(id=${thema.id})}">
+                                            <input type="hidden" name="fachgebiet" th:value="${fachgebiet}">
+                                            <button type="submit" class="btn-close"></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
 
             <form th:action="@{/betreuende/profilEdit}">
                 <button type="submit" class="btn btn-primary">Zurück zum Profil</button>

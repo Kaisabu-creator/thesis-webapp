@@ -13,14 +13,31 @@ public class Thema {
     private final List<Link> links;
     private final long profilID;
     private final Set<Voraussetzung> voraussetzungen;
+    private final Set<String> fachgebiete;
 
     public Thema(String titel, long id) {
         this.titel = titel;
         this.profilID = id;
         this.links = new ArrayList<>();
         this.voraussetzungen = new HashSet<>();
+        this.fachgebiete = new HashSet<>();
     }
 
+    public Set<String> getFachgebiete() {
+        return fachgebiete;
+    }
+
+    public void addFachgebiet(String fachgebiet) {
+        fachgebiete.add(fachgebiet);
+    }
+
+    public void removeFachgebiet(String fachgebiet) {
+        fachgebiete.remove(fachgebiet);
+    }
+
+    public boolean hasFachgebiet(String fachgebiet) {
+        return fachgebiete.contains(fachgebiet);
+    }
 
     public void updateVoraussetzungen(Set<Voraussetzung> voraussetzungen) {
         this.voraussetzungen.clear();

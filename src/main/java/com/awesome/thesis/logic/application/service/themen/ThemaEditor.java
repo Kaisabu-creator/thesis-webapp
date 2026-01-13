@@ -3,6 +3,7 @@ package com.awesome.thesis.logic.application.service.themen;
 import com.awesome.thesis.logic.domain.model.links.Link;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
 import com.awesome.thesis.logic.domain.model.themen.Voraussetzung;
+import jakarta.validation.constraints.NotEmpty;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -83,5 +84,19 @@ public class ThemaEditor {
     public void updateVoraussetzungen(String id, Set<Voraussetzung> set) {
         Thema thema = getThema(id);
         thema.updateVoraussetzungen(set);
+        repository.update(thema.getId(), thema);
     }
+
+    public void addFachgebiet(String id, String fachgebiet) {
+        Thema thema = getThema(id);
+        thema.addFachgebiet(fachgebiet);
+        repository.update(thema.getId(), thema);
+    }
+
+    public void removeFachgebiet(String id, String fachgebiet) {
+        Thema thema = getThema(id);
+        thema.removeFachgebiet(fachgebiet);
+        repository.update(thema.getId(), thema);
+    }
+
 }

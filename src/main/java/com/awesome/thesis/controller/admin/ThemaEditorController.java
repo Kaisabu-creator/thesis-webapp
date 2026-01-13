@@ -1,4 +1,6 @@
 package com.awesome.thesis.controller.admin;
+
+import com.awesome.thesis.controller.dto.FachgebietDTO;
 import com.awesome.thesis.controller.dto.ThemaInfoDTO;
 import com.awesome.thesis.controller.dto.LinkDTO;
 import com.awesome.thesis.logic.application.dto.ThemaDTO;
@@ -33,14 +35,15 @@ public class ThemaEditorController {
     VoraussetzungenEditor vorEditor;
 
     @GetMapping("/themaEdit/{id}")
-    public String editThema(@PathVariable("id")String id, Model model, OAuth2AuthenticationToken auth) {
+    public String editThema(@PathVariable("id") String id, Model model, OAuth2AuthenticationToken auth) {
         Integer profilID = auth.getPrincipal().getAttribute("id");
         Thema thema = themaEditor.getThema(id);
         if (themaEditor.allowedEdit(profilID, thema)) {
             ThemaInfoDTO info = new ThemaInfoDTO(thema.getTitel(), thema.getBeschreibung());
-            model.addAttribute("themaLinkDTO", new LinkDTO("", ""));
             model.addAttribute("themaInfoDTO", info);
             model.addAttribute("thema", themaEditor.getThema(id));
+            model.addAttribute("themaLinkDTO", new LinkDTO("", ""));
+            model.addAttribute("fachgebietDTO", new FachgebietDTO(""));
             model.addAttribute("profilID", profilID);
             model.addAttribute("themaVoraussetzungen", thema.getVoraussetzungen());
             model.addAttribute("voraussetzungen", vorEditor.getAll());
@@ -51,12 +54,16 @@ public class ThemaEditorController {
     }
 
     @PostMapping("themaEdit/{id}/editInfo")
-    public String editThemaInfo(@PathVariable String id,@Valid @ModelAttribute("themaInfoDTO") ThemaInfoDTO themaInfoDTO, BindingResult result, Model model, OAuth2AuthenticationToken auth) {
+    public String editThemaInfo(@PathVariable String id, @Valid @ModelAttribute("themaInfoDTO") ThemaInfoDTO themaInfoDTO, BindingResult result, Model model, OAuth2AuthenticationToken auth) {
         Integer profilID = auth.getPrincipal().getAttribute("id");
         Thema thema = themaEditor.getThema(id);
-        if(result.hasErrors()) {
+        if (result.hasErrors()) {
             model.addAttribute("themaLinkDTO", new LinkDTO("", ""));
             model.addAttribute("thema", thema);
+            model.addAttribute("profilID", profilID);
+            model.addAttribute("themaVoraussetzungen", thema.getVoraussetzungen());
+            model.addAttribute("voraussetzungen", vorEditor.getAll());
+            model.addAttribute("fachgebietDTO", new FachgebietDTO(""));
             return "admin/themaEdit";
         }
         if (themaEditor.allowedEdit(profilID, thema)) {
@@ -74,10 +81,14 @@ public class ThemaEditorController {
     public String editThemaLink(@PathVariable String id, @Valid @ModelAttribute("themaLinkDTO") LinkDTO dto, BindingResult result, Model model, OAuth2AuthenticationToken auth) {
         Integer profilID = auth.getPrincipal().getAttribute("id");
         Thema thema = themaEditor.getThema(id);
-        if (result.hasErrors()){
+        if (result.hasErrors()) {
             ThemaInfoDTO info = new ThemaInfoDTO(thema.getTitel(), thema.getBeschreibung());
             model.addAttribute("themaInfoDTO", info);
             model.addAttribute("thema", themaEditor.getThema(id));
+            model.addAttribute("fachgebietDTO", new FachgebietDTO(""));
+            model.addAttribute("profilID", profilID);
+            model.addAttribute("themaVoraussetzungen", thema.getVoraussetzungen());
+            model.addAttribute("voraussetzungen", vorEditor.getAll());
             return "admin/themaEdit";
         }
         if (themaEditor.allowedEdit(profilID, thema)) {
@@ -142,6 +153,40 @@ public class ThemaEditorController {
             return "redirect:/betreuende/profilEdit";
         } else {
             return "redirect:/thema" + id;
+        }
+    }
+
+    @PostMapping("/themaEdit/{id}/addFachgebiet")
+    public String addFachgebiet(@PathVariable String id, @Valid @ModelAttribute FachgebietDTO fachgebietDTO, BindingResult result, Model model, OAuth2AuthenticationToken auth) {
+        Integer profilID = auth.getPrincipal().getAttribute("id");
+        Thema thema = themaEditor.getThema(id);
+        if (themaEditor.allowedEdit(profilID, thema)) {
+            if (result.hasErrors()) {
+                ThemaInfoDTO info = new ThemaInfoDTO(thema.getTitel(), thema.getBeschreibung());
+                model.addAttribute("themaInfoDTO", info);
+                model.addAttribute("thema", thema);
+                model.addAttribute("themaLinkDTO", new LinkDTO("", ""));
+                model.addAttribute("profilID", profilID);
+                model.addAttribute("themaVoraussetzungen", thema.getVoraussetzungen());
+                model.addAttribute("voraussetzungen", vorEditor.getAll());
+                return "redirect:/themaEdit/" + id;
+            }
+            themaEditor.addFachgebiet(id, fachgebietDTO.fachgebiet());
+            return "redirect:/themaEdit/" + id;
+        } else {
+            return "redirect:/";
+        }
+    }
+
+    @PostMapping("/themaEdit/{id}/removeFachgebiet")
+    public String removeFachgebiet(@PathVariable String id, String fachgebiet, OAuth2AuthenticationToken auth) {
+        Integer profilID = auth.getPrincipal().getAttribute("id");
+        Thema thema = themaEditor.getThema(id);
+        if (themaEditor.allowedEdit(profilID, thema)) {
+            themaEditor.removeFachgebiet(id, fachgebiet);
+            return "redirect:/themaEdit/" + id;
+        } else {
+            return "redirect:/";
         }
     }
 }

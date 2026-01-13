@@ -155,4 +155,25 @@ public class ThemaEditorControllerTest {
         verify(themaEditor).deleteThema("2");
     }
 
+    @Test
+    @DisplayName("You can add a Fachgebiet")
+    @WithMockOAuth2User(roles = {"BETREUENDE"}, id = 1)
+    void test_12() throws Exception {
+        Thema thema = mock(Thema.class);
+        when(themaEditor.getThema(any())).thenReturn(thema);
+        when(themaEditor.allowedEdit(anyLong(), any())).thenReturn(true);
+        mvc.perform(post("/themaEdit/2/addFachgebiet").param("fachgebiet", "das").with(csrf()));
+        verify(themaEditor).addFachgebiet("2","das");
+    }
+
+    @Test
+    @DisplayName("You can remove a Fachgebiet")
+    @WithMockOAuth2User(roles = {"BETREUENDE"}, id = 1)
+    void test_13() throws Exception {
+        Thema thema = mock(Thema.class);
+        when(themaEditor.getThema(any())).thenReturn(thema);
+        when(themaEditor.allowedEdit(anyLong(), any())).thenReturn(true);
+        mvc.perform(post("/themaEdit/2/removeFachgebiet").param("fachgebiet", "das").with(csrf()));
+        verify(themaEditor).removeFachgebiet("2","das");
+    }
 }
