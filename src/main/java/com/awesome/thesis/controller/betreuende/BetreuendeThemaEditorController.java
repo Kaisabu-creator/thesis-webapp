@@ -38,76 +38,70 @@ public class BetreuendeThemaEditorController {
     public String editThema(@PathVariable("id") String id, Model model, OAuth2AuthenticationToken auth) {
         Integer profilID = auth.getPrincipal().getAttribute("id");
         Thema thema = themaEditor.getThema(id);
-        if (themaEditor.allowedEdit(profilID, thema)) {
-            ThemaInfoDTO info = new ThemaInfoDTO(thema.getTitel(), thema.getBeschreibung());
-            model.addAttribute("themaInfoDTO", info);
-            model.addAttribute("thema", themaEditor.getThema(id));
-            model.addAttribute("themaLinkDTO", new LinkDTO("", ""));
-            model.addAttribute("fachgebietDTO", new FachgebietDTO(""));
-            model.addAttribute("profilID", profilID);
-            model.addAttribute("themaVoraussetzungen", thema.getVoraussetzungen());
-            model.addAttribute("voraussetzungen", vorEditor.getAll());
-            return "betreuende/themaEdit";
-        } else {
+        if (!themaEditor.allowedEdit(profilID, thema)) {
             return "redirect:/";
         }
+        ThemaInfoDTO info = new ThemaInfoDTO(thema.getTitel(), thema.getBeschreibung());
+        model.addAttribute("themaInfoDTO", info);
+        model.addAttribute("thema", themaEditor.getThema(id));
+        model.addAttribute("themaLinkDTO", new LinkDTO("", ""));
+        model.addAttribute("fachgebietDTO", new FachgebietDTO(""));
+        model.addAttribute("themaVoraussetzungen", thema.getVoraussetzungen());
+        model.addAttribute("voraussetzungen", vorEditor.getAll());
+        return "betreuende/themaEdit";
     }
 
     @PostMapping("themaEdit/{id}/editInfo")
     public String editThemaInfo(@PathVariable String id, @Valid @ModelAttribute("themaInfoDTO") ThemaInfoDTO themaInfoDTO, BindingResult result, Model model, OAuth2AuthenticationToken auth) {
         Integer profilID = auth.getPrincipal().getAttribute("id");
         Thema thema = themaEditor.getThema(id);
+        if (!themaEditor.allowedEdit(profilID, thema)) {
+            return "redirect:/";
+        }
         if (result.hasErrors()) {
             model.addAttribute("themaLinkDTO", new LinkDTO("", ""));
             model.addAttribute("thema", thema);
-            model.addAttribute("profilID", profilID);
             model.addAttribute("themaVoraussetzungen", thema.getVoraussetzungen());
             model.addAttribute("voraussetzungen", vorEditor.getAll());
             model.addAttribute("fachgebietDTO", new FachgebietDTO(""));
             return "betreuende/themaEdit";
         }
-        if (themaEditor.allowedEdit(profilID, thema)) {
-            profilEditor.removeThema(profilID, new ThemaDTO(id, thema.getTitel()));
-            profilEditor.addThema(profilID, new ThemaDTO(id, themaInfoDTO.titel()));
-            themaEditor.editTitel(id, themaInfoDTO.titel());
-            themaEditor.editBeschreibung(id, themaInfoDTO.beschreibung());
-            return "redirect:/themaEdit/" + id;
-        } else {
-            return "redirect:/";
-        }
+        profilEditor.removeThema(profilID, new ThemaDTO(id, thema.getTitel()));
+        profilEditor.addThema(profilID, new ThemaDTO(id, themaInfoDTO.titel()));
+        themaEditor.editTitel(id, themaInfoDTO.titel());
+        themaEditor.editBeschreibung(id, themaInfoDTO.beschreibung());
+        return "redirect:/themaEdit/" + id;
     }
 
     @PostMapping("/themaEdit/{id}/editLink")
     public String editThemaLink(@PathVariable String id, @Valid @ModelAttribute("themaLinkDTO") LinkDTO dto, BindingResult result, Model model, OAuth2AuthenticationToken auth) {
         Integer profilID = auth.getPrincipal().getAttribute("id");
         Thema thema = themaEditor.getThema(id);
+        if (!themaEditor.allowedEdit(profilID, thema)) {
+            return "redirect:/";
+        }
         if (result.hasErrors()) {
             ThemaInfoDTO info = new ThemaInfoDTO(thema.getTitel(), thema.getBeschreibung());
             model.addAttribute("themaInfoDTO", info);
             model.addAttribute("thema", themaEditor.getThema(id));
             model.addAttribute("fachgebietDTO", new FachgebietDTO(""));
-            model.addAttribute("profilID", profilID);
             model.addAttribute("themaVoraussetzungen", thema.getVoraussetzungen());
             model.addAttribute("voraussetzungen", vorEditor.getAll());
             return "betreuende/themaEdit";
         }
-        if (themaEditor.allowedEdit(profilID, thema)) {
-            themaEditor.addLink(id, dto.url(), dto.urlBeschreibung());
-            return "redirect:/themaEdit/" + id;
-        } else {
-            return "redirect:/";
-        }
+        themaEditor.addLink(id, dto.url(), dto.urlBeschreibung());
+        return "redirect:/themaEdit/" + id;
     }
 
     @PostMapping("/themaEdit/{id}/deleteLink")
     public String deleteLink(@ModelAttribute Link link, @PathVariable String id, @ModelAttribute("themaLinkDTO") LinkDTO dto, OAuth2AuthenticationToken auth) {
         Integer profilID = auth.getPrincipal().getAttribute("id");
-        if (themaEditor.allowedEdit(profilID, themaEditor.getThema(id))) {
-            themaEditor.removeLink(id, link);
-            return "redirect:/themaEdit/" + id;
-        } else {
+        Thema thema = themaEditor.getThema(id);
+        if (!themaEditor.allowedEdit(profilID, thema)) {
             return "redirect:/";
         }
+        themaEditor.removeLink(id, link);
+        return "redirect:/themaEdit/" + id;
     }
 
     @PostMapping("/themaAnsicht/{id}")
@@ -119,74 +113,68 @@ public class BetreuendeThemaEditorController {
     public String editVoraussetzung(@RequestParam(required = false) Optional<Set<String>> voraussetzungen, @PathVariable String id, OAuth2AuthenticationToken auth) {
         Integer profilID = auth.getPrincipal().getAttribute("id");
         Thema thema = themaEditor.getThema(id);
-        if (themaEditor.allowedEdit(profilID, thema)) {
-            Set<Voraussetzung> list = new HashSet<>();
-            voraussetzungen.orElse(Set.of()).forEach(e -> list.add(new Voraussetzung(e)));
-            themaEditor.updateVoraussetzungen(id, list);
-            return "redirect:/themaEdit/" + id;
-        } else {
+        if (!themaEditor.allowedEdit(profilID, thema)) {
             return "redirect:/";
         }
+        Set<Voraussetzung> list = new HashSet<>();
+        voraussetzungen.orElse(Set.of()).forEach(e -> list.add(new Voraussetzung(e)));
+        themaEditor.updateVoraussetzungen(id, list);
+        return "redirect:/themaEdit/" + id;
     }
 
     @GetMapping("/thema/{id}/confirmDeletion")
     public String checkDeleteThema(@PathVariable String id, OAuth2AuthenticationToken auth, Model model) {
         Integer profilID = auth.getPrincipal().getAttribute("id");
         Thema thema = themaEditor.getThema(id);
-        if (themaEditor.allowedEdit(profilID, thema)) {
-            boolean canEdit = themaEditor.allowedEdit(profilID, thema);
-            model.addAttribute("thema", thema);
-            model.addAttribute("canEdit", canEdit);
-            return "themen/confirmThemaDeletion";
-        } else {
-            return "redirect:/thema" + id;
+        if (!themaEditor.allowedEdit(profilID, thema)) {
+            return "redirect:/";
         }
+        boolean canEdit = themaEditor.allowedEdit(profilID, thema);
+        model.addAttribute("thema", thema);
+        model.addAttribute("canEdit", canEdit);
+        return "themen/confirmThemaDeletion";
     }
 
     @PostMapping("/thema/{id}/deleteThema")
-    public String deleteThema(@PathVariable String id, OAuth2AuthenticationToken auth, Model model) {
+    public String deleteThema(@PathVariable String id, OAuth2AuthenticationToken auth) {
         Integer profilID = auth.getPrincipal().getAttribute("id");
         Thema thema = themaEditor.getThema(id);
-        if (themaEditor.allowedEdit(profilID, thema)) {
-            profilEditor.removeThema(profilID, new ThemaDTO(id, thema.getTitel()));
-            themaEditor.deleteThema(id);
-            return "redirect:/betreuende/profilEdit";
-        } else {
-            return "redirect:/thema" + id;
+        if (!themaEditor.allowedEdit(profilID, thema)) {
+            return "redirect:/";
         }
+        profilEditor.removeThema(profilID, new ThemaDTO(id, thema.getTitel()));
+        themaEditor.deleteThema(id);
+        return "redirect:/betreuende/profilEdit";
     }
 
     @PostMapping("/themaEdit/{id}/addFachgebiet")
     public String addFachgebiet(@PathVariable String id, @Valid @ModelAttribute FachgebietDTO fachgebietDTO, BindingResult result, Model model, OAuth2AuthenticationToken auth) {
         Integer profilID = auth.getPrincipal().getAttribute("id");
         Thema thema = themaEditor.getThema(id);
-        if (themaEditor.allowedEdit(profilID, thema)) {
-            if (result.hasErrors()) {
-                ThemaInfoDTO info = new ThemaInfoDTO(thema.getTitel(), thema.getBeschreibung());
-                model.addAttribute("themaInfoDTO", info);
-                model.addAttribute("thema", thema);
-                model.addAttribute("themaLinkDTO", new LinkDTO("", ""));
-                model.addAttribute("profilID", profilID);
-                model.addAttribute("themaVoraussetzungen", thema.getVoraussetzungen());
-                model.addAttribute("voraussetzungen", vorEditor.getAll());
-                return "redirect:/themaEdit/" + id;
-            }
-            themaEditor.addFachgebiet(id, fachgebietDTO.fachgebiet());
-            return "redirect:/themaEdit/" + id;
-        } else {
+        if (!themaEditor.allowedEdit(profilID, thema)) {
             return "redirect:/";
         }
+        if (result.hasErrors()) {
+            ThemaInfoDTO info = new ThemaInfoDTO(thema.getTitel(), thema.getBeschreibung());
+            model.addAttribute("themaInfoDTO", info);
+            model.addAttribute("thema", thema);
+            model.addAttribute("themaLinkDTO", new LinkDTO("", ""));
+            model.addAttribute("themaVoraussetzungen", thema.getVoraussetzungen());
+            model.addAttribute("voraussetzungen", vorEditor.getAll());
+            return "betreuende/themaEdit";
+        }
+        themaEditor.addFachgebiet(id, fachgebietDTO.fachgebiet());
+        return "redirect:/themaEdit/" + id;
     }
 
     @PostMapping("/themaEdit/{id}/removeFachgebiet")
     public String removeFachgebiet(@PathVariable String id, String fachgebiet, OAuth2AuthenticationToken auth) {
         Integer profilID = auth.getPrincipal().getAttribute("id");
         Thema thema = themaEditor.getThema(id);
-        if (themaEditor.allowedEdit(profilID, thema)) {
-            themaEditor.removeFachgebiet(id, fachgebiet);
-            return "redirect:/themaEdit/" + id;
-        } else {
+        if (!themaEditor.allowedEdit(profilID, thema)) {
             return "redirect:/";
         }
+        themaEditor.removeFachgebiet(id, fachgebiet);
+        return "redirect:/themaEdit/" + id;
     }
 }
