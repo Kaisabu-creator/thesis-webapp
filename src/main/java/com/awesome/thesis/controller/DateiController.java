@@ -3,6 +3,7 @@ package com.awesome.thesis.controller;
 import com.awesome.thesis.logic.application.dto.DateiDTO;
 import com.awesome.thesis.logic.application.service.files.DateiService;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
+import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
 import com.awesome.thesis.logic.domain.model.files.DateiInfos;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Controller;
@@ -19,10 +20,12 @@ public class DateiController {
 
     private final DateiService dateiService;
     private final ProfilEditor profilEditor;
+    private final ThemaEditor themaEditor;
 
-    public DateiController(DateiService dateiService, ProfilEditor profilEditor) {
+    public DateiController(DateiService dateiService, ProfilEditor profilEditor, ThemaEditor themaEditor) {
         this.dateiService = dateiService;
         this.profilEditor = profilEditor;
+        this.themaEditor = themaEditor;
     }
 
     @GetMapping("/datei/create")
@@ -42,6 +45,29 @@ public class DateiController {
             String dateiId = UUID.randomUUID().toString();
             DateiDTO dateiDTO = new DateiDTO(dateiId, infos.getTitle(), infos.getDescription());
             profilEditor.addDatei(id.longValue(), dateiDTO);
+
+            model.addAttribute("dateiInfos", infos);
+            model.addAttribute("nachricht", infos.getTitle() + " wurde erfolgreich hochgeladen.");
+
+            return "upload";
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("nachricht", e.getMessage());
+            return "upload";
+        }
+    }
+
+    @PostMapping("thema/datei/create")
+    public String themaAnnehmen (@RequestParam("datei") MultipartFile multipartFile,
+                            @RequestParam(value = "beschreibung", required = false) String beschreibung,
+                            OAuth2AuthenticationToken auth,
+                            Model model){
+        try {
+            DateiInfos infos = dateiService.infosErstellen(multipartFile, beschreibung);
+
+            String id = auth.getPrincipal().getAttribute("id");
+            String dateiId = UUID.randomUUID().toString();
+            DateiDTO dateiDTO = new DateiDTO(dateiId, infos.getTitle(), infos.getDescription());
+            themaEditor.addDatei(id, dateiDTO);
 
             model.addAttribute("dateiInfos", infos);
             model.addAttribute("nachricht", infos.getTitle() + " wurde erfolgreich hochgeladen.");

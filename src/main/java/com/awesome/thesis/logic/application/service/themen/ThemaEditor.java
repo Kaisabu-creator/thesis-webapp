@@ -1,6 +1,8 @@
 package com.awesome.thesis.logic.application.service.themen;
 
+import com.awesome.thesis.logic.application.dto.DateiDTO;
 import com.awesome.thesis.logic.domain.model.links.Link;
+import com.awesome.thesis.logic.domain.model.profil.Profil;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
 import com.awesome.thesis.logic.domain.model.themen.Voraussetzung;
 import jakarta.validation.constraints.NotEmpty;
@@ -97,6 +99,18 @@ public class ThemaEditor {
         Thema thema = getThema(id);
         thema.removeFachgebiet(fachgebiet);
         repository.update(thema.getId(), thema);
+    }
+
+    public void addDatei(String id, DateiDTO datei) {
+        Thema thema = getThema(id);
+        thema.addDatei(datei);
+        repository.update(id, thema);
+    }
+
+    public void removeDatei(String id, DateiDTO datei) {
+        Thema thema = getThema(id);
+        thema.removeDatei(datei);
+        repository.update(id, thema);
     }
 
 }

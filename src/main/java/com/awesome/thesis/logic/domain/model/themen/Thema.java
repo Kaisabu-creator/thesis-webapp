@@ -1,6 +1,7 @@
 package com.awesome.thesis.logic.domain.model.themen;
 
 import com.awesome.thesis.annotations.AggregateRoot;
+import com.awesome.thesis.logic.application.dto.DateiDTO;
 import com.awesome.thesis.logic.domain.model.links.Link;
 
 import java.util.*;
@@ -14,6 +15,7 @@ public class Thema {
     private final long profilID;
     private final Set<Voraussetzung> voraussetzungen;
     private final Set<String> fachgebiete;
+    private final Set<DateiDTO> dateien;
 
     public Thema(String titel, long id) {
         this.titel = titel;
@@ -21,6 +23,7 @@ public class Thema {
         this.links = new ArrayList<>();
         this.voraussetzungen = new HashSet<>();
         this.fachgebiete = new HashSet<>();
+        this.dateien = new HashSet<>();
     }
 
     public Set<String> getFachgebiete() {
@@ -112,4 +115,15 @@ public class Thema {
         return Objects.hash(id);
     }
 
+    public void addDatei(DateiDTO datei) {
+        dateien.add(datei);
+    }
+
+    public void removeDatei(DateiDTO datei) {
+        dateien.remove(datei);
+    }
+
+    public Set<DateiDTO> getDateien() {
+        return dateien;
+    }
 }

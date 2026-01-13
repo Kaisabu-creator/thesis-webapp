@@ -6,6 +6,7 @@ import com.awesome.thesis.configurations.SecurityConfig;
 import com.awesome.thesis.helper.WithMockOAuth2User;
 import com.awesome.thesis.logic.application.service.files.DateiService;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
+import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -23,7 +24,10 @@ class DateiControllerTest {
     MockMvc mockMvc;
 
     @MockitoBean
-    ProfilEditor editor;
+    ProfilEditor profilEditor;
+
+    @MockitoBean
+    ThemaEditor themaEditor;
 
     @MockitoBean
     DateiService dateiService;
