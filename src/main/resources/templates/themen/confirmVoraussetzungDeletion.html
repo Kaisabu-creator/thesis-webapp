@@ -37,7 +37,7 @@
 <span th:text="${voraussetzung}">Voraussetzung</span>
 <form th:action="@{/admin/removeVoraussetzung}" method="post">
     <input type="hidden" th:value="${voraussetzung}" name="voraussetzung">
-    <button type="submit" class="btn btn-danger">Thema löschen</button>
+    <button type="submit" class="btn btn-danger">Modul löschen</button>
 </form>
 <a th:href="@{/admin/module/edit}" class="btn btn-primary">Nicht löschen</a>
 </body>
