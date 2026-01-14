@@ -31,34 +31,45 @@
         </div>
     </div>
 </nav>
-<div class="container-fluid py 3">
+<div class="container-fluid py-3" th:object="${thema}">
     <div class="row justify-content-center">
         <div class="col-md-12 mb-4">
-            <h1 class="display-4 fw-bold" th:text="*{thema.titel}">Thema Titel</h1>
+            <h1 class="display-4 fw-bold" th:text="*{titel}">Thema Titel</h1>
         </div>
     </div>
     <a th:href="@{/betreuende/{profilID}(profilID=${profilID})}">Link zum Profil</a>
-    <div th:if="${thema.hasBeschreibung}">
-        Beschreibung des Themas:
-        <p><span th:text="${thema.beschreibung}">Beschreibung</span></p>
+    <div th:if="*{!beschreibung.isEmpty()}">
+        <h2>Beschreibung des Themas:</h2>
+        <p><span th:text="*{beschreibung}">Beschreibung</span></p>
     </div>
     <div>
-        <span>Voraussetzungen:</span>
-        <div th:each="vor: ${thema.getVoraussetzungen()}">
-            <div th:text="${vor.voraussetzung()}"></div>
+        <div th:if="*{!voraussetzungen.isEmpty()}">
+            <h2>Voraussetzungen:</h2>
+            <div th:each="vor: *{voraussetzungen}">
+                <div th:text="${vor.voraussetzung()}"></div>
+            </div>
         </div>
     </div>
     <div>
-        <span>Fachgebiete:</span>
-        <div th:each="fach: ${thema.getFachgebiete()}">
-            <div th:text="${fach}"></div>
+        <div th:if="*{!fachgebiete.isEmpty()}">
+            <h2>Fachgebiete:</h2>
+            <div th:each="fach: *{fachgebiete}">
+                <div th:text="${fach}"></div>
+            </div>
         </div>
     </div>
-    <div th:if="${thema.hasLinks}">
-        <p>Links zu externen Ressourcen:</p>
-        <ul th:each="link: ${thema.links}">
+    <div th:if="*{!links.isEmpty()}">
+        <h2>Links zu externen Ressourcen:</h2>
+        <ul th:each="link: *{links}">
             <li><a th:href="@{{link}(link=${link.url})}" th:text="${link.url}"></a>
                 <div th:text="${link.text}">Beschreibung des Links</div>
+            </li>
+        </ul>
+    </div>
+    <div class="row justify-content-center" th:if="*{!dateien.isEmpty()}">
+        <h2>Dateien</h2>
+        <ul class="ps-5" th:each="datei: *{dateien}">
+            <li><a th:href="@{/datei/{dateiId}(dateiId=${datei.id})}" th:text="${datei.name}">Datei</a>
             </li>
         </ul>
     </div>

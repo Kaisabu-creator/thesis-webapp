@@ -182,6 +182,31 @@
                 </div>
             </div>
 
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 bg-light overflow-auto" style="max-height: 500px">
+                    <div class="card-body">
+                        <h2 class="card-title fw-bold">Dateien</h2>
+                        <a class="btn btn-primary mb-4" th:href="@{/thema/datei/{id}/create(id=${thema.id})}">Neue Datei hochladen</a>
+                        <table class="table table-striped mb-0">
+                            <tbody>
+                            <tr th:each="datei: *{thema.dateien}">
+                                <td>
+                                    <a th:href="@{/datei/{dateiId}(dateiId=${datei.id})}" th:text="${datei.name}">Datei</a>
+                                </td>
+                                <td>
+                                    <span th:text="${datei.beschreibung}">Beschreibung</span>
+                                </td>
+                                <td class="text-end d-flex justify-content-end gap-2">
+                                    <a th:href="@{/datei/{dateiId}/delete(dateiId=${datei.id})}" class="btn-close"
+                                       aria-label="Datei entfernen"></a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
 
 
             <form th:action="@{/betreuende/profilEdit}">
