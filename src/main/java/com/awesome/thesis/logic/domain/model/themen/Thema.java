@@ -11,7 +11,7 @@ public class Thema {
     private String id;
     private String titel;
     private String beschreibung;
-    private final List<Link> links;
+    private final Set<Link> links;
     private final long profilID;
     private final Set<Voraussetzung> voraussetzungen;
     private final Set<String> fachgebiete;
@@ -20,7 +20,7 @@ public class Thema {
     public Thema(String titel, long id) {
         this.titel = titel;
         this.profilID = id;
-        this.links = new ArrayList<>();
+        this.links = new HashSet<>();
         this.voraussetzungen = new HashSet<>();
         this.fachgebiete = new HashSet<>();
         this.dateien = new HashSet<>();
@@ -77,7 +77,7 @@ public class Thema {
         links.add(link);
     }
 
-    public List<Link> getLinks() {
+    public Set<Link> getLinks() {
         return links;
     }
 

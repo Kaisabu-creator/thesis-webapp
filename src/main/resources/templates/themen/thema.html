@@ -38,7 +38,9 @@
         </div>
     </div>
     <a th:href="@{/betreuende/{profilID}(profilID=${profilID})}">Link zum Profil</a>
-    <div th:if="*{!beschreibung.isEmpty()}">
+
+    <!-- isEmpty does not work here because beschreibung can be null as it is a String instead of a Set -->
+    <div th:if="${thema.hasBeschreibung()}">
         <h2>Beschreibung des Themas:</h2>
         <p><span th:text="*{beschreibung}">Beschreibung</span></p>
     </div>
