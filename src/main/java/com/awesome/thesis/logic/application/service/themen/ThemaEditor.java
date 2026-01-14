@@ -1,11 +1,14 @@
 package com.awesome.thesis.logic.application.service.themen;
 
 import com.awesome.thesis.logic.application.dto.DateiDTO;
+import com.awesome.thesis.logic.application.dto.ThemaDTO;
+import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import com.awesome.thesis.logic.domain.model.links.Link;
 import com.awesome.thesis.logic.domain.model.profil.Profil;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
 import com.awesome.thesis.logic.domain.model.themen.Voraussetzung;
 import jakarta.validation.constraints.NotEmpty;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +18,9 @@ import java.util.Set;
 @Service
 public class ThemaEditor {
     IThemaRepo repository;
+
+    @Autowired
+    ProfilEditor profilEditor;
 
     public ThemaEditor(IThemaRepo repository) {
         this.repository = repository;
@@ -71,8 +77,10 @@ public class ThemaEditor {
         return profilID == thema.getProfilID();
     }
 
-    public void deleteThema(String id) {
+    public void deleteThema(String id, Integer profilID) {
+        Thema thema = getThema(id);
         repository.delete(id);
+        profilEditor.removeThemaOld(profilID, new ThemaDTO(id, thema.getTitel()));
     }
 
     public void removeAllVoraussetzung (Voraussetzung voraussetzung) {

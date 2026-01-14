@@ -143,7 +143,7 @@ public class BetreuendeThemaEditorController {
             return "redirect:/";
         }
         profilEditor.removeThemaOld(profilID, new ThemaDTO(id, thema.getTitel()));
-        themaEditor.deleteThema(id);
+        themaEditor.deleteThema(id, profilID);
         return "redirect:/betreuende/profilEdit";
     }
 

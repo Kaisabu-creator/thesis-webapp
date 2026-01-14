@@ -151,7 +151,7 @@ public class ThemaEditorControllerTest {
         when(themaEditor.getThema(any())).thenReturn(thema);
         when(themaEditor.allowedEdit(anyLong(), any())).thenReturn(true);
         mvc.perform(post("/thema/2/deleteThema").with(csrf()));
-        verify(themaEditor).deleteThema("2");
+        verify(themaEditor).deleteThema("2", 1);
     }
 
     @Test
