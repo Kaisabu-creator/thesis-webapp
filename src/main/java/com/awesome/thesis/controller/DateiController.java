@@ -57,7 +57,7 @@ public class DateiController {
             Integer id = auth.getPrincipal().getAttribute("id");
             String dateiId = UUID.randomUUID().toString();
             DateiDTO dateiDTO = new DateiDTO(dateiId, infos.getTitle(), infos.getDescription());
-            profilEditor.addDatei(id.longValue(), dateiDTO);
+            profilEditor.addDateiOld(id.longValue(), dateiDTO);
 
             model.addAttribute("dateiInfos", infos);
             model.addAttribute("nachricht", infos.getTitle() + " wurde erfolgreich hochgeladen.");

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class ProfilEditor {
@@ -126,31 +125,55 @@ public class ProfilEditor {
         profile.update(id, profil);
     }
 
-    public void addThema(long id, ThemaDTO themaOld) {
+    public void addThemaOld(long id, ThemaDTO themaOld) {
         ThemaValue thema = new ThemaValue(themaOld.id(), themaOld.name());
         Profil profil = get(id);
         profil.addThema(thema);
         profile.update(id, profil);
     }
 
-    public void removeThema(long id, ThemaDTO themaOld) {
+    public void removeThemaOld(long id, ThemaDTO themaOld) {
         ThemaValue thema = new ThemaValue(themaOld.id(), themaOld.name());
         Profil profil = get(id);
         profil.removeThema(thema);
         profile.update(id, profil);
     }
 
-    public void addDatei(long id, DateiDTO dateiOld) {
+    public void addDateiOld(long id, DateiDTO dateiOld) {
         DateiValue datei = new DateiValue(dateiOld.id(), dateiOld.name(), dateiOld.beschreibung());
         Profil profil = get(id);
         profil.addDatei(datei);
         profile.update(id, profil);
     }
 
-    public void removeDatei(long id, DateiDTO dateiOld) {
+    public void removeDateiOld(long id, DateiDTO dateiOld) {
         DateiValue datei = new DateiValue(dateiOld.id(), dateiOld.name(), dateiOld.beschreibung());
         Profil profil = get(id);
         profil.removeDatei(datei);
+        profile.update(id, profil);
+    }
+
+    public void addThema(long id, String themaId, String name) {
+        Profil profil = get(id);
+        profil.addThema(new ThemaValue(themaId, name));
+        profile.update(id, profil);
+    }
+
+    public void removeThema(long id, String themaId) {
+        Profil profil = get(id);
+        profil.removeThema(new ThemaValue(themaId, ""));
+        profile.update(id, profil);
+    }
+
+    public void addDatei(long id, String dateiId, String name, String beschreibung) {
+        Profil profil = get(id);
+        profil.addDatei(new DateiValue(dateiId, name, beschreibung));
+        profile.update(id, profil);
+    }
+
+    public void removeDateiOld(long id, String dateiId) {
+        Profil profil = get(id);
+        profil.removeDatei(new DateiValue(dateiId, "", ""));
         profile.update(id, profil);
     }
 }
