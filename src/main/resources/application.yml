@@ -13,6 +13,10 @@ spring:
             client-id: ${CLIENT_ID}
             client-secret: ${CLIENT_SECRET}
             scope: read:public_repo
+  datasource:
+    password: ${POSTGRES_PASSWORD}
+    username: ${POSTGRES_USER}
+    url: jdbc:postgresql://localhost:5432/thesis-postgres
 
 logging:
   level:
