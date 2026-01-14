@@ -126,30 +126,26 @@ public class ProfilEditor {
     }
 
     public void addThemaOld(long id, ThemaDTO themaOld) {
-        ThemaValue thema = new ThemaValue(themaOld.id(), themaOld.name());
         Profil profil = get(id);
-        profil.addThema(thema);
+        profil.addThema(new ThemaValue(themaOld.id(), themaOld.name()));
         profile.update(id, profil);
     }
 
     public void removeThemaOld(long id, ThemaDTO themaOld) {
-        ThemaValue thema = new ThemaValue(themaOld.id(), themaOld.name());
         Profil profil = get(id);
-        profil.removeThema(thema);
+        profil.removeThema(new ThemaValue(themaOld.id(), themaOld.name()));
         profile.update(id, profil);
     }
 
     public void addDateiOld(long id, DateiDTO dateiOld) {
-        DateiValue datei = new DateiValue(dateiOld.id(), dateiOld.name(), dateiOld.beschreibung());
         Profil profil = get(id);
-        profil.addDatei(datei);
+        profil.addDatei(new DateiValue(dateiOld.id(), dateiOld.name(), dateiOld.beschreibung()));
         profile.update(id, profil);
     }
 
     public void removeDateiOld(long id, DateiDTO dateiOld) {
-        DateiValue datei = new DateiValue(dateiOld.id(), dateiOld.name(), dateiOld.beschreibung());
         Profil profil = get(id);
-        profil.removeDatei(datei);
+        profil.removeDatei(new DateiValue(dateiOld.id(), dateiOld.name(), dateiOld.beschreibung()));
         profile.update(id, profil);
     }
 
