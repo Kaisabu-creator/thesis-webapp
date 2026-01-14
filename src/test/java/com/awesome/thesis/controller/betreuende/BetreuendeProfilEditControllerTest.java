@@ -17,7 +17,6 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.never;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -40,7 +39,7 @@ class BetreuendeProfilEditControllerTest {
     @DisplayName("get auf /betreuende/profilEdit funktioniert")
     void get_profilEdit() throws Exception {
         Profil profil = new Profil(1, "test");
-        when(editor.get(anyLong())).thenReturn(profil);
+        when(editor.get(anyInt())).thenReturn(profil);
         mockMvc.perform(get("/betreuende/profilEdit"))
                 .andExpect(model().attribute("profil", profil))
                 .andExpect(view().name("betreuende/profilEdit"))
@@ -52,7 +51,7 @@ class BetreuendeProfilEditControllerTest {
     @DisplayName("get auf /betreuende/profilEdit funktioniert nicht ohne Rechte")
     void get_profilEdit_withoutRights() throws Exception {
         Profil profil = new Profil(1, "test");
-        when(editor.get(anyLong())).thenReturn(profil);
+        when(editor.get(anyInt())).thenReturn(profil);
         mockMvc.perform(get("/betreuende/profilEdit"))
                 .andExpect(status().isForbidden());
     }
@@ -130,7 +129,7 @@ class BetreuendeProfilEditControllerTest {
     @DisplayName("post Email hinzufügen funktioniert nicht bei fehlender Email")
     void post_addEmail_keinWert() throws Exception {
         Profil profil = new Profil(1, "test");
-        when(editor.get(anyLong())).thenReturn(profil);
+        when(editor.get(anyInt())).thenReturn(profil);
         mockMvc.perform(post("/betreuende/profilEdit/addKontakt")
                         .param("type", "email")
                         .param("label", "test")
@@ -144,13 +143,13 @@ class BetreuendeProfilEditControllerTest {
     @DisplayName("post Email hinzufügen funktioniert nicht bei fehlender Email")
     void post_addEmail_BackEnd_keinWert() throws Exception {
         Profil profil = new Profil(1, "test");
-        when(editor.get(anyLong())).thenReturn(profil);
+        when(editor.get(anyInt())).thenReturn(profil);
         mockMvc.perform(post("/betreuende/profilEdit/addKontakt")
                         .param("type", "email")
                         .param("label", "test")
                         .param("wert", "")
                         .with(csrf()));
-        verify(editor, never()).addEmail(anyLong(), any(), any());
+        verify(editor, never()).addEmail(anyInt(), any(), any());
     }
 
     @Test
@@ -158,7 +157,7 @@ class BetreuendeProfilEditControllerTest {
     @DisplayName("post Email hinzufügen funktioniert nicht bei falscher Email")
     void post_addEmail_keineEmail() throws Exception {
         Profil profil = new Profil(1, "test");
-        when(editor.get(anyLong())).thenReturn(profil);
+        when(editor.get(anyInt())).thenReturn(profil);
         mockMvc.perform(post("/betreuende/profilEdit/addKontakt")
                         .param("type", "email")
                         .param("label", "test")
@@ -172,13 +171,13 @@ class BetreuendeProfilEditControllerTest {
     @DisplayName("post Email hinzufügen funktioniert nicht bei falscher Email")
     void post_addEmail_BackEnd_keineEmail() throws Exception {
         Profil profil = new Profil(1, "test");
-        when(editor.get(anyLong())).thenReturn(profil);
+        when(editor.get(anyInt())).thenReturn(profil);
         mockMvc.perform(post("/betreuende/profilEdit/addKontakt")
                         .param("type", "email")
                         .param("label", "test")
                         .param("wert", "test")
                         .with(csrf()));
-        verify(editor, never()).addEmail(anyLong(), any(), any());
+        verify(editor, never()).addEmail(anyInt(), any(), any());
     }
 
     @Test
@@ -210,7 +209,7 @@ class BetreuendeProfilEditControllerTest {
     @DisplayName("post Tel hinzufügen funktioniert nicht bei fehlender Email")
     void post_addTel_keinWert() throws Exception {
         Profil profil = new Profil(1, "test");
-        when(editor.get(anyLong())).thenReturn(profil);
+        when(editor.get(anyInt())).thenReturn(profil);
         mockMvc.perform(post("/betreuende/profilEdit/addKontakt")
                         .param("type", "tel")
                         .param("label", "test")
@@ -224,13 +223,13 @@ class BetreuendeProfilEditControllerTest {
     @DisplayName("post Tel hinzufügen funktioniert nicht bei fehlender Email")
     void post_addTel_BackEnd_keinWert() throws Exception {
         Profil profil = new Profil(1, "test");
-        when(editor.get(anyLong())).thenReturn(profil);
+        when(editor.get(anyInt())).thenReturn(profil);
         mockMvc.perform(post("/betreuende/profilEdit/addKontakt")
                 .param("type", "tel")
                 .param("label", "test")
                 .param("wert", "")
                 .with(csrf()));
-        verify(editor, never()).addEmail(anyLong(), any(), any());
+        verify(editor, never()).addEmail(anyInt(), any(), any());
     }
 
     @Test
@@ -238,7 +237,7 @@ class BetreuendeProfilEditControllerTest {
     @DisplayName("post Tel hinzufügen funktioniert nicht bei falscher Email")
     void post_addTel_keineTel() throws Exception {
         Profil profil = new Profil(1, "test");
-        when(editor.get(anyLong())).thenReturn(profil);
+        when(editor.get(anyInt())).thenReturn(profil);
         mockMvc.perform(post("/betreuende/profilEdit/addKontakt")
                         .param("type", "tel")
                         .param("label", "test")
@@ -252,12 +251,12 @@ class BetreuendeProfilEditControllerTest {
     @DisplayName("post Tel hinzufügen funktioniert nicht bei falscher Email")
     void post_addTel_BackEnd_keineEmail() throws Exception {
         Profil profil = new Profil(1, "test");
-        when(editor.get(anyLong())).thenReturn(profil);
+        when(editor.get(anyInt())).thenReturn(profil);
         mockMvc.perform(post("/betreuende/profilEdit/addKontakt")
                 .param("type", "tel")
                 .param("label", "test")
                 .param("wert", "test")
                 .with(csrf()));
-        verify(editor, never()).addEmail(anyLong(), any(), any());
+        verify(editor, never()).addEmail(anyInt(), any(), any());
     }
 }

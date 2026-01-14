@@ -98,7 +98,7 @@ class AdminProfilCreatorTest {
                 .param("id", "")
                 .param("name", "test")
                 .with(csrf()));
-        verify(editor, never()).create(anyLong(), any());
+        verify(editor, never()).create(anyInt(), any());
     }
 
     @Test
@@ -109,7 +109,7 @@ class AdminProfilCreatorTest {
                 .param("id", "0")
                 .param("name", "test")
                 .with(csrf()));
-        verify(editor, never()).create(anyLong(), any());
+        verify(editor, never()).create(anyInt(), any());
     }
 
     @Test
@@ -120,6 +120,6 @@ class AdminProfilCreatorTest {
                 .param("id", "1")
                 .param("name", "")
                 .with(csrf()));
-        verify(editor, never()).create(anyLong(), any());
+        verify(editor, never()).create(anyInt(), any());
     }
 }

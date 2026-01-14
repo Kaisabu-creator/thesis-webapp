@@ -21,38 +21,38 @@ public class ProfilEditor {
         this.profile = profile;
     }
 
-    public void addEmail(long id, String label, String wert) {
+    public void addEmail(int id, String label, String wert) {
         Profil profil = get(id);
         profil.addEmail(label, wert);
         profile.update(id, profil);
     }
 
-    public void addTel(long id, String label, String wert) {
+    public void addTel(int id, String label, String wert) {
         Profil profil = get(id);
         profil.addTel(label, wert);
         profile.update(id, profil);
     }
 
-    public void editName(long id, String name) {
+    public void editName(int id, String name) {
         Profil profil = get(id);
         profil.setName(name);
         profile.update(id, profil);
     }
 
-    public void removeKontakt(long id, Kontakt kontakt) {
+    public void removeKontakt(int id, Kontakt kontakt) {
         Profil profil = get(id);
         profil.removeKontakt(kontakt);
         profile.update(id, profil);
     }
 
-    public void addFachgebiet(long id, String fachgebiet) {
+    public void addFachgebiet(int id, String fachgebiet) {
         Profil profil = get(id);
         profil.addFachgebiet(fachgebiet);
         fachgebieteEditor.add(fachgebiet);
         profile.update(id, profil);
     }
 
-    public void removeFachgebiet(long id, String fachgebiet) {
+    public void removeFachgebiet(int id, String fachgebiet) {
         Profil profil = get(id);
         profil.removeFachgebiet(fachgebiet);
         fachgebieteEditor.remove(fachgebiet);
@@ -67,23 +67,23 @@ public class ProfilEditor {
         }
     }
 
-    public void delete(long id) {
+    public void delete(int id) {
         profile.delete(id);
     }
 
-    public void create(long id, String name) {
+    public void create(int id, String name) {
         Profil profil = new Profil(id, name);
         profile.save(id, profil);
     }
 
-    public Profil get(long id) {
+    public Profil get(int id) {
         if (profile.containsKey(id)) {
             return profile.get(id);
         }
         throw new IllegalArgumentException("No such id " + id);
     }
 
-    public boolean contains(long id) {
+    public boolean contains(int id) {
         return profile.containsKey(id);
     }
 
@@ -112,62 +112,62 @@ public class ProfilEditor {
                         ))
                 .toList();
     }
-    public void addLink(long id, String url, String urlBeschreibung) {
+    public void addLink(int id, String url, String urlBeschreibung) {
         Profil profil = get(id);
         ProfilLink link = new ProfilLink(url, urlBeschreibung);
         profil.addLink(link);
         profile.update(id, profil);
     }
 
-    public void removeLink(long id, ProfilLink link) {
+    public void removeLink(int id, ProfilLink link) {
         Profil profil = get(id);
         profil.removeLink(link);
         profile.update(id, profil);
     }
 
-    public void addThemaOld(long id, ThemaDTO themaOld) {
+    public void addThemaOld(int id, ThemaDTO themaOld) {
         Profil profil = get(id);
         profil.addThema(new ThemaValue(themaOld.id(), themaOld.name()));
         profile.update(id, profil);
     }
 
-    public void removeThemaOld(long id, ThemaDTO themaOld) {
+    public void removeThemaOld(int id, ThemaDTO themaOld) {
         Profil profil = get(id);
         profil.removeThema(new ThemaValue(themaOld.id(), themaOld.name()));
         profile.update(id, profil);
     }
 
-    public void addDateiOld(long id, DateiDTO dateiOld) {
+    public void addDateiOld(int id, DateiDTO dateiOld) {
         Profil profil = get(id);
         profil.addDatei(new DateiValue(dateiOld.id(), dateiOld.name(), dateiOld.beschreibung()));
         profile.update(id, profil);
     }
 
-    public void removeDateiOld(long id, DateiDTO dateiOld) {
+    public void removeDateiOld(int id, DateiDTO dateiOld) {
         Profil profil = get(id);
         profil.removeDatei(new DateiValue(dateiOld.id(), dateiOld.name(), dateiOld.beschreibung()));
         profile.update(id, profil);
     }
 
-    public void addThema(long id, String themaId, String name) {
+    public void addThema(int id, String themaId, String name) {
         Profil profil = get(id);
         profil.addThema(new ThemaValue(themaId, name));
         profile.update(id, profil);
     }
 
-    public void removeThema(long id, String themaId) {
+    public void removeThema(int id, String themaId) {
         Profil profil = get(id);
         profil.removeThema(new ThemaValue(themaId, ""));
         profile.update(id, profil);
     }
 
-    public void addDatei(long id, String dateiId, String name, String beschreibung) {
+    public void addDatei(int id, String dateiId, String name, String beschreibung) {
         Profil profil = get(id);
         profil.addDatei(new DateiValue(dateiId, name, beschreibung));
         profile.update(id, profil);
     }
 
-    public void removeDateiOld(long id, String dateiId) {
+    public void removeDateiOld(int id, String dateiId) {
         Profil profil = get(id);
         profil.removeDatei(new DateiValue(dateiId, "", ""));
         profile.update(id, profil);

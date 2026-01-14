@@ -39,7 +39,7 @@ public class ThemaEditor {
         repository.update(id, thema);
     }
 
-    public void editTitel(long profilID, String id, String titel) {
+    public void editTitel(int profilID, String id, String titel) {
         profilEditor.addThema(profilID, id, titel);
         Thema thema = getThema(id);
         thema.setTitel(titel);

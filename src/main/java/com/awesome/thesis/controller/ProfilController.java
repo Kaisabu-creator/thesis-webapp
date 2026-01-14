@@ -28,7 +28,7 @@ public class ProfilController {
     }
 
     @GetMapping("/betreuende/{id}")
-    public String getProfil(@PathVariable Long id, Model model) {
+    public String getProfil(@PathVariable int id, Model model) {
         model.addAttribute("profil", profilEditor.get(id));
         return "profiles/profil";
     }

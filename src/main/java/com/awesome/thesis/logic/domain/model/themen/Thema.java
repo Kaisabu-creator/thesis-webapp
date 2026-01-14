@@ -12,12 +12,12 @@ public class Thema {
     private String titel;
     private String beschreibung;
     private final Set<Link> links;
-    private final long profilID;
+    private final int profilID;
     private final Set<Voraussetzung> voraussetzungen;
     private final Set<String> fachgebiete;
     private final Set<DateiDTO> dateien;
 
-    public Thema(String titel, long id) {
+    public Thema(String titel, int id) {
         this.titel = titel;
         this.profilID = id;
         this.links = new HashSet<>();
@@ -104,7 +104,7 @@ public class Thema {
         this.id = id;
     }
 
-    public long getProfilID() {
+    public int getProfilID() {
         return profilID;
     }
 

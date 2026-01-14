@@ -10,7 +10,7 @@ import java.util.Set;
 
 @AggregateRoot
 public class Profil {
-    private final long id;
+    private final int id;
     private String name;
     private final Set<Kontakt> kontakte;
     private final Set<String> fachgebiete;
@@ -18,7 +18,7 @@ public class Profil {
     private final Set<ThemaValue> themen;
     private final Set<DateiValue> dateien;
 
-    public Profil(long id, String name) {
+    public Profil(int id, String name) {
         this.id = id;
         this.name = name;
         this.kontakte = new HashSet<>();

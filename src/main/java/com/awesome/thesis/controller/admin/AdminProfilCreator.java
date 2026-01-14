@@ -2,7 +2,6 @@ package com.awesome.thesis.controller.admin;
 
 import com.awesome.thesis.controller.dto.ProfilCreateDTO;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
-import com.awesome.thesis.logic.domain.model.profil.Profil;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -39,7 +38,7 @@ public class AdminProfilCreator {
     }
 
     @PostMapping("/betreuendeDelete")
-    public String deleteBetreuende(long id) {
+    public String deleteBetreuende(int id) {
         editor.delete(id);
         return "redirect:/admin";
     }
