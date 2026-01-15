@@ -4,8 +4,10 @@ import com.awesome.thesis.configurations.AppUserService;
 import com.awesome.thesis.configurations.MethodSecurityConfig;
 import com.awesome.thesis.configurations.SecurityConfig;
 import com.awesome.thesis.helper.WithMockOAuth2User;
+import com.awesome.thesis.logic.application.service.fachgebiete.FachgebieteEditor;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
+import com.awesome.thesis.logic.application.service.voraussetzungen.VoraussetzungenEditor;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,7 +23,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.mockito.ArgumentMatchers.any;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 @Import({SecurityConfig.class, MethodSecurityConfig.class, AppUserService.class})
 @WebMvcTest(ThemaController.class)
@@ -34,7 +35,13 @@ public class ThemaControllerTest {
     ThemaEditor themaEditor;
 
     @MockitoBean
-    ProfilEditor editor;
+    FachgebieteEditor fachEditor;
+
+    @MockitoBean
+    VoraussetzungenEditor vorEditor;
+
+    @MockitoBean
+    ProfilEditor profilEditor;
 
     @Test
     @WithMockOAuth2User()

@@ -1,5 +1,6 @@
 package com.awesome.thesis.logic.application.service.themen;
 
+import com.awesome.thesis.logic.application.service.fachgebiete.FachgebieteEditor;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import com.awesome.thesis.logic.domain.model.links.Link;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
@@ -25,12 +26,14 @@ public class ThemaEditorTest {
     private IThemaRepo repo;
     private ProfilEditor profilEditor;
     private ThemaEditor editor;
+    private FachgebieteEditor fachEditor;
 
     @BeforeEach
     void setUp() {
         repo = mock(IThemaRepo.class);
         profilEditor = mock(ProfilEditor.class);
-        editor = new ThemaEditor(repo, profilEditor);
+        fachEditor = mock(FachgebieteEditor.class);
+        editor = new ThemaEditor(repo, profilEditor, fachEditor);
     }
 
     @Test

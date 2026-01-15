@@ -4,6 +4,7 @@ package com.awesome.thesis.logic.application.service.voraussetzungen;
 import com.awesome.thesis.logic.domain.model.themen.Voraussetzung;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -28,5 +29,12 @@ public class VoraussetzungenEditor{
 
     public void remove(Voraussetzung voraussetzung) {
         repo.remove(voraussetzung);
+    }
+
+    public Set<Voraussetzung> mapToVoraussetzung(Set<String> voraussetzungen) {
+        if (voraussetzungen == null) return Collections.emptySet();
+        return voraussetzungen.stream()
+                .map(Voraussetzung::new)
+                .collect(Collectors.toSet());
     }
 }

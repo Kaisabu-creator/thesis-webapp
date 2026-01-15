@@ -1,14 +1,20 @@
 package com.awesome.thesis.controller;
 
 import com.awesome.thesis.controller.dto.ThemaInfoDTO;
+import com.awesome.thesis.logic.application.service.fachgebiete.FachgebieteEditor;
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
+import com.awesome.thesis.logic.application.service.voraussetzungen.VoraussetzungenEditor;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
+import com.awesome.thesis.logic.domain.model.themen.Voraussetzung;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Set;
 
 @Controller
 public class ThemaController {
@@ -16,9 +22,21 @@ public class ThemaController {
     @Autowired
     ThemaEditor editor;
 
+    @Autowired
+    FachgebieteEditor fachEditor;
+
+    @Autowired
+    VoraussetzungenEditor vorEditor;
+
+
     @GetMapping("/themen")
-    public String themenListe(Model model) {
-        model.addAttribute("themenListe", editor.getAll());
+    public String themenListe(Model model, @RequestParam(required = false) Set<String> interessen, @RequestParam(required = false) Set<String> voraussetzungen) {
+        Set<Voraussetzung> set = vorEditor.mapToVoraussetzung(voraussetzungen);
+        model.addAttribute("themenListe", editor.getFitting(set, interessen));
+        model.addAttribute("fachgebiete", fachEditor.getAll());
+        model.addAttribute("voraussetzungen", vorEditor.getAll());
+        model.addAttribute("interessen", interessen);
+        model.addAttribute("eingabeVoraussetzungen", set);
         return "themen/themen";
     }
 

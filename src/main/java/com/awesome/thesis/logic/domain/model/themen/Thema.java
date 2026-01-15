@@ -133,4 +133,17 @@ public class Thema {
     public Set<DateiDTO> getDateien() {
         return dateien;
     }
+
+    public boolean fitsRequirements(Set<Voraussetzung> voraussetzungen, Set<String> interessen) {
+        if((interessen == null || interessen.isEmpty()) && (voraussetzungen == null || voraussetzungen.isEmpty())) {
+            return true;
+        }
+        if(voraussetzungen == null || voraussetzungen.isEmpty()) {
+            return this.fachgebiete.containsAll(interessen);
+        }
+        if(interessen == null || interessen.isEmpty()) {
+            return this.voraussetzungen.containsAll(voraussetzungen);
+        }
+         return this.voraussetzungen.containsAll(voraussetzungen) && this.fachgebiete.containsAll(interessen);
+    }
 }

@@ -2,6 +2,7 @@ package com.awesome.thesis.logic.application.service.themen;
 
 import com.awesome.thesis.logic.application.dto.DateiDTO;
 import com.awesome.thesis.logic.application.dto.ThemaDTO;
+import com.awesome.thesis.logic.application.service.fachgebiete.FachgebieteEditor;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import com.awesome.thesis.logic.domain.model.links.Link;
 import com.awesome.thesis.logic.domain.model.profil.Profil;
@@ -11,6 +12,7 @@ import jakarta.validation.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -21,9 +23,12 @@ public class ThemaEditor {
 
     private final ProfilEditor profilEditor;
 
-    public ThemaEditor(IThemaRepo repository, ProfilEditor profilEditor) {
+    private final FachgebieteEditor fachEditor;
+
+    public ThemaEditor(IThemaRepo repository, ProfilEditor profilEditor, FachgebieteEditor fachEditor) {
         this.repository = repository;
         this.profilEditor = profilEditor;
+        this.fachEditor = fachEditor;
     }
 
     public void addLink(String id, String url, String urlBeschreibung) {
@@ -100,12 +105,14 @@ public class ThemaEditor {
     public void addFachgebiet(String id, String fachgebiet) {
         Thema thema = getThema(id);
         thema.addFachgebiet(fachgebiet);
+        fachEditor.add(fachgebiet);
         repository.update(thema.getId(), thema);
     }
 
     public void removeFachgebiet(String id, String fachgebiet) {
         Thema thema = getThema(id);
         thema.removeFachgebiet(fachgebiet);
+        fachEditor.remove(fachgebiet);
         repository.update(thema.getId(), thema);
     }
 
@@ -121,4 +128,9 @@ public class ThemaEditor {
         repository.update(id, thema);
     }
 
+    public List<Thema> getFitting(Set<Voraussetzung> voraussetzungen, Set<String> interessen) {
+            return getAll().stream()
+                    .filter(e -> e.fitsRequirements(voraussetzungen,interessen))
+                    .toList();
+        }
 }
