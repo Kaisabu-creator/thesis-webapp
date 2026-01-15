@@ -11,4 +11,9 @@ public record DateiValue (String id, String name, String beschreibung ) {
         }
         return this.id.equals(other.id);
     }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 }
