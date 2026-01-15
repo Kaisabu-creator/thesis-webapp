@@ -33,7 +33,7 @@ public class Profil {
         this.name = name;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 

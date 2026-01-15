@@ -15,27 +15,27 @@ public class ProfileRepoImpl implements IProfileRepo {
     }
 
     @Override
-    public Profil get(long id) {
+    public Profil get(int id) {
         return database.get(id);
     }
 
     @Override
-    public boolean containsKey(long id) {
+    public boolean containsKey(int id) {
         return database.containsKey(id);
     }
 
     @Override
-    public void save(long id, Profil profil) {
+    public void save(int id, Profil profil) {
         database.save(id, profil);
     }
 
     @Override
-    public void update(long key, Profil profil) {
+    public void update(int key, Profil profil) {
         database.update(key, profil);
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(int id) {
         database.delete(id);
     }
 
