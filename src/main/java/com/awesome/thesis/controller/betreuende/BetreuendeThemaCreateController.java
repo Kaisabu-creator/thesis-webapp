@@ -38,11 +38,10 @@ public class BetreuendeThemaCreateController {
         if(result.hasErrors()) {
             return "betreuende/themaCreate";
         }
-        Integer id = auth.getPrincipal().getAttribute("id");
-        Thema thema = new Thema(dto.titel(), id);
-        themaEditor.addThema(thema);
+        Integer profilID = auth.getPrincipal().getAttribute("id");
+        Thema thema = new Thema(dto.titel(), profilID);
+        themaEditor.addThema(thema, profilID);
         String themaId = thema.getId();
-        profilEditor.addThemaOld(id, new ThemaDTO(themaId, dto.titel()));
         themaEditor.editBeschreibung(themaId, dto.beschreibung());
         redirect.addFlashAttribute("themaInfoDTO", dto);
         return "redirect:/themaEdit/" + themaId;

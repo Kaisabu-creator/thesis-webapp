@@ -1,6 +1,7 @@
 package com.awesome.thesis.logic.application.service.themen;
 
 import com.awesome.thesis.logic.application.dto.DateiDTO;
+import com.awesome.thesis.logic.application.dto.ThemaDTO;
 import com.awesome.thesis.logic.application.service.fachgebiete.FachgebieteEditor;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
@@ -52,7 +53,7 @@ public class ThemaEditor {
         repository.update(id, thema);
     }
 
-    public void addThema(Thema thema) {
+    public void addThema(Thema thema, int profilID) {
         if (thema.getId() != null) {
             if (repository.containsKey(thema.getId())) {
                 repository.update(thema.getId(), thema);
@@ -60,6 +61,7 @@ public class ThemaEditor {
         } else {
             thema.setId(repository.save(thema));
         }
+        profilEditor.addThema(profilID, thema.getId(), thema.getTitel());
     }
 
     public Thema getThema(String id) {

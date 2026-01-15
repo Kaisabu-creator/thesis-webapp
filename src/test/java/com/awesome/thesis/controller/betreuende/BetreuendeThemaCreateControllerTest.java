@@ -60,6 +60,6 @@ public class BetreuendeThemaCreateControllerTest {
                         .with(csrf()))
                 .andExpect(status().is3xxRedirection());
         Thema thema = new Thema("titel", 1);
-        verify(themaEditor).addThema(thema);
+        verify(themaEditor).addThema(thema, 1);
     }
 }

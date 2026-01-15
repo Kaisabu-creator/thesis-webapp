@@ -100,7 +100,7 @@ public class ThemaEditorTest {
         when(repo.containsKey("a")).thenReturn(true);
 
         //Act
-        editor.addThema(thema);
+        editor.addThema(thema, 1);
 
         //Assert
         verify(repo).update(any(), any(Thema.class));
@@ -114,7 +114,7 @@ public class ThemaEditorTest {
         when(repo.save(any())).thenReturn("a");
 
         //Act
-        editor.addThema(thema);
+        editor.addThema(thema, 1);
 
         //Assert
         assertThat(thema.getId()).isEqualTo("a");
