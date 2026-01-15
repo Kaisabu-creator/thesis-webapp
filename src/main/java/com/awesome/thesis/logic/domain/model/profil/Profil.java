@@ -1,12 +1,14 @@
 package com.awesome.thesis.logic.domain.model.profil;
 
 import com.awesome.thesis.annotations.AggregateRoot;
+import org.springframework.data.annotation.Id;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @AggregateRoot
 public class Profil {
+    @Id
     private final int id;
     private String name;
     private final Set<Kontakt> kontakte;
