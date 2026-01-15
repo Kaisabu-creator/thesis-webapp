@@ -61,7 +61,7 @@ public class DateiController {
             model.addAttribute("dateiInfos", infos);
             model.addAttribute("nachricht", infos.getTitle() + " wurde erfolgreich hochgeladen.");
 
-            return "upload";
+            return "redirect:/betreuende/profilEdit";
         } catch (IllegalArgumentException e) {
             model.addAttribute("nachricht", e.getMessage());
             return "upload";
