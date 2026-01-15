@@ -167,7 +167,7 @@ public class ProfilEditor {
         profile.update(id, profil);
     }
 
-    public void removeDateiOld(int id, String dateiId) {
+    public void removeDatei(int id, String dateiId) {
         Profil profil = get(id);
         profil.removeDatei(new DateiValue(dateiId, "", ""));
         profile.update(id, profil);
