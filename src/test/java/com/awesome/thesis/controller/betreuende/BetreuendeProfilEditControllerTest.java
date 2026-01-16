@@ -5,8 +5,8 @@ import com.awesome.thesis.configurations.MethodSecurityConfig;
 import com.awesome.thesis.configurations.SecurityConfig;
 import com.awesome.thesis.helper.WithMockOAuth2User;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
-import com.awesome.thesis.logic.domain.model.profil.Kontakt;
-import com.awesome.thesis.logic.domain.model.profil.Kontaktart;
+import com.awesome.thesis.logic.domain.model.profil.ProfilKontakt;
+import com.awesome.thesis.logic.domain.model.profil.ProfilKontaktart;
 import com.awesome.thesis.logic.domain.model.profil.Profil;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -78,26 +78,26 @@ class BetreuendeProfilEditControllerTest {
 
     @Test
     @WithMockOAuth2User(roles = {"BETREUENDE"}, id=1)
-    @DisplayName("post Kontakt löschen")
+    @DisplayName("post ProfilKontakt löschen")
     void post_deleteKontakt() throws Exception {
         mockMvc.perform(post("/betreuende/profilEdit/deleteKontakt")
                         .param("label", "test")
                         .param("wert", "test@icloud.com")
-                        .param("kontaktart", Kontaktart.EMAIL.toString())
+                        .param("kontaktart", ProfilKontaktart.EMAIL.toString())
                         .with(csrf()))
                 .andExpect(status().is3xxRedirection());
     }
 
     @Test
     @WithMockOAuth2User(roles = {"BETREUENDE"}, id=1)
-    @DisplayName("post Kontakt löschen")
+    @DisplayName("post ProfilKontakt löschen")
     void post_deleteKontakt_BackEnd() throws Exception {
         mockMvc.perform(post("/betreuende/profilEdit/deleteKontakt")
                 .param("label", "test")
                 .param("wert", "test@icloud.com")
-                .param("kontaktart", Kontaktart.EMAIL.toString())
+                .param("kontaktart", ProfilKontaktart.EMAIL.toString())
                 .with(csrf()));
-        verify(editor).removeKontakt(1, new Kontakt("test", "test@icloud.com", Kontaktart.EMAIL));
+        verify(editor).removeKontakt(1, new ProfilKontakt("test", "test@icloud.com", ProfilKontaktart.EMAIL));
     }
 
     @Test

@@ -1,9 +1,9 @@
 package com.awesome.thesis.persistence.profiles;
 
-import com.awesome.thesis.logic.domain.model.profil.Kontakt;
+import com.awesome.thesis.logic.domain.model.profil.ProfilKontakt;
 import com.awesome.thesis.logic.domain.model.profil.Profil;
 import org.springframework.stereotype.Component;
-import com.awesome.thesis.logic.domain.model.profil.Kontaktart;
+import com.awesome.thesis.logic.domain.model.profil.ProfilKontaktart;
 
 import java.util.*;
 
@@ -13,13 +13,13 @@ class FakeDatabaseProfileImpl implements IDatabaseProfile {
 
     public FakeDatabaseProfileImpl() {
         Profil janik = new Profil(182077829,"Janik Daub");
-        janik.addKontakt(new Kontakt("Email", "janik@mail.com", Kontaktart.EMAIL));
+        janik.addKontakt(new ProfilKontakt("Email", "janik@mail.com", ProfilKontaktart.EMAIL));
         update(182077829, janik);
         Profil ryota = new Profil(180645494, "Ryota Kariya");
-        ryota.addKontakt(new Kontakt("Email", "ryota@mail.com", Kontaktart.EMAIL));
+        ryota.addKontakt(new ProfilKontakt("Email", "ryota@mail.com", ProfilKontaktart.EMAIL));
         update(180645494, ryota);
         Profil ole = new Profil(181595941, "Ole Marschik");
-        ole.addKontakt(new Kontakt("Email", "ole@mail.com", Kontaktart.EMAIL));
+        ole.addKontakt(new ProfilKontakt("Email", "ole@mail.com", ProfilKontaktart.EMAIL));
         update(181595941, ole);
     }
 

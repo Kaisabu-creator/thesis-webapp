@@ -69,7 +69,7 @@
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" th:field="*{type}" id="radioDefault1"
                                        value="email">
-                                <label class="form-check-label" for="radioDefault1">
+  Kontakt                              <label class="form-check-label" for="radioDefault1">
                                     Email
                                 </label>
                             </div>
@@ -102,18 +102,18 @@
                     <h2 class="card-title fw-bold">Kontakte</h2>
                     <table class="table table-striped mb-0">
                         <tbody>
-                        <tr th:each="kontakt : *{kontakte}">
+                        <tr th:each="profilKontakt : *{kontakte}">
                             <td>
                                 <p>
-                                    <span th:text="${kontakt.label}">ProfilEmail:</span>
-                                    <a th:href="${kontakt.href}" th:text="${kontakt.wert}" href="muster@email.com">muster@email.com</a>
+                                    <span th:text="${profilKontakt.label}">ProfilEmail:</span>
+                                    <a th:href="${profilKontakt.href}" th:text="${profilKontakt.wert}" href="muster@email.com">muster@email.com</a>
                                 </p>
                             </td>
                             <td class="text-end">
                                 <form method="post" th:action="@{/betreuende/profilEdit/deleteKontakt}">
-                                    <input type="hidden" name="label" th:value="${kontakt.label}">
-                                    <input type="hidden" name="wert" th:value="${kontakt.wert}">
-                                    <input type="hidden" name="kontaktart" th:value="${kontakt.kontaktart}">
+                                    <input type="hidden" name="label" th:value="${profilKontakt.label}">
+                                    <input type="hidden" name="wert" th:value="${profilKontakt.wert}">
+                                    <input type="hidden" name="kontaktart" th:value="${profilKontakt.kontaktart}">
                                     <button type="submit" class="btn-close" aria-label="Kontakt löschen"></button>
                                 </form>
                             </td>

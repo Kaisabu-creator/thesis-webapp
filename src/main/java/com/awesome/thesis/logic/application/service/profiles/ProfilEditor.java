@@ -1,6 +1,5 @@
 package com.awesome.thesis.logic.application.service.profiles;
 
-import com.awesome.thesis.logic.application.dto.DateiDTO;
 import com.awesome.thesis.logic.application.service.fachgebiete.FachgebieteEditor;
 import com.awesome.thesis.logic.domain.model.profil.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +37,9 @@ public class ProfilEditor {
         profile.update(id, profil);
     }
 
-    public void removeKontakt(int id, Kontakt kontakt) {
+    public void removeKontakt(int id, ProfilKontakt profilKontakt) {
         Profil profil = get(id);
-        profil.removeKontakt(kontakt);
+        profil.removeKontakt(profilKontakt);
         profile.update(id, profil);
     }
 
@@ -126,25 +125,25 @@ public class ProfilEditor {
 
     public void addThema(int id, String themaId, String name) {
         Profil profil = get(id);
-        profil.addThema(new ThemaValue(themaId, name));
+        profil.addThema(new ProfilThemaValue(themaId, name));
         profile.update(id, profil);
     }
 
     public void removeThema(int id, String themaId) {
         Profil profil = get(id);
-        profil.removeThema(new ThemaValue(themaId, ""));
+        profil.removeThema(new ProfilThemaValue(themaId, ""));
         profile.update(id, profil);
     }
 
     public void addDatei(int id, String dateiId, String name, String beschreibung) {
         Profil profil = get(id);
-        profil.addDatei(new DateiValue(dateiId, name, beschreibung));
+        profil.addDatei(new ProfilDateiValue(dateiId, name, beschreibung));
         profile.update(id, profil);
     }
 
     public void removeDatei(int id, String dateiId) {
         Profil profil = get(id);
-        profil.removeDatei(new DateiValue(dateiId, "", ""));
+        profil.removeDatei(new ProfilDateiValue(dateiId, "", ""));
         profile.update(id, profil);
     }
 }

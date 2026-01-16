@@ -41,10 +41,10 @@
     </div>
     <div class="row justify-content-center" th:if="*{!kontakte.isEmpty()}">
         <h2 class="display-6">Kontakt</h2>
-        <div class="col-md-12" th:each="kontakt: *{kontakte}">
+        <div class="col-md-12" th:each="profilKontakt: *{kontakte}">
             <p>
-                <span th:text="${kontakt.label}">ProfilEmail:</span>
-                <a th:href="${kontakt.href}" th:text="${kontakt.wert}" href="muster@email.com">muster@email.com</a>
+                <span th:text="${profilKontakt.label}">ProfilEmail:</span>
+                <a th:href="${profilKontakt.href}" th:text="${profilKontakt.wert}" href="muster@email.com">muster@email.com</a>
             </p>
         </div>
     </div>

@@ -11,11 +11,11 @@ public class Profil {
     @Id
     private final int id;
     private String name;
-    private Set<Kontakt> kontakte;
+    private Set<ProfilKontakt> kontakte;
     private Set<ProfilFachgebiet> fachgebiete;
     private Set<ProfilLink> links;
-    private Set<ThemaValue> themen;
-    private Set<DateiValue> dateien;
+    private Set<ProfilThemaValue> themen;
+    private Set<ProfilDateiValue> dateien;
 
     public Profil(int id, String name) {
         this.id = id;
@@ -39,30 +39,30 @@ public class Profil {
         return id;
     }
 
-    public Set<Kontakt> getKontakte() {
+    public Set<ProfilKontakt> getKontakte() {
         return kontakte;
     }
 
-    public void setKontakte(Set<Kontakt> kontakte) {
+    public void setKontakte(Set<ProfilKontakt> kontakte) {
         this.kontakte = kontakte;
     }
 
-    public void addKontakt(Kontakt kontakt) {
-        kontakte.add(kontakt);
+    public void addKontakt(ProfilKontakt profilKontakt) {
+        kontakte.add(profilKontakt);
     }
 
-    public void removeKontakt(Kontakt kontakt) {
-        kontakte.remove(kontakt);
+    public void removeKontakt(ProfilKontakt profilKontakt) {
+        kontakte.remove(profilKontakt);
     }
 
     public void addEmail(String label, String wert) {
-        Kontakt kontakt = new Kontakt(label, wert, Kontaktart.EMAIL);
-        kontakte.add(kontakt);
+        ProfilKontakt profilKontakt = new ProfilKontakt(label, wert, ProfilKontaktart.EMAIL);
+        kontakte.add(profilKontakt);
     }
 
     public void addTel(String label, String wert) {
-        Kontakt kontakt = new Kontakt(label, wert, Kontaktart.TEL);
-        kontakte.add(kontakt);
+        ProfilKontakt profilKontakt = new ProfilKontakt(label, wert, ProfilKontaktart.TEL);
+        kontakte.add(profilKontakt);
     }
 
     public Set<String> getFachgebiete() {
@@ -118,37 +118,37 @@ public class Profil {
         links.remove(link);
     }
 
-    public Set<ThemaValue> getThemen() {
+    public Set<ProfilThemaValue> getThemen() {
         return themen;
     }
 
-    public void setThemen(Set<ThemaValue> themen) {
+    public void setThemen(Set<ProfilThemaValue> themen) {
         this.themen = themen;
     }
 
-    public void addThema(ThemaValue thema) {
+    public void addThema(ProfilThemaValue thema) {
         themen.remove(thema);
         themen.add(thema);
     }
 
-    public void removeThema(ThemaValue thema) {
+    public void removeThema(ProfilThemaValue thema) {
         themen.remove(thema);
     }
 
-    public void addDatei(DateiValue datei) {
+    public void addDatei(ProfilDateiValue datei) {
         dateien.remove(datei);
         dateien.add(datei);
     }
 
-    public void removeDatei(DateiValue datei) {
+    public void removeDatei(ProfilDateiValue datei) {
         dateien.remove(datei);
     }
 
-    public Set<DateiValue> getDateien() {
+    public Set<ProfilDateiValue> getDateien() {
         return dateien;
     }
 
-    public void setDateien(Set<DateiValue> dateien) {
+    public void setDateien(Set<ProfilDateiValue> dateien) {
         this.dateien = dateien;
     }
 }

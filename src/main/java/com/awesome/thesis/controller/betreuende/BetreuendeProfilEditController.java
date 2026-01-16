@@ -6,7 +6,7 @@ import com.awesome.thesis.controller.dto.ProfilEditDTO;
 import com.awesome.thesis.controller.dto.kontakt.EmailKontaktDTO;
 import com.awesome.thesis.controller.dto.kontakt.TelKontaktDTO;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
-import com.awesome.thesis.logic.domain.model.profil.Kontakt;
+import com.awesome.thesis.logic.domain.model.profil.ProfilKontakt;
 import com.awesome.thesis.logic.domain.model.profil.ProfilLink;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,9 +50,9 @@ public class BetreuendeProfilEditController {
     }
 
     @PostMapping("profilEdit/deleteKontakt")
-    public String deleteKontakt(@ModelAttribute Kontakt kontakt,OAuth2AuthenticationToken auth) {
+    public String deleteKontakt(@ModelAttribute ProfilKontakt profilKontakt, OAuth2AuthenticationToken auth) {
         Integer id = auth.getPrincipal().getAttribute("id");
-        editor.removeKontakt(id, kontakt);
+        editor.removeKontakt(id, profilKontakt);
         return "redirect:/betreuende/profilEdit";
     }
 

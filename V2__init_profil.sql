@@ -4,7 +4,7 @@ create table profil
     name varchar(50) not null
 );
 
-create table kontakt
+create table profilKontakt
 (
     id serial primary key,
     profil integer not null references profil (id),
