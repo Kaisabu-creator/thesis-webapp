@@ -70,8 +70,10 @@ public class ProfilEditor {
     }
 
     public void create(int id, String name) {
-        Profil profil = new Profil(id, name);
-        profile.save(id, profil);
+        if (!profile.containsKey(id)) {
+            Profil profil = new Profil(id, name);
+            profile.save(id, profil);
+        }
     }
 
     public Profil get(int id) {
