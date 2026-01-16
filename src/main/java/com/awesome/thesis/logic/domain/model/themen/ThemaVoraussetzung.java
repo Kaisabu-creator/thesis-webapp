@@ -1,4 +1,7 @@
 package com.awesome.thesis.logic.domain.model.themen;
 
-public class ThemaVoraussetzung {
+import com.awesome.thesis.annotations.AggregateValue;
+
+@AggregateValue
+public record ThemaVoraussetzung (String voraussetzung){
 }

@@ -4,7 +4,9 @@ import com.awesome.thesis.logic.application.dto.DateiDTO;
 import com.awesome.thesis.logic.application.service.fachgebiete.FachgebieteEditor;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
+import com.awesome.thesis.logic.domain.model.themen.ThemaDateiValue;
 import com.awesome.thesis.logic.domain.model.themen.ThemaLink;
+import com.awesome.thesis.logic.domain.model.themen.ThemaVoraussetzung;
 import com.awesome.thesis.logic.domain.model.voraussetzungen.Voraussetzung;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class ThemaEditor {
@@ -85,17 +88,20 @@ public class ThemaEditor {
         repository.delete(id);
     }
 
-    public void removeAllVoraussetzung (Voraussetzung voraussetzung) {
-        List<Thema> list = repository.getThemen();
-        list.forEach(e -> {
-            e.removeVoraussetzung(voraussetzung);
-            repository.update(e.getId(), e);
+    public void removeAllVoraussetzung(Voraussetzung v) {
+        List<Thema> themen = repository.getThemen();
+        themen.forEach(t -> {
+            t.removeVoraussetzung(
+                    new ThemaVoraussetzung(v.voraussetzung())
+            );
+            repository.update(t.getId(), t);
         });
     }
 
     public void updateVoraussetzungen(String id, Set<Voraussetzung> set) {
+        Set<ThemaVoraussetzung> voraussetzung = mapToThemaVoraussetzung(set);
         Thema thema = getThema(id);
-        thema.updateVoraussetzungen(set);
+        thema.updateVoraussetzungen(voraussetzung);
         repository.update(thema.getId(), thema);
     }
 
@@ -113,28 +119,42 @@ public class ThemaEditor {
         repository.update(thema.getId(), thema);
     }
 
-    public void addDatei(String id, DateiDTO datei) {
+    public void addDatei(String id, ThemaDateiValue datei) {
         Thema thema = getThema(id);
         thema.addDatei(datei);
         repository.update(id, thema);
     }
 
-    public void removeDatei(String id, DateiDTO datei) {
+    public void removeDatei(String id, ThemaDateiValue datei) {
         Thema thema = getThema(id);
         thema.removeDatei(datei);
         repository.update(id, thema);
     }
 
+    public Set<ThemaVoraussetzung> mapToThemaVoraussetzung(Set<Voraussetzung> voraussetzungen) {
+        return voraussetzungen.stream()
+                .map(e -> new ThemaVoraussetzung(e.voraussetzung()))
+                .collect(Collectors.toSet());
+    }
+
     public List<Thema> getFitting(Set<Voraussetzung> voraussetzungen, Set<String> interessen) {
+        Set<ThemaVoraussetzung> themaVoraussetzungen = mapToThemaVoraussetzung(voraussetzungen);
             return getAll().stream()
-                    .filter(e -> e.fitsRequirements(voraussetzungen,interessen))
+                    .filter(e -> e.fitsRequirements(themaVoraussetzungen,interessen))
                     .toList();
         }
 
     public List<Thema> sortRang(Set<Voraussetzung> voraussetzungen, Set<String> interessen) {
+        Set<ThemaVoraussetzung> themaVoraussetzungen = mapToThemaVoraussetzung(voraussetzungen);
         return getAll().stream()
-                .filter(e -> e.calcRang(voraussetzungen, interessen) != -1)
-                .sorted(Comparator.comparingLong((Thema thema) -> thema.calcRang(voraussetzungen, interessen)).reversed())
+                .filter(e -> e.calcRang(themaVoraussetzungen, interessen) != -1)
+                .sorted(Comparator.comparingLong((Thema thema) -> thema.calcRang(themaVoraussetzungen, interessen)).reversed())
                 .toList();
+    }
+
+    public Set<Voraussetzung> getVoraussetzungen(String id) {
+        Thema thema = getThema(id);
+        Set<ThemaVoraussetzung> voraussetzungen = thema.getVoraussetzungen();
+        return voraussetzungen.stream().map(e -> new Voraussetzung(e.voraussetzung())).collect(Collectors.toSet());
     }
 }

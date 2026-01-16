@@ -41,7 +41,7 @@ public class BetreuendeThemaEditorController {
         model.addAttribute("thema", themaEditor.getThema(id));
         model.addAttribute("themaLinkDTO", new LinkDTO("", ""));
         model.addAttribute("fachgebietDTO", new FachgebietDTO(""));
-        model.addAttribute("themaVoraussetzungen", thema.getVoraussetzungen());
+        model.addAttribute("themaVoraussetzungen", themaEditor.getVoraussetzungen(id));
         model.addAttribute("voraussetzungen", vorEditor.getAll());
         return "betreuende/themaEdit";
     }
@@ -56,7 +56,7 @@ public class BetreuendeThemaEditorController {
         if (result.hasErrors()) {
             model.addAttribute("themaLinkDTO", new LinkDTO("", ""));
             model.addAttribute("thema", thema);
-            model.addAttribute("themaVoraussetzungen", thema.getVoraussetzungen());
+            model.addAttribute("themaVoraussetzungen", themaEditor.getVoraussetzungen(id));
             model.addAttribute("voraussetzungen", vorEditor.getAll());
             model.addAttribute("fachgebietDTO", new FachgebietDTO(""));
             return "betreuende/themaEdit";
@@ -78,7 +78,7 @@ public class BetreuendeThemaEditorController {
             model.addAttribute("themaInfoDTO", info);
             model.addAttribute("thema", themaEditor.getThema(id));
             model.addAttribute("fachgebietDTO", new FachgebietDTO(""));
-            model.addAttribute("themaVoraussetzungen", thema.getVoraussetzungen());
+            model.addAttribute("themaVoraussetzungen", themaEditor.getVoraussetzungen(id));
             model.addAttribute("voraussetzungen", vorEditor.getAll());
             return "betreuende/themaEdit";
         }
@@ -109,9 +109,9 @@ public class BetreuendeThemaEditorController {
         if (!themaEditor.allowedEdit(profilID, thema)) {
             return "redirect:/";
         }
-        Set<Voraussetzung> list = new HashSet<>();
-        voraussetzungen.orElse(Set.of()).forEach(e -> list.add(new Voraussetzung(e)));
-        themaEditor.updateVoraussetzungen(id, list);
+        Set<Voraussetzung> set = new HashSet<>();
+        voraussetzungen.orElse(Set.of()).forEach(e -> set.add(new Voraussetzung(e)));
+        themaEditor.updateVoraussetzungen(id, set);
         return "redirect:/themaEdit/" + id;
     }
 
@@ -151,7 +151,7 @@ public class BetreuendeThemaEditorController {
             model.addAttribute("themaInfoDTO", info);
             model.addAttribute("thema", thema);
             model.addAttribute("themaLinkDTO", new LinkDTO("", ""));
-            model.addAttribute("themaVoraussetzungen", thema.getVoraussetzungen());
+            model.addAttribute("themaVoraussetzungen", themaEditor.getVoraussetzungen(id));
             model.addAttribute("voraussetzungen", vorEditor.getAll());
             return "betreuende/themaEdit";
         }

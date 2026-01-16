@@ -13,9 +13,9 @@ public class Thema {
     private String beschreibung;
     private final Set<ThemaLink> links;
     private final int profilID;
-    private final Set<Voraussetzung> voraussetzungen;
+    private final Set<ThemaVoraussetzung> voraussetzungen;
     private final Set<String> fachgebiete;
-    private final Set<DateiDTO> dateien;
+    private final Set<ThemaDateiValue> dateien;
 
     public Thema(String titel, int id) {
         this.titel = titel;
@@ -49,16 +49,16 @@ public class Thema {
         return fachgebiete.contains(fachgebiet);
     }
 
-    public void updateVoraussetzungen(Set<Voraussetzung> voraussetzungen) {
+    public void updateVoraussetzungen(Set<ThemaVoraussetzung> voraussetzungen) {
         this.voraussetzungen.clear();
         this.voraussetzungen.addAll(voraussetzungen);
     }
 
-    public void removeVoraussetzung(Voraussetzung voraussetzung) {
+    public void removeVoraussetzung(ThemaVoraussetzung voraussetzung) {
         voraussetzungen.remove(voraussetzung);
     }
 
-    public Set<Voraussetzung> getVoraussetzungen() {
+    public Set<ThemaVoraussetzung> getVoraussetzungen() {
         return voraussetzungen;
     }
 
@@ -124,19 +124,19 @@ public class Thema {
         return Objects.hash(id);
     }
 
-    public void addDatei(DateiDTO datei) {
+    public void addDatei(ThemaDateiValue datei) {
         dateien.add(datei);
     }
 
-    public void removeDatei(DateiDTO datei) {
+    public void removeDatei(ThemaDateiValue datei) {
         dateien.remove(datei);
     }
 
-    public Set<DateiDTO> getDateien() {
+    public Set<ThemaDateiValue> getDateien() {
         return dateien;
     }
 
-    public boolean fitsRequirements(Set<Voraussetzung> voraussetzungen, Set<String> interessen) {
+    public boolean fitsRequirements(Set<ThemaVoraussetzung> voraussetzungen, Set<String> interessen) {
         if ((interessen == null || interessen.isEmpty()) && (voraussetzungen == null || voraussetzungen.isEmpty())) {
             return true;
         }
@@ -149,7 +149,7 @@ public class Thema {
         return this.voraussetzungen.containsAll(voraussetzungen) && this.fachgebiete.containsAll(interessen);
     }
 
-    public long calcRang(Set<Voraussetzung> voraussetzungen, Set<String> interessen) {
+    public long calcRang(Set<ThemaVoraussetzung> voraussetzungen, Set<String> interessen) {
         if ((interessen == null || interessen.isEmpty()) && (voraussetzungen == null || voraussetzungen.isEmpty())) {
             return 0;
         }
