@@ -32,6 +32,6 @@ public class FachgebieteRepoImpl implements IFachgebieteRepo {
 
     @Override
     public boolean contains(String fachgebiet) {
-        database.contains(fachgebiet);
+        return database.contains(fachgebiet);
     }
 }
