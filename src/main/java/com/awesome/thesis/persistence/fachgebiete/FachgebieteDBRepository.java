@@ -15,5 +15,5 @@ public interface FachgebieteDBRepository extends CrudRepository<Fachgebiet, Stri
 
     @Modifying
     @Query("insert into fachgebiet values (:name)")
-    void save(@Param("name") String name);
+    void insert(@Param("name") String name);
 }

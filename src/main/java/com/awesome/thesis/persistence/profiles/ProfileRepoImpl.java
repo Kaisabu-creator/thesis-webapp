@@ -8,39 +8,39 @@ import java.util.List;
 
 @Repository
 public class ProfileRepoImpl implements IProfileRepo {
-    IDatabaseProfile database;
+    ProfileDBRepository dbRepository;
 
-    public ProfileRepoImpl(IDatabaseProfile database) {
-        this.database = database;
+    public ProfileRepoImpl(ProfileDBRepository dbRepository) {
+        this.dbRepository = dbRepository;
     }
 
     @Override
     public Profil get(int id) {
-        return database.get(id);
+        return dbRepository.findById(id);
     }
 
     @Override
     public boolean containsKey(int id) {
-        return database.containsKey(id);
+        return dbRepository.existsById(id);
     }
 
     @Override
     public void save(int id, Profil profil) {
-        database.save(id, profil);
+        dbRepository.insert(profil.getId(), profil.getName());
     }
 
     @Override
     public void update(int key, Profil profil) {
-        database.update(key, profil);
+        dbRepository.save(profil);
     }
 
     @Override
     public void delete(int id) {
-        database.delete(id);
+        dbRepository.deleteById(id);
     }
 
     @Override
     public List<Profil> getAll() {
-        return database.getAll();
+        return dbRepository.findAll();
     }
 }

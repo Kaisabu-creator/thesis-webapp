@@ -8,30 +8,30 @@ import java.util.Set;
 
 @Repository
 public class FachgebieteRepoImpl implements IFachgebieteRepo {
-    private final IDatabaseFachgebiete database;
+    private final FachgebieteDBRepository dbRepository;
 
-    public FachgebieteRepoImpl(IDatabaseFachgebiete database) {
-        this.database = database;
+    public FachgebieteRepoImpl(FachgebieteDBRepository dbRepository) {
+        this.dbRepository = dbRepository;
     }
 
 
     @Override
     public void add(String name, Fachgebiet fachgebiet) {
-        database.add(name, fachgebiet);
+        dbRepository.insert(fachgebiet.getName());
     }
 
     @Override
     public void delete(String name) {
-        database.delete(name);
+        dbRepository.deleteById(name);
     }
 
     @Override
     public Set<Fachgebiet> getAll() {
-        return database.getAll();
+        return dbRepository.findAll();
     }
 
     @Override
     public boolean contains(String fachgebiet) {
-        return database.contains(fachgebiet);
+        return dbRepository.existsById(fachgebiet);
     }
 }
