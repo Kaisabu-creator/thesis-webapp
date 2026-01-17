@@ -6,7 +6,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -70,5 +72,37 @@ class ProfilEditorTest {
 
         //Act + Assert
         assertThrows(IllegalArgumentException.class, () -> editor.get(1));
+    }
+
+    @Test
+    @DisplayName("getFitting with empty set returns all profiles")
+    void test_getFittingEmpty() {
+        //Arrange
+        List<Profil> p = List.of(new Profil(1, "test"));
+        when(profile.getAll()).thenReturn(p);
+        ProfilEditor editor = new ProfilEditor(profile, fachgebieteEditor);
+
+        //Act
+        assertThat(editor.getFitting(new HashSet<>())).isEqualTo(p);
+    }
+
+    @Test
+    @DisplayName("getFitting only returns profiles that fit the interests")
+    void test_getFitting() {
+        //Arrange
+        Profil p1 = mock(Profil.class);
+        when(p1.fitsInterests(any())).thenReturn(true);
+        Profil p2 = mock(Profil.class);
+        when(p2.fitsInterests(any())).thenReturn(false);
+        List<Profil> p = List.of(p1, p2);
+        when(profile.getAll()).thenReturn(p);
+        ProfilEditor editor = new ProfilEditor(profile, fachgebieteEditor);
+
+        //Act
+        List<Profil> r = editor.getFitting(Set.of("test"));
+
+        // Assert
+        assertThat(r).contains(p1);
+        assertThat(r).doesNotContain(p2);
     }
 }
