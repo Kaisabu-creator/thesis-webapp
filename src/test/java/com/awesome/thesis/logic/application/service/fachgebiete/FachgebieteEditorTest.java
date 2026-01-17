@@ -50,6 +50,22 @@ class FachgebieteEditorTest {
     }
 
     @Test
+    @DisplayName("getAll gets Fachgebiete from repo")
+    void test_getAll() {
+        //Arrange
+        IFachgebieteRepo repo = mock(IFachgebieteRepo.class);
+        IProfileRepo profilRepo = mock(IProfileRepo.class);
+        IThemaRepo themaRepo = mock(IThemaRepo.class);
+        FachgebieteEditor editor = new FachgebieteEditor(repo, profilRepo, themaRepo);
+
+        //Act
+        editor.getAll();
+
+        //Assert
+        verify(repo).getAll();
+    }
+
+    @Test
     @DisplayName("An unused fachgebiet can be removed")
     void test_remove() {
         //Arrange
