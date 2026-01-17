@@ -23,7 +23,7 @@ public class FachgebieteEditor {
 
     public void add(String fachgebiet) {
         if (!repo.contains(fachgebiet)) {
-            repo.add(fachgebiet, new Fachgebiet(fachgebiet));
+            repo.add(new Fachgebiet(fachgebiet));
         }
     }
 

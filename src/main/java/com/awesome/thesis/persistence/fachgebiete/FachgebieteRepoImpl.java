@@ -16,7 +16,7 @@ public class FachgebieteRepoImpl implements IFachgebieteRepo {
 
 
     @Override
-    public void add(String name, Fachgebiet fachgebiet) {
+    public void add(Fachgebiet fachgebiet) {
         dbRepository.insert(fachgebiet.getName());
     }
 
