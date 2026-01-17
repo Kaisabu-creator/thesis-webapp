@@ -110,8 +110,8 @@ public class ThemaEditor {
     public void removeFachgebiet(Integer id, String fachgebiet) {
         Thema thema = getThema(id);
         thema.removeFachgebiet(new ThemaFachgebiet(fachgebiet));
-        fachEditor.remove(fachgebiet);
         repository.update(thema.getId(), thema);
+        fachEditor.remove(fachgebiet);
     }
 
     public void addDatei(Integer id, ThemaDateiValue datei) {

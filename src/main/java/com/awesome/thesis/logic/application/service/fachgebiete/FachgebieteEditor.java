@@ -1,7 +1,9 @@
 package com.awesome.thesis.logic.application.service.fachgebiete;
 
 import com.awesome.thesis.logic.application.service.profiles.IProfileRepo;
+import com.awesome.thesis.logic.application.service.themen.IThemaRepo;
 import com.awesome.thesis.logic.domain.model.fachgebiete.Fachgebiet;
+import com.awesome.thesis.logic.domain.model.themen.ThemaFachgebiet;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -11,10 +13,12 @@ import java.util.stream.Collectors;
 public class FachgebieteEditor {
     private final IFachgebieteRepo repo;
     private final IProfileRepo profileRepo;
+    private final IThemaRepo themaRepo;
 
-    public FachgebieteEditor(IFachgebieteRepo repo, IProfileRepo profileRepo) {
+    public FachgebieteEditor(IFachgebieteRepo repo, IProfileRepo profileRepo, IThemaRepo themaRepo) {
         this.repo = repo;
         this.profileRepo = profileRepo;
+        this.themaRepo = themaRepo;
     }
 
     public void add(String fachgebiet) {
@@ -30,10 +34,10 @@ public class FachgebieteEditor {
     }
 
     public void remove(String fachgebiet) {
-        boolean unused = profileRepo.getAll().stream()
-                .noneMatch(p -> p.hasFachgebiet(fachgebiet));
+        boolean profilUnused = profileRepo.getAll().stream().noneMatch(p -> p.hasFachgebiet(fachgebiet));
+        boolean themaUnused = themaRepo.getThemen().stream().noneMatch(t -> t.hasFachgebiet(new ThemaFachgebiet(fachgebiet)));
 
-        if (unused) {
+        if (profilUnused && themaUnused) {
             repo.delete(fachgebiet);
         }
     }
