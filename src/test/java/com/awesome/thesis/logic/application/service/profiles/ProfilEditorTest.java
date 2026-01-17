@@ -136,4 +136,32 @@ class ProfilEditorTest {
         // Assert
         assertThat(r).containsExactlyInAnyOrder(p1, p2);
     }
+
+    @Test
+    @DisplayName("An existing profile can't be created again")
+    void test_createExisting() {
+        //Arrange
+        when(profile.containsKey(anyInt())).thenReturn(true);
+        ProfilEditor editor = new ProfilEditor(profile, fachgebieteEditor);
+
+        //Act
+        editor.create(1, "test");
+
+        //Assert
+        verify(profile, never()).save(any());
+    }
+
+    @Test
+    @DisplayName("An non-existing profile can be created again")
+    void test_create() {
+        //Arrange
+        when(profile.containsKey(anyInt())).thenReturn(false);
+        ProfilEditor editor = new ProfilEditor(profile, fachgebieteEditor);
+
+        //Act
+        editor.create(1, "test");
+
+        //Assert
+        verify(profile).save(new Profil(1, "test"));
+    }
 }
