@@ -13,10 +13,11 @@ public class ArchitectureTest {
     private final JavaClasses klassen =
             new ClassFileImporter()
                     .withImportOption(l -> !l.contains("/test/"))
+                    .withImportOption(l -> !l.contains("ThesisApplication.class"))
                     .importPackagesOf(ThesisApplication.class);
 
     @Test
-    @DisplayName("Die Mwst Anwendung hat eine Onion Architektur")
+    @DisplayName("Die Thesis Anwendung hat eine Onion Architektur")
     public void onionArchitektur() throws Exception {
         ArchRule rule = onionArchitecture()
                 .domainModels("com.awesome.thesis.logic.domain.model..")
