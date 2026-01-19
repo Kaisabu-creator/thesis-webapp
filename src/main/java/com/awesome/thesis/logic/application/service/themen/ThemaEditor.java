@@ -101,16 +101,16 @@ public class ThemaEditor {
 
     public void addFachgebiet(Integer id, String fachgebiet) {
         Thema thema = getThema(id);
-        thema.addFachgebiet(new ThemaFachgebiet(fachgebiet));
         fachEditor.add(fachgebiet);
+        thema.addFachgebiet(new ThemaFachgebiet(fachgebiet));
         repository.update(thema.getId(), thema);
     }
 
     public void removeFachgebiet(Integer id, String fachgebiet) {
         Thema thema = getThema(id);
+        fachEditor.remove(fachgebiet);
         thema.removeFachgebiet(new ThemaFachgebiet(fachgebiet));
         repository.update(thema.getId(), thema);
-        fachEditor.remove(fachgebiet);
     }
 
     public void addDatei(Integer id, ThemaDateiValue datei) {

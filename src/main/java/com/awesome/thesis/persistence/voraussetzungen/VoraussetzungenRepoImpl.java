@@ -1,10 +1,12 @@
 package com.awesome.thesis.persistence.voraussetzungen;
 
 import com.awesome.thesis.logic.application.service.voraussetzungen.IVoraussetzungenRepo;
+import com.awesome.thesis.logic.domain.model.themen.ThemaVoraussetzung;
 import com.awesome.thesis.logic.domain.model.voraussetzungen.Voraussetzung;
 import org.springframework.stereotype.Repository;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Repository
 public class VoraussetzungenRepoImpl implements IVoraussetzungenRepo {
@@ -27,6 +29,8 @@ public class VoraussetzungenRepoImpl implements IVoraussetzungenRepo {
 
     @Override
     public Set<Voraussetzung> getAll() {
-        return database.findAll();
+        return database.findAll().stream()
+                .map(e -> new Voraussetzung(e.voraussetzung()))
+                .collect(Collectors.toSet());
     }
 }
