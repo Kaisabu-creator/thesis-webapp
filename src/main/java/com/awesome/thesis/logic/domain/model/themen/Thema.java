@@ -18,21 +18,22 @@ public class Thema {
     private  Set<ThemaFachgebiet> fachgebiete;
     private  Set<ThemaDateiValue> dateien;
 
-    public Thema(String titel, int id) {
-        this.titel = titel;
-        this.profilID = id;
-        this.links = new HashSet<>();
-        this.voraussetzungen = new HashSet<>();
-        this.fachgebiete = new HashSet<>();
-        this.dateien = new HashSet<>();
-        this.id = null;
-    }
 
-    @PersistenceCreator
-    public Thema(Integer id, String titel, int profilID) {
+    public Thema(Integer id, String titel, String beschreibung, int profilID, Set<ThemaLink> links, Set<ThemaVoraussetzung> voraussetzungen, Set<ThemaFachgebiet> fachgebiete, Set<ThemaDateiValue> dateien) {
         this.id = id;
         this.titel = titel;
+        this.beschreibung = beschreibung;
+        this.links = links;
         this.profilID = profilID;
+        this.voraussetzungen = voraussetzungen;
+        this.fachgebiete = fachgebiete;
+        this.dateien = dateien;
+    }
+
+    public Thema(String titel, int profilID) {
+        this.titel = titel;
+        this.profilID = profilID;
+        this.beschreibung = "";
         this.links = new HashSet<>();
         this.voraussetzungen = new HashSet<>();
         this.fachgebiete = new HashSet<>();
@@ -44,7 +45,7 @@ public class Thema {
     }
 
     public String fachgebieteString() {
-        Set<String> stringFachgebiete = fachgebiete.stream().map(e -> e.fachgebiet()).collect(Collectors.toSet());
+        Set<String> stringFachgebiete = fachgebiete.stream().map(ThemaFachgebiet::fachgebiet).collect(Collectors.toSet());
         if (fachgebiete.isEmpty()) {
             return "";
         }
