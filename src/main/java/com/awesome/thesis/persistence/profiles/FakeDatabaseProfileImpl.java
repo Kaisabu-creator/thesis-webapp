@@ -13,13 +13,13 @@ class FakeDatabaseProfileImpl implements IDatabaseProfile {
 
     public FakeDatabaseProfileImpl() {
         Profil janik = new Profil(182077829,"Janik Daub");
-        janik.addKontakt(new ProfilKontakt("Email", "janik@mail.com", ProfilKontaktart.EMAIL));
+        janik.addEmail(null, "janik@mail.com");
         update(182077829, janik);
         Profil ryota = new Profil(180645494, "Ryota Kariya");
-        ryota.addKontakt(new ProfilKontakt("Email", "ryota@mail.com", ProfilKontaktart.EMAIL));
+        ryota.addEmail(null, "ryota@mail.com");
         update(180645494, ryota);
         Profil ole = new Profil(181595941, "Ole Marschik");
-        ole.addKontakt(new ProfilKontakt("Email", "ole@mail.com", ProfilKontaktart.EMAIL));
+        ole.addEmail(null, "ole@mail.com");
         update(181595941, ole);
     }
 
