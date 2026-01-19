@@ -28,6 +28,16 @@ public class Profil {
         this.dateien = new HashSet<>();
     }
 
+    public Profil(int id, String name, Set<ProfilKontakt> kontakte, Set<ProfilFachgebiet> fachgebiete, Set<ProfilLink> links, Set<ProfilThemaValue> themen, Set<ProfilDateiValue> dateien) {
+        this.id = id;
+        this.name = name;
+        this.kontakte = kontakte;
+        this.fachgebiete = fachgebiete;
+        this.links = links;
+        this.themen = themen;
+        this.dateien = dateien;
+    }
+
     public int getId() {
         return id;
     }
