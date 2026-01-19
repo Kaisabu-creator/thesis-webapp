@@ -48,10 +48,6 @@ public class Profil {
         this.kontakte = kontakte;
     }
 
-    public void addKontakt(ProfilKontakt profilKontakt) {
-        kontakte.add(profilKontakt);
-    }
-
     public void removeKontakt(ProfilKontakt profilKontakt) {
         kontakte.remove(profilKontakt);
     }
