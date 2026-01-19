@@ -1,6 +1,5 @@
 package com.awesome.thesis.logic.application.service.themen;
 
-import com.awesome.thesis.logic.application.dto.DateiDTO;
 import com.awesome.thesis.logic.application.service.fachgebiete.FachgebieteEditor;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import com.awesome.thesis.logic.domain.model.fachgebiete.Fachgebiet;
