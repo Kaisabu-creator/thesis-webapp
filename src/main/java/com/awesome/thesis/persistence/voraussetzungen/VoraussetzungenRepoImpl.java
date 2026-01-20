@@ -1,7 +1,6 @@
 package com.awesome.thesis.persistence.voraussetzungen;
 
-import com.awesome.thesis.logic.application.service.voraussetzungen.IVoraussetzungenRepo;
-import com.awesome.thesis.logic.domain.model.profil.Profil;
+import com.awesome.thesis.logic.application.service.voraussetzungen.VoraussetzungenRepoI;
 import com.awesome.thesis.logic.domain.model.voraussetzungen.Voraussetzung;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Repository;
  * und ist für das Mapping zwischen domain.model und DTOs der Datenbank.
  */
 @Repository
-public class VoraussetzungenRepoImpl implements IVoraussetzungenRepo {
+public class VoraussetzungenRepoImpl implements VoraussetzungenRepoI {
 
   private final VoraussetzungenDbRepository database;
 
