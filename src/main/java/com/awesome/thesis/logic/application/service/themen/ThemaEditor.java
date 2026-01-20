@@ -15,22 +15,39 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
+/**
+ * Diese Klasse ist der Service von {@link Thema}.
+ */
 @Service
 public class ThemaEditor {
 
-  IThemaRepo repository;
+  ThemaRepoI repository;
 
   private final ProfilEditor profilEditor;
 
   private final FachgebieteEditor fachEditor;
 
-  public ThemaEditor(IThemaRepo repository, ProfilEditor profilEditor,
+  /**
+   * Konstruktor für Konstruktor-Injection mit den nötigen Dependencies.
+   *
+   * @param repository Repository von {@link Thema}.
+   * @param profilEditor Service vom Profil.
+   * @param fachEditor Service von Fachgebiet.
+   */
+  public ThemaEditor(ThemaRepoI repository, ProfilEditor profilEditor,
       FachgebieteEditor fachEditor) {
     this.repository = repository;
     this.profilEditor = profilEditor;
     this.fachEditor = fachEditor;
   }
 
+  /**
+   * Fügt einen Link hinzu.
+   *
+   * @param id Die Id des Themas.
+   * @param url Die Url.
+   * @param urlBeschreibung Die Beschreibung der Url.
+   */
   public void addLink(Integer id, String url, String urlBeschreibung) {
     Thema thema = getThema(id);
     ThemaLink link = new ThemaLink(url, urlBeschreibung);
@@ -38,12 +55,25 @@ public class ThemaEditor {
     repository.update(id, thema);
   }
 
+  /**
+   * Löscht einen Link.
+   *
+   * @param id Die Id des Themas.
+   * @param link Der Link, der gelöscht werden soll.
+   */
   public void removeLink(Integer id, ThemaLink link) {
     Thema thema = getThema(id);
     thema.removeUrl(link);
     repository.update(id, thema);
   }
 
+  /**
+   * Bearbeitet den Titel.
+   *
+   * @param profilId Die Id vom Profil, wozu das Thema gehört.
+   * @param id Die Id des Themas.
+   * @param titel Der Titel, der gesetzt werden soll.
+   */
   public void editTitel(int profilId, Integer id, String titel) {
     profilEditor.addThema(profilId, id, titel);
     Thema thema = getThema(id);
@@ -51,12 +81,24 @@ public class ThemaEditor {
     repository.update(id, thema);
   }
 
+  /**
+   * Bearbeitet die Beschreibung des Themas.
+   *
+   * @param id Die Id des Themas.
+   * @param beschreibung Die Beschreibung des Themas.
+   */
   public void editBeschreibung(Integer id, String beschreibung) {
     Thema thema = getThema(id);
     thema.setBeschreibung(beschreibung);
     repository.update(id, thema);
   }
 
+  /**
+   * Fügt ein Thema in die Datenbank hinzu falls noch nicht vorhanden, sonst ein Update.
+   *
+   * @param thema Das Thema, das hinzugefügt werden soll.
+   * @param profilId Die Id des Profils, wozu das Thema gehört.
+   */
   public void addThema(Thema thema, int profilId) {
     if (thema.getId() != null) {
       if (repository.containsKey(thema.getId())) {
@@ -68,6 +110,13 @@ public class ThemaEditor {
     profilEditor.addThema(profilId, thema.getId(), thema.getTitel());
   }
 
+  /**
+   * Fragt nach einem Thema aus der Datenbank an.
+   *
+   * @param id Die Id des Themas, wonach gesucht wird.
+   * @return Das Thema, wonach gesucht wird, sonst eine Exception,
+   *         dass das gesuchte Thema nicht vorhanden ist.
+   */
   public Thema getThema(Integer id) {
     if (repository.containsKey(id)) {
       return repository.get(id);
@@ -80,15 +129,33 @@ public class ThemaEditor {
     return repository.getThemen();
   }
 
+  /**
+   * Checkt, ob ein bestimmtes Profil das Thema bearbeiten darf.
+   *
+   * @param profilId Die Id des Profils.
+   * @param thema Das Thema, welches gecheckt wird.
+   * @return True, falls das Profil das Thema editieren darf, sonst false.
+   */
   public boolean allowedEdit(long profilId, Thema thema) {
     return profilId == thema.getProfilId();
   }
 
+  /**
+   * Löscht ein Thema aus der Datenbank.
+   *
+   * @param id Die Id des Themas, welches gelöscht werden soll.
+   * @param profilId Die Id des Profils, wozu das Thema gehört.
+   */
   public void deleteThema(Integer id, Integer profilId) {
     profilEditor.removeThema(profilId, id);
     repository.delete(id);
   }
 
+  /**
+   * Löscht eine Voraussetzung aus allen Themen.
+   *
+   * @param v Die Voraussetzung, die gelöscht werden soll.
+   */
   public void removeAllVoraussetzung(Voraussetzung v) {
     List<Thema> themen = repository.getThemen();
     for (Thema t : themen) {
@@ -99,6 +166,12 @@ public class ThemaEditor {
     }
   }
 
+  /**
+   * Ersetzt die vorhandenen Voraussetzungen im Thema durch neue Voraussetzungen.
+   *
+   * @param id Die Id des Themas.
+   * @param voraussetzungen Die Voraussetzungen.
+   */
   public void updateVoraussetzungen(Integer id, Set<String> voraussetzungen) {
     Set<ThemaVoraussetzung> safeVoraussetzungen = mapToThemaVoraussetzung(voraussetzungen);
     Thema thema = getThema(id);
@@ -106,6 +179,12 @@ public class ThemaEditor {
     repository.update(thema.getId(), thema);
   }
 
+  /**
+   * Fügt ein Fachgebiet hinzu.
+   *
+   * @param id Die Id des Themas.
+   * @param fachgebiet Das Fachgebiet, das gelöscht werden soll.
+   */
   public void addFachgebiet(Integer id, String fachgebiet) {
     Thema thema = getThema(id);
     fachEditor.add(fachgebiet);
@@ -113,6 +192,12 @@ public class ThemaEditor {
     repository.update(thema.getId(), thema);
   }
 
+  /**
+   * Löscht ein Fachgebiet aus einem Thema.
+   *
+   * @param id Die Id des Themas.
+   * @param fachgebiet Das Fachgebiet, dass gelöscht werden soll.
+   */
   public void removeFachgebiet(Integer id, String fachgebiet) {
     Thema thema = getThema(id);
     fachEditor.remove(fachgebiet);
@@ -120,12 +205,24 @@ public class ThemaEditor {
     repository.update(thema.getId(), thema);
   }
 
+  /**
+   * Fügt Informationen zu einer Datei zu einem Thema hinzu.
+   *
+   * @param id Die Id des Themas.
+   * @param datei Die Datei, die hinzugefügt werden soll.
+   */
   public void addDatei(Integer id, ThemaDateiValue datei) {
     Thema thema = getThema(id);
     thema.addDatei(datei);
     repository.update(id, thema);
   }
 
+  /**
+   * Formt ein Set von String zu einem Set von ThemaVoraussetzung um.
+   *
+   * @param voraussetzungen Das eingegebene Set.
+   * @return Set von ThemaVoraussetzung.
+   */
   public Set<ThemaVoraussetzung> mapToThemaVoraussetzung(Set<String> voraussetzungen) {
     if (!(voraussetzungen == null)) {
       return voraussetzungen.stream()
@@ -135,6 +232,13 @@ public class ThemaEditor {
     return Set.of();
   }
 
+  /**
+   * Eine Liste von Themen, welche die eingegebenen Voraussetzungen und Interessen besitzen.
+   *
+   * @param voraussetzungen Die Voraussetzungen.
+   * @param interessen Die Interessen.
+   * @return Eine Liste von passenden Themen.
+   */
   public List<Thema> getFitting(Set<String> voraussetzungen, Set<String> interessen) {
     Set<ThemaFachgebiet> themaFachgebiet = mapToThemaFachgebiet(interessen);
     Set<ThemaVoraussetzung> themaVoraussetzungen = mapToThemaVoraussetzung(voraussetzungen);
@@ -143,6 +247,14 @@ public class ThemaEditor {
         .toList();
   }
 
+  /**
+   * Sortiert Themen nach der Anzahl der Interessen und Voraussetzungen, die eingegeben wurden.
+   *
+   * @param voraussetzungen Die Voraussetzungen.
+   * @param interessen Die Interessen.
+   * @return Eine Liste von Themen sortiert nach der Anzahl
+   *         der Interessen und Voraussetzungen, die eingegeben wurden.
+   */
   public List<Thema> sortRang(Set<String> voraussetzungen, Set<String> interessen) {
     Set<ThemaVoraussetzung> themaVoraussetzungen = mapToThemaVoraussetzung(voraussetzungen);
     Set<ThemaFachgebiet> themaFachgebiet = mapToThemaFachgebiet(interessen);
@@ -167,11 +279,22 @@ public class ThemaEditor {
         .collect(Collectors.toSet());
   }
 
+  /**
+   * Lädt alle Voraussetzungen von einem Thema.
+   *
+   * @param id Die Id des Themas.
+   * @return Ein Set von Voraussetzungen passend zum Thema.
+   */
   public Set<Voraussetzung> getVoraussetzungen(Integer id) {
     Thema thema = getThema(id);
     return mapToVoraussetzung(thema.getVoraussetzungen());
   }
 
+  /**
+   * Löscht eine Voraussetzung für alle Themen.
+   *
+   * @param voraussetzung Die Voraussetzungen, die gelöscht werden soll.
+   */
   public void removeVoraussetzungForAll(String voraussetzung) {
     ThemaVoraussetzung themaVor = new ThemaVoraussetzung(voraussetzung);
     List<Thema> list = getAll().stream().filter(e -> e.hasVoraussetzung(themaVor)).toList();

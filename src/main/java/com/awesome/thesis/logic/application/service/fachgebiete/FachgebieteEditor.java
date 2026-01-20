@@ -1,7 +1,7 @@
 package com.awesome.thesis.logic.application.service.fachgebiete;
 
 import com.awesome.thesis.logic.application.service.profiles.ProfileRepoI;
-import com.awesome.thesis.logic.application.service.themen.IThemaRepo;
+import com.awesome.thesis.logic.application.service.themen.ThemaRepoI;
 import com.awesome.thesis.logic.domain.model.fachgebiete.Fachgebiet;
 import com.awesome.thesis.logic.domain.model.themen.ThemaFachgebiet;
 import java.util.Set;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class FachgebieteEditor {
   private final FachgebieteRepoI repo;
   private final ProfileRepoI profileRepo;
-  private final IThemaRepo themaRepo;
+  private final ThemaRepoI themaRepo;
   
   /**
    * Konstruktor für Konstruktor-Injection mit den nötigen Dependencies.
@@ -24,7 +24,7 @@ public class FachgebieteEditor {
    * @param profileRepo Repository von Profil
    * @param themaRepo   Repository von Themen
    */
-  public FachgebieteEditor(FachgebieteRepoI repo, ProfileRepoI profileRepo, IThemaRepo themaRepo) {
+  public FachgebieteEditor(FachgebieteRepoI repo, ProfileRepoI profileRepo, ThemaRepoI themaRepo) {
     this.repo = repo;
     this.profileRepo = profileRepo;
     this.themaRepo = themaRepo;

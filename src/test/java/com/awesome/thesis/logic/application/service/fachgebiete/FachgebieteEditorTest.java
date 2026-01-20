@@ -8,7 +8,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.awesome.thesis.logic.application.service.profiles.ProfileRepoI;
-import com.awesome.thesis.logic.application.service.themen.IThemaRepo;
+import com.awesome.thesis.logic.application.service.themen.ThemaRepoI;
 import com.awesome.thesis.logic.domain.model.fachgebiete.Fachgebiet;
 import com.awesome.thesis.logic.domain.model.profil.Profil;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
@@ -21,13 +21,13 @@ import org.junit.jupiter.api.Test;
 class FachgebieteEditorTest {
   FachgebieteRepoI repo;
   ProfileRepoI profilRepo;
-  IThemaRepo themaRepo;
+  ThemaRepoI themaRepo;
   
   @BeforeEach
   void dependencies() {
     repo = mock(FachgebieteRepoI.class);
     profilRepo = mock(ProfileRepoI.class);
-    themaRepo = mock(IThemaRepo.class);
+    themaRepo = mock(ThemaRepoI.class);
   }
   
   @Test

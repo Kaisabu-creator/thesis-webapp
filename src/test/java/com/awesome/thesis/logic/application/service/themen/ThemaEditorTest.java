@@ -21,14 +21,14 @@ public class ThemaEditorTest {
     private static Thema neuesThema() {
         return new Thema("Test", 180645494);
     }
-    private IThemaRepo repo;
+    private ThemaRepoI repo;
     private ProfilEditor profilEditor;
     private ThemaEditor editor;
     private FachgebieteEditor fachEditor;
 
     @BeforeEach
     void setUp() {
-        repo = mock(IThemaRepo.class);
+        repo = mock(ThemaRepoI.class);
         profilEditor = mock(ProfilEditor.class);
         fachEditor = mock(FachgebieteEditor.class);
         editor = new ThemaEditor(repo, profilEditor, fachEditor);

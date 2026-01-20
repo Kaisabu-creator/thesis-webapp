@@ -1,6 +1,6 @@
 package com.awesome.thesis.persistence.themen;
 
-import com.awesome.thesis.logic.application.service.themen.IThemaRepo;
+import com.awesome.thesis.logic.application.service.themen.ThemaRepoI;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
 import com.awesome.thesis.logic.domain.model.themen.ThemaDateiValue;
 import com.awesome.thesis.logic.domain.model.themen.ThemaFachgebiet;
@@ -21,7 +21,7 @@ import org.springframework.stereotype.Repository;
  * und ist für das Mapping zwischen domain.model und DTOs der Datenbank.
  */
 @Repository
-public class ThemaRepoImpl implements IThemaRepo {
+public class ThemaRepoImpl implements ThemaRepoI {
 
   ThemenDbRepository database;
 
