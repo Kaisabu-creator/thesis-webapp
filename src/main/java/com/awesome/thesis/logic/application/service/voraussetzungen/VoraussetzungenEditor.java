@@ -8,6 +8,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
+/**
+ * Diese Klasse ist der Service von {@link Voraussetzung}.
+ *
+ */
 @Service
 public class VoraussetzungenEditor {
 
