@@ -25,6 +25,11 @@ public class ThemaRepoImpl implements IThemaRepo {
 
   ThemenDbRepository database;
 
+  /**
+   * Initialisiert das ThemaRepoImpl.
+   *
+   * @param database Datenbank-Repository für den Zugriff auf die Datenbank.
+   */
   public ThemaRepoImpl(ThemenDbRepository database) {
     this.database = database;
   }
@@ -34,6 +39,7 @@ public class ThemaRepoImpl implements IThemaRepo {
     database.save(thema);
   }
 
+  @Override
   public boolean containsKey(Integer id) {
     return database.existsById(id);
   }
