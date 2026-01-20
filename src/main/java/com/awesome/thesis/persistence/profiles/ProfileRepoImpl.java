@@ -8,12 +8,12 @@ import com.awesome.thesis.logic.domain.model.profil.ProfilKontakt;
 import com.awesome.thesis.logic.domain.model.profil.ProfilKontaktart;
 import com.awesome.thesis.logic.domain.model.profil.ProfilLink;
 import com.awesome.thesis.logic.domain.model.profil.ProfilThemaValue;
-import com.awesome.thesis.persistence.profiles.dtos.ProfilDTO;
-import com.awesome.thesis.persistence.profiles.dtos.ProfilDateiValueDTO;
-import com.awesome.thesis.persistence.profiles.dtos.ProfilFachgebietDTO;
-import com.awesome.thesis.persistence.profiles.dtos.ProfilKontaktDTO;
-import com.awesome.thesis.persistence.profiles.dtos.ProfilLinkDTO;
-import com.awesome.thesis.persistence.profiles.dtos.ProfilThemaValueDTO;
+import com.awesome.thesis.persistence.profiles.dtos.ProfilDateiValueDto;
+import com.awesome.thesis.persistence.profiles.dtos.ProfilDto;
+import com.awesome.thesis.persistence.profiles.dtos.ProfilFachgebietDto;
+import com.awesome.thesis.persistence.profiles.dtos.ProfilKontaktDto;
+import com.awesome.thesis.persistence.profiles.dtos.ProfilLinkDto;
+import com.awesome.thesis.persistence.profiles.dtos.ProfilThemaValueDto;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -25,9 +25,9 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class ProfileRepoImpl implements IProfileRepo {
-  ProfileDBRepository dbRepository;
+  ProfileDbRepository dbRepository;
   
-  public ProfileRepoImpl(ProfileDBRepository dbRepository) {
+  public ProfileRepoImpl(ProfileDbRepository dbRepository) {
     this.dbRepository = dbRepository;
   }
   
@@ -63,121 +63,121 @@ public class ProfileRepoImpl implements IProfileRepo {
         .toList();
   }
   
-  //Mapping Profil -> ProfilDTO
-  private ProfilDTO toProfilDto(Profil profil) {
-    return new ProfilDTO(profil.getId(), profil.getName(),
+  //Mapping Profil -> ProfilDto
+  private ProfilDto toProfilDto(Profil profil) {
+    return new ProfilDto(profil.getId(), profil.getName(),
         translateKontakte(profil.getKontakte()), translateFachgebiete(profil.getFachgebiete()),
         translateLinks(profil.getLinks()), translateThemen(profil.getThemen()),
         translateDateien(profil.getDateien()));
   }
   
-  private Set<ProfilDateiValueDTO> translateDateien(Set<ProfilDateiValue> profilDateiValues) {
+  private Set<ProfilDateiValueDto> translateDateien(Set<ProfilDateiValue> profilDateiValues) {
     return profilDateiValues.stream()
         .map(this::toDateiValueDto)
         .collect(Collectors.toSet());
   }
   
-  private ProfilDateiValueDTO toDateiValueDto(ProfilDateiValue profilDateiValue) {
-    return new ProfilDateiValueDTO(profilDateiValue.id(), profilDateiValue.name(),
+  private ProfilDateiValueDto toDateiValueDto(ProfilDateiValue profilDateiValue) {
+    return new ProfilDateiValueDto(profilDateiValue.id(), profilDateiValue.name(),
         profilDateiValue.beschreibung());
   }
   
-  private Set<ProfilThemaValueDTO> translateThemen(Set<ProfilThemaValue> profilThemaValues) {
+  private Set<ProfilThemaValueDto> translateThemen(Set<ProfilThemaValue> profilThemaValues) {
     return profilThemaValues.stream()
         .map(this::toThemaValueDto)
         .collect(Collectors.toSet());
   }
   
-  private ProfilThemaValueDTO toThemaValueDto(ProfilThemaValue profilThemaValue) {
-    return new ProfilThemaValueDTO(profilThemaValue.id(), profilThemaValue.name());
+  private ProfilThemaValueDto toThemaValueDto(ProfilThemaValue profilThemaValue) {
+    return new ProfilThemaValueDto(profilThemaValue.id(), profilThemaValue.name());
   }
   
-  private Set<ProfilLinkDTO> translateLinks(Set<ProfilLink> profilLinks) {
+  private Set<ProfilLinkDto> translateLinks(Set<ProfilLink> profilLinks) {
     return profilLinks.stream()
         .map(this::toLinkDto)
         .collect(Collectors.toSet());
   }
   
-  private ProfilLinkDTO toLinkDto(ProfilLink profilLink) {
-    return new ProfilLinkDTO(profilLink.url(), profilLink.text());
+  private ProfilLinkDto toLinkDto(ProfilLink profilLink) {
+    return new ProfilLinkDto(profilLink.url(), profilLink.text());
   }
   
-  private Set<ProfilFachgebietDTO> translateFachgebiete(Set<String> fachgebiete) {
+  private Set<ProfilFachgebietDto> translateFachgebiete(Set<String> fachgebiete) {
     return fachgebiete.stream()
         .map(this::toFachgebietDto)
         .collect(Collectors.toSet());
   }
   
-  private ProfilFachgebietDTO toFachgebietDto(String profilFachgebiet) {
-    return new ProfilFachgebietDTO(profilFachgebiet);
+  private ProfilFachgebietDto toFachgebietDto(String profilFachgebiet) {
+    return new ProfilFachgebietDto(profilFachgebiet);
   }
   
-  private Set<ProfilKontaktDTO> translateKontakte(Set<ProfilKontakt> kontakt) {
+  private Set<ProfilKontaktDto> translateKontakte(Set<ProfilKontakt> kontakt) {
     return kontakt.stream()
         .map(this::toKontaktDto)
         .collect(Collectors.toSet());
   }
   
-  private ProfilKontaktDTO toKontaktDto(ProfilKontakt profilKontakt) {
-    return new ProfilKontaktDTO(profilKontakt.label(), profilKontakt.wert(),
+  private ProfilKontaktDto toKontaktDto(ProfilKontakt profilKontakt) {
+    return new ProfilKontaktDto(profilKontakt.label(), profilKontakt.wert(),
         profilKontakt.kontaktart().name());
   }
   
-  //Mapping ProfilDTO -> Profil
-  private Profil toProfil(ProfilDTO profilDto) {
+  //Mapping ProfilDto -> Profil
+  private Profil toProfil(ProfilDto profilDto) {
     return new Profil(profilDto.id(), profilDto.name(), translateKontaktDtos(profilDto.kontakte()),
         translateFachgebietDtos(profilDto.fachgebiete()), translateLinkDtos(profilDto.links()),
         translateThemaDtos(profilDto.themen()), translateDateiDtos(profilDto.dateien()));
   }
   
-  private Set<ProfilDateiValue> translateDateiDtos(Set<ProfilDateiValueDTO> profilDateiValueDtos) {
+  private Set<ProfilDateiValue> translateDateiDtos(Set<ProfilDateiValueDto> profilDateiValueDtos) {
     return profilDateiValueDtos.stream()
         .map(this::toDateiValue)
         .collect(Collectors.toSet());
   }
   
-  private ProfilDateiValue toDateiValue(ProfilDateiValueDTO profilDateiValueDto) {
+  private ProfilDateiValue toDateiValue(ProfilDateiValueDto profilDateiValueDto) {
     return new ProfilDateiValue(profilDateiValueDto.id(), profilDateiValueDto.name(),
         profilDateiValueDto.beschreibung());
   }
   
-  private Set<ProfilThemaValue> translateThemaDtos(Set<ProfilThemaValueDTO> profilThemaValueDtos) {
+  private Set<ProfilThemaValue> translateThemaDtos(Set<ProfilThemaValueDto> profilThemaValueDtos) {
     return profilThemaValueDtos.stream()
         .map(this::toThemaValue)
         .collect(Collectors.toSet());
   }
   
-  private ProfilThemaValue toThemaValue(ProfilThemaValueDTO profilThemaValueDto) {
+  private ProfilThemaValue toThemaValue(ProfilThemaValueDto profilThemaValueDto) {
     return new ProfilThemaValue(profilThemaValueDto.id(), profilThemaValueDto.name());
   }
   
-  private Set<ProfilLink> translateLinkDtos(Set<ProfilLinkDTO> profilLinkDtos) {
+  private Set<ProfilLink> translateLinkDtos(Set<ProfilLinkDto> profilLinkDtos) {
     return profilLinkDtos.stream()
         .map(this::toLink)
         .collect(Collectors.toSet());
   }
   
-  private ProfilLink toLink(ProfilLinkDTO profilLinkDto) {
+  private ProfilLink toLink(ProfilLinkDto profilLinkDto) {
     return new ProfilLink(profilLinkDto.url(), profilLinkDto.text());
   }
   
-  private Set<ProfilFachgebiet> translateFachgebietDtos(Set<ProfilFachgebietDTO> fachgebietDtos) {
+  private Set<ProfilFachgebiet> translateFachgebietDtos(Set<ProfilFachgebietDto> fachgebietDtos) {
     return fachgebietDtos.stream()
         .map(this::toFachgebiet)
         .collect(Collectors.toSet());
   }
   
-  private ProfilFachgebiet toFachgebiet(ProfilFachgebietDTO profilFachgebietDto) {
+  private ProfilFachgebiet toFachgebiet(ProfilFachgebietDto profilFachgebietDto) {
     return new ProfilFachgebiet(profilFachgebietDto.fachgebiet());
   }
   
-  private Set<ProfilKontakt> translateKontaktDtos(Set<ProfilKontaktDTO> kontaktDtos) {
+  private Set<ProfilKontakt> translateKontaktDtos(Set<ProfilKontaktDto> kontaktDtos) {
     return kontaktDtos.stream()
         .map(this::toKontakt)
         .collect(Collectors.toSet());
   }
   
-  private ProfilKontakt toKontakt(ProfilKontaktDTO profilKontaktDto) {
+  private ProfilKontakt toKontakt(ProfilKontaktDto profilKontaktDto) {
     return new ProfilKontakt(profilKontaktDto.label(), profilKontaktDto.wert(),
         ProfilKontaktart.valueOf(profilKontaktDto.kontaktart()));
   }
