@@ -20,7 +20,7 @@ public class VoraussetzungenEditor{
     }
 
     public void add(Voraussetzung voraussetzung) {
-        repo.add(voraussetzung);
+      if(!repo.contains(voraussetzung)) repo.add(voraussetzung);
     }
 
     public List<Voraussetzung> getAll() {

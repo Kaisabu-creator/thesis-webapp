@@ -8,4 +8,5 @@ public interface IVoraussetzungenRepo {
     void add(Voraussetzung voraussetzung);
     void remove(Voraussetzung voraussetzung);
     Set<Voraussetzung> getAll();
+    boolean contains(Voraussetzung voraussetzung);
 }

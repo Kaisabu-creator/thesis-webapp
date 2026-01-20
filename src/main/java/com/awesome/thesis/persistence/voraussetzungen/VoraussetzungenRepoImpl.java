@@ -33,4 +33,9 @@ public class VoraussetzungenRepoImpl implements IVoraussetzungenRepo {
                 .map(e -> new Voraussetzung(e.voraussetzung()))
                 .collect(Collectors.toSet());
     }
+
+  @Override
+  public boolean contains(Voraussetzung voraussetzung) {
+    return database.existsById(voraussetzung.getVoraussetzung());
+  }
 }
