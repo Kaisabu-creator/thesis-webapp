@@ -15,44 +15,66 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+/**
+ * Controller für Admins, um Voraussetzungen zu löschen/hinzuzufügen.
+ */
 @RequestMapping("/admin")
 @Secured("ROLE_ADMIN")
 @Controller
 public class AdminVoraussetzungenController {
 
-    @Autowired
-    VoraussetzungenEditor vorEditor;
+  @Autowired
+  VoraussetzungenEditor vorEditor;
 
-    @Autowired
-    ThemaEditor themaEditor;
+  @Autowired
+  ThemaEditor themaEditor;
 
-    @GetMapping("/module/edit")
-    public String editVoraussetzung(Model model) {
-        model.addAttribute("vorDTO", new VoraussetzungDto(""));
-        model.addAttribute("vorListe", vorEditor.getAll());
-        return "admin/voraussetzungen";
+  /**
+   * Ein GetMapping auf module/edit.
+   *
+   * @param model {@link Model}
+   * @return voraussetzungen.html
+   */
+  @GetMapping("/module/edit")
+  public String editVoraussetzung(Model model) {
+    model.addAttribute("vorDTO", new VoraussetzungDto(""));
+    model.addAttribute("vorListe", vorEditor.getAll());
+    return "admin/voraussetzungen";
+  }
+
+  /**
+   * Ein PostMapping, um Voraussetzungen hinzuzufügen.
+   *
+   * @param vorDto {@link VoraussetzungDto}
+   * @param result {@link BindingResult}
+   * @return Voraussetzungen hinzufügen
+   */
+  @PostMapping("/addVoraussetzung")
+  public String addVoraussetzung(@Valid VoraussetzungDto vorDto, BindingResult result) {
+    if (result.hasErrors()) {
+      return "redirect:/admin/module/edit";
     }
+    vorEditor.add(new Voraussetzung(vorDto.voraussetzung()));
+    return "redirect:/admin/module/edit";
+  }
 
-    @PostMapping("/addVoraussetzung")
-    public String addVoraussetzung(@Valid VoraussetzungDto vorDTO, BindingResult result) {
-        if(result.hasErrors()) {
-            return "redirect:/admin/module/edit";
-        }
-        vorEditor.add(new Voraussetzung(vorDTO.voraussetzung()));
-        return "redirect:/admin/module/edit";
-    }
+  @PostMapping("/checkRemoveVoraussetzung")
+  public String checkRemoveVoraussetzung(@RequestParam String voraussetzung, Model model) {
+    model.addAttribute("voraussetzung", voraussetzung);
+    return "themen/confirmVoraussetzungDeletion";
+  }
 
-    @PostMapping("/checkRemoveVoraussetzung")
-    public String checkRemoveVoraussetzung(@RequestParam String voraussetzung, Model model) {
-        model.addAttribute("voraussetzung", voraussetzung);
-        return "themen/confirmVoraussetzungDeletion";
-    }
-
-    @PostMapping("/removeVoraussetzung")
-    public String removeVoraussetzung(@RequestParam String voraussetzung) {
-        vorEditor.remove(new Voraussetzung(voraussetzung));
-        themaEditor.removeAllVoraussetzung(new Voraussetzung(voraussetzung));
-        return "redirect:/admin/module/edit";
-    }
+  /**
+   * Eine Voraussetzung löschen.
+   *
+   * @param voraussetzung Die Voraussetzung, die gelöscht werden soll.
+   * @return Eine Voraussetzung löschen.
+   */
+  @PostMapping("/removeVoraussetzung")
+  public String removeVoraussetzung(@RequestParam String voraussetzung) {
+    vorEditor.remove(new Voraussetzung(voraussetzung));
+    themaEditor.removeAllVoraussetzung(new Voraussetzung(voraussetzung));
+    return "redirect:/admin/module/edit";
+  }
 
 }
