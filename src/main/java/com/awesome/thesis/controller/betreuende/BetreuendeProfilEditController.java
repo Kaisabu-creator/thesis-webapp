@@ -1,7 +1,7 @@
 package com.awesome.thesis.controller.betreuende;
 
 import com.awesome.thesis.controller.dto.FachgebietDto;
-import com.awesome.thesis.controller.dto.LinkDTO;
+import com.awesome.thesis.controller.dto.LinkDto;
 import com.awesome.thesis.controller.dto.ProfilEditDto;
 import com.awesome.thesis.controller.dto.kontakt.EmailKontaktDto;
 import com.awesome.thesis.controller.dto.kontakt.TelKontaktDto;
@@ -42,7 +42,7 @@ public class BetreuendeProfilEditController {
     Integer id = auth.getPrincipal().getAttribute("id");
     model.addAttribute("profil", editor.get(id));
     model.addAttribute("kontakt", new EmailKontaktDto("email", "", ""));
-    model.addAttribute("linkDTO", new LinkDTO("", ""));
+    model.addAttribute("LinkDto", new LinkDto("", ""));
     model.addAttribute("profilEditDTO", new ProfilEditDto(""));
     model.addAttribute("fachgebietDTO", new FachgebietDto(""));
     return "betreuende/profilEdit";
@@ -64,7 +64,7 @@ public class BetreuendeProfilEditController {
     if (result.hasErrors()) {
       model.addAttribute("profil", editor.get(id));
       model.addAttribute("kontakt", new EmailKontaktDto("email", "", ""));
-      model.addAttribute("linkDTO", new LinkDTO("", ""));
+      model.addAttribute("LinkDto", new LinkDto("", ""));
       model.addAttribute("fachgebietDTO", new FachgebietDto(""));
       return "betreuende/profilEdit";
     }
@@ -102,7 +102,7 @@ public class BetreuendeProfilEditController {
     Integer id = auth.getPrincipal().getAttribute("id");
     if (result.hasErrors()) {
       model.addAttribute("profil", editor.get(id));
-      model.addAttribute("linkDTO", new LinkDTO("", ""));
+      model.addAttribute("LinkDto", new LinkDto("", ""));
       model.addAttribute("profilEditDTO", new ProfilEditDto(""));
       model.addAttribute("fachgebietDTO", new FachgebietDto(""));
       return "betreuende/profilEdit";
@@ -126,7 +126,7 @@ public class BetreuendeProfilEditController {
     Integer id = auth.getPrincipal().getAttribute("id");
     if (result.hasErrors()) {
       model.addAttribute("profil", editor.get(id));
-      model.addAttribute("linkDTO", new LinkDTO("", ""));
+      model.addAttribute("LinkDto", new LinkDto("", ""));
       model.addAttribute("profilEditDTO", new ProfilEditDto(""));
       model.addAttribute("fachgebietDTO", new FachgebietDto(""));
       return "betreuende/profilEdit";
@@ -151,7 +151,7 @@ public class BetreuendeProfilEditController {
     if (result.hasErrors()) {
       model.addAttribute("profil", editor.get(id));
       model.addAttribute("kontakt", new EmailKontaktDto("email", "", ""));
-      model.addAttribute("linkDTO", new LinkDTO("", ""));
+      model.addAttribute("LinkDto", new LinkDto("", ""));
       model.addAttribute("profilEditDTO", new ProfilEditDto(""));
       return "betreuende/profilEdit";
     }
@@ -176,14 +176,14 @@ public class BetreuendeProfilEditController {
   /**
    * Methode für Post-Mapping um einen Link hinzuzufügen.
    *
-   * @param linkDto {@link LinkDTO} zur Validierung
+   * @param linkDto {@link LinkDto} zur Validierung
    * @param result {@link BindingResult} um mit fehlschlagender Validierung umzugehen
    * @param model  {@link Model}
    * @param auth   {@link OAuth2AuthenticationToken} um auf Github-Id zuzugreifen
    * @return redirect auf betreuende/profilEdit und bei Fehlern im BindingResult profilEdit.html
    */
   @PostMapping("/profilEdit/addLink")
-  public String addLink(@Valid @ModelAttribute() LinkDTO linkDto, BindingResult result,
+  public String addLink(@Valid @ModelAttribute() LinkDto linkDto, BindingResult result,
                         Model model, OAuth2AuthenticationToken auth) {
     Integer id = auth.getPrincipal().getAttribute("id");
     if (result.hasErrors()) {
