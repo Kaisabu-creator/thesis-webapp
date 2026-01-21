@@ -75,7 +75,7 @@ public class Profil {
   }
   
   public Set<ProfilKontakt> getKontakte() {
-    return kontakte;
+    return Set.copyOf(kontakte);
   }
   
   public void removeKontakt(ProfilKontakt profilKontakt) {
@@ -93,7 +93,8 @@ public class Profil {
   }
   
   public Set<String> getFachgebiete() {
-    return fachgebiete.stream().map(ProfilFachgebiet::fachgebiet).collect(Collectors.toSet());
+    return Set.copyOf(fachgebiete.stream()
+        .map(ProfilFachgebiet::fachgebiet).collect(Collectors.toSet()));
   }
   
   public void setFachgebiete(Set<String> fachgebiete) {
@@ -142,7 +143,7 @@ public class Profil {
   }
   
   public Set<ProfilLink> getLinks() {
-    return links;
+    return Set.copyOf(links);
   }
   
   public void setLinks(Set<ProfilLink> links) {
@@ -158,7 +159,7 @@ public class Profil {
   }
   
   public Set<ProfilThemaValue> getThemen() {
-    return themen;
+    return Set.copyOf(themen);
   }
   
   public void setThemen(Set<ProfilThemaValue> themen) {
@@ -184,7 +185,7 @@ public class Profil {
   }
   
   public Set<ProfilDateiValue> getDateien() {
-    return dateien;
+    return Set.copyOf(dateien);
   }
   
   @Override
