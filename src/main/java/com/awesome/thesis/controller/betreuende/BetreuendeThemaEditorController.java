@@ -1,8 +1,8 @@
 package com.awesome.thesis.controller.betreuende;
 
 import com.awesome.thesis.controller.dto.FachgebietDto;
-import com.awesome.thesis.controller.dto.LinkDTO;
-import com.awesome.thesis.controller.dto.ThemaInfoDTO;
+import com.awesome.thesis.controller.dto.LinkDto;
+import com.awesome.thesis.controller.dto.ThemaInfoDto;
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
 import com.awesome.thesis.logic.application.service.voraussetzungen.VoraussetzungenEditor;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
@@ -39,10 +39,10 @@ public class BetreuendeThemaEditorController {
     if (!themaEditor.allowedEdit(profilId, thema)) {
       return "redirect:/";
     }
-    ThemaInfoDTO info = new ThemaInfoDTO(thema.getTitel(), thema.getBeschreibung());
+    ThemaInfoDto info = new ThemaInfoDto(thema.getTitel(), thema.getBeschreibung());
     model.addAttribute("themaInfoDTO", info);
     model.addAttribute("thema", themaEditor.getThema(id));
-    model.addAttribute("themaLinkDTO", new LinkDTO("", ""));
+    model.addAttribute("themaLinkDTO", new LinkDto("", ""));
     model.addAttribute("fachgebietDTO", new FachgebietDto(""));
     model.addAttribute("themaVoraussetzungen", themaEditor.getVoraussetzungen(id));
     model.addAttribute("voraussetzungen", vorEditor.getAll());
@@ -51,7 +51,7 @@ public class BetreuendeThemaEditorController {
 
   @PostMapping("themaEdit/{id}/editInfo")
   public String editThemaInfo(@PathVariable Integer id,
-      @Valid @ModelAttribute("themaInfoDTO") ThemaInfoDTO themaInfoDto, BindingResult result,
+      @Valid @ModelAttribute("themaInfoDTO") ThemaInfoDto themaInfoDto, BindingResult result,
       Model model, OAuth2AuthenticationToken auth) {
     Integer profilId = auth.getPrincipal().getAttribute("id");
     Thema thema = themaEditor.getThema(id);
@@ -59,7 +59,7 @@ public class BetreuendeThemaEditorController {
       return "redirect:/";
     }
     if (result.hasErrors()) {
-      model.addAttribute("themaLinkDTO", new LinkDTO("", ""));
+      model.addAttribute("themaLinkDTO", new LinkDto("", ""));
       model.addAttribute("thema", thema);
       model.addAttribute("themaVoraussetzungen", themaEditor.getVoraussetzungen(id));
       model.addAttribute("voraussetzungen", vorEditor.getAll());
@@ -73,7 +73,7 @@ public class BetreuendeThemaEditorController {
 
   @PostMapping("/themaEdit/{id}/editLink")
   public String editThemaLink(@PathVariable Integer id,
-      @Valid @ModelAttribute("themaLinkDTO") LinkDTO dto, BindingResult result, Model model,
+      @Valid @ModelAttribute("themaLinkDTO") LinkDto dto, BindingResult result, Model model,
       OAuth2AuthenticationToken auth) {
     Integer profilId = auth.getPrincipal().getAttribute("id");
     Thema thema = themaEditor.getThema(id);
@@ -81,7 +81,7 @@ public class BetreuendeThemaEditorController {
       return "redirect:/";
     }
     if (result.hasErrors()) {
-      ThemaInfoDTO info = new ThemaInfoDTO(thema.getTitel(), thema.getBeschreibung());
+      ThemaInfoDto info = new ThemaInfoDto(thema.getTitel(), thema.getBeschreibung());
       model.addAttribute("themaInfoDTO", info);
       model.addAttribute("thema", themaEditor.getThema(id));
       model.addAttribute("fachgebietDTO", new FachgebietDto(""));
@@ -95,7 +95,7 @@ public class BetreuendeThemaEditorController {
 
   @PostMapping("/themaEdit/{id}/deleteLink")
   public String deleteLink(@ModelAttribute ThemaLink link, @PathVariable Integer id,
-      @ModelAttribute("themaLinkDTO") LinkDTO dto, OAuth2AuthenticationToken auth) {
+      @ModelAttribute("themaLinkDTO") LinkDto dto, OAuth2AuthenticationToken auth) {
     Integer profilId = auth.getPrincipal().getAttribute("id");
     Thema thema = themaEditor.getThema(id);
     if (!themaEditor.allowedEdit(profilId, thema)) {
@@ -157,10 +157,10 @@ public class BetreuendeThemaEditorController {
       return "redirect:/";
     }
     if (result.hasErrors()) {
-      ThemaInfoDTO info = new ThemaInfoDTO(thema.getTitel(), thema.getBeschreibung());
+      ThemaInfoDto info = new ThemaInfoDto(thema.getTitel(), thema.getBeschreibung());
       model.addAttribute("themaInfoDTO", info);
       model.addAttribute("thema", thema);
-      model.addAttribute("themaLinkDTO", new LinkDTO("", ""));
+      model.addAttribute("themaLinkDTO", new LinkDto("", ""));
       model.addAttribute("themaVoraussetzungen", themaEditor.getVoraussetzungen(id));
       model.addAttribute("voraussetzungen", vorEditor.getAll());
       return "betreuende/themaEdit";
