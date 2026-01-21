@@ -4,9 +4,11 @@ import com.awesome.thesis.controller.dto.ThemaInfoDto;
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
 import jakarta.validation.Valid;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -53,12 +55,17 @@ public class BetreuendeThemaCreateController {
     if (result.hasErrors()) {
       return "betreuende/themaCreate";
     }
-    Integer profilId = auth.getPrincipal().getAttribute("id");
+    int profilId = getId(auth);
     Thema thema = new Thema(dto.titel(), profilId);
     themaEditor.addThema(thema, profilId);
     Integer themaId = thema.getId();
     themaEditor.editBeschreibung(themaId, dto.beschreibung());
     redirect.addFlashAttribute("themaInfoDTO", dto);
     return "redirect:/themaEdit/" + themaId;
+  }
+
+  private int getId(OAuth2AuthenticationToken auth) {
+    return (int) Optional.ofNullable(auth.getPrincipal().getAttribute("id"))
+        .orElseThrow(() -> new OAuth2AuthenticationException("Keine Github-Id"));
   }
 }

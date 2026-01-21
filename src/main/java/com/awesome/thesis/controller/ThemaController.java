@@ -4,9 +4,11 @@ import com.awesome.thesis.logic.application.service.fachgebiete.FachgebieteEdito
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
 import com.awesome.thesis.logic.application.service.voraussetzungen.VoraussetzungenEditor;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
+import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,11 +60,16 @@ public class ThemaController {
   @GetMapping("/thema/{id}")
   public String thema(@PathVariable("id") Integer id, Model model, OAuth2AuthenticationToken auth) {
     Thema thema = editor.getThema(id);
-    Integer profilId = auth.getPrincipal().getAttribute("id");
+    int profilId = getId(auth);
     boolean canEdit = editor.allowedEdit(profilId, thema);
     model.addAttribute("thema", thema);
     model.addAttribute("canEdit", canEdit);
     model.addAttribute("profilID", thema.getProfilId());
     return "themen/thema";
+  }
+
+  private int getId(OAuth2AuthenticationToken auth) {
+    return (int) Optional.ofNullable(auth.getPrincipal().getAttribute("id"))
+        .orElseThrow(() -> new OAuth2AuthenticationException("Keine Github-Id"));
   }
 }
