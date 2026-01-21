@@ -42,7 +42,7 @@ public class BetreuendeProfilEditController {
     Integer id = auth.getPrincipal().getAttribute("id");
     model.addAttribute("profil", editor.get(id));
     model.addAttribute("kontakt", new EmailKontaktDto("email", "", ""));
-    model.addAttribute("LinkDto", new LinkDto("", ""));
+    model.addAttribute("linkDTO", new LinkDto("", ""));
     model.addAttribute("profilEditDTO", new ProfilEditDto(""));
     model.addAttribute("fachgebietDTO", new FachgebietDto(""));
     return "betreuende/profilEdit";
@@ -64,7 +64,7 @@ public class BetreuendeProfilEditController {
     if (result.hasErrors()) {
       model.addAttribute("profil", editor.get(id));
       model.addAttribute("kontakt", new EmailKontaktDto("email", "", ""));
-      model.addAttribute("LinkDto", new LinkDto("", ""));
+      model.addAttribute("linkDTO", new LinkDto("", ""));
       model.addAttribute("fachgebietDTO", new FachgebietDto(""));
       return "betreuende/profilEdit";
     }
@@ -102,7 +102,7 @@ public class BetreuendeProfilEditController {
     Integer id = auth.getPrincipal().getAttribute("id");
     if (result.hasErrors()) {
       model.addAttribute("profil", editor.get(id));
-      model.addAttribute("LinkDto", new LinkDto("", ""));
+      model.addAttribute("linkDTO", new LinkDto("", ""));
       model.addAttribute("profilEditDTO", new ProfilEditDto(""));
       model.addAttribute("fachgebietDTO", new FachgebietDto(""));
       return "betreuende/profilEdit";
@@ -126,7 +126,7 @@ public class BetreuendeProfilEditController {
     Integer id = auth.getPrincipal().getAttribute("id");
     if (result.hasErrors()) {
       model.addAttribute("profil", editor.get(id));
-      model.addAttribute("LinkDto", new LinkDto("", ""));
+      model.addAttribute("linkDTO", new LinkDto("", ""));
       model.addAttribute("profilEditDTO", new ProfilEditDto(""));
       model.addAttribute("fachgebietDTO", new FachgebietDto(""));
       return "betreuende/profilEdit";
@@ -151,7 +151,7 @@ public class BetreuendeProfilEditController {
     if (result.hasErrors()) {
       model.addAttribute("profil", editor.get(id));
       model.addAttribute("kontakt", new EmailKontaktDto("email", "", ""));
-      model.addAttribute("LinkDto", new LinkDto("", ""));
+      model.addAttribute("linkDTO", new LinkDto("", ""));
       model.addAttribute("profilEditDTO", new ProfilEditDto(""));
       return "betreuende/profilEdit";
     }
@@ -183,7 +183,7 @@ public class BetreuendeProfilEditController {
    * @return redirect auf betreuende/profilEdit und bei Fehlern im BindingResult profilEdit.html
    */
   @PostMapping("/profilEdit/addLink")
-  public String addLink(@Valid @ModelAttribute() LinkDto linkDto, BindingResult result,
+  public String addLink(@Valid @ModelAttribute("linkDTO") LinkDto linkDto, BindingResult result,
                         Model model, OAuth2AuthenticationToken auth) {
     Integer id = auth.getPrincipal().getAttribute("id");
     if (result.hasErrors()) {
