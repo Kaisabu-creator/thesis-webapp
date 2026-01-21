@@ -21,6 +21,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+/**
+ * Controller, um Daten zu Themen zu editieren.
+ */
 @Controller
 @Secured("ROLE_BETREUENDE")
 public class BetreuendeThemaEditorController {
@@ -31,6 +34,14 @@ public class BetreuendeThemaEditorController {
   @Autowired
   VoraussetzungenEditor vorEditor;
 
+  /**
+   * Methode für GetMapping auf die ThemaEdit-Seite.
+   *
+   * @param id    Die Id des Themas.
+   * @param model {@link Model}
+   * @param auth  {@link OAuth2AuthenticationToken} Variable, welche die Github-Id gespeichert hat.
+   * @return themaEdit.html, Template zum Editieren von Themen.
+   */
   @GetMapping("/themaEdit/{id}")
   public String editThema(@PathVariable("id") Integer id, Model model,
       OAuth2AuthenticationToken auth) {
@@ -49,6 +60,16 @@ public class BetreuendeThemaEditorController {
     return "betreuende/themaEdit";
   }
 
+  /**
+   * Methode für PostMapping, um Titel und Beschreibung eines Themas zu verändern.
+   *
+   * @param id Die Id des Themas.
+   * @param themaInfoDto {@link ThemaInfoDto} um neue Themendaten zu erhalten/speichern.
+   * @param result {@link BindingResult} um mit fehlschlagender Validierung umzugehen
+   * @param model {@link Model}
+   * @param auth {@link OAuth2AuthenticationToken} um auf Github-Id zuzugreifen
+   * @return themaEdit.html mit verändertem Titel/Beschreibung.
+   */
   @PostMapping("themaEdit/{id}/editInfo")
   public String editThemaInfo(@PathVariable Integer id,
       @Valid @ModelAttribute("themaInfoDTO") ThemaInfoDto themaInfoDto, BindingResult result,
@@ -71,6 +92,16 @@ public class BetreuendeThemaEditorController {
     return "redirect:/themaEdit/" + id;
   }
 
+  /**
+   * Methode für PostMapping, um Links zu einem Thema hinzuzufügen.
+   *
+   * @param id Die Id des Themas.
+   * @param dto {@link LinkDto} um neue Links zu erhalten.
+   * @param result {@link BindingResult} um mit fehlschlagender Validierung umzugehen
+   * @param model {@link Model}
+   * @param auth {@link OAuth2AuthenticationToken} um auf Github-Id zuzugreifen
+   * @return themaEdit.html mit hinzugefügtem Link.
+   */
   @PostMapping("/themaEdit/{id}/editLink")
   public String editThemaLink(@PathVariable Integer id,
       @Valid @ModelAttribute("themaLinkDTO") LinkDto dto, BindingResult result, Model model,
@@ -93,6 +124,15 @@ public class BetreuendeThemaEditorController {
     return "redirect:/themaEdit/" + id;
   }
 
+  /**
+   * Methode für PostMapping, um einen Link vom Thema zu löschen.
+   *
+   * @param link Der Link, der gelöscht werden soll.
+   * @param id Die Id des Themas.
+   * @param dto {@link LinkDto} um Links zu erhalten.
+   * @param auth {@link OAuth2AuthenticationToken} um auf Github-Id zuzugreifen
+   * @return themaEdit.html mit gelöschtem Link.
+   */
   @PostMapping("/themaEdit/{id}/deleteLink")
   public String deleteLink(@ModelAttribute ThemaLink link, @PathVariable Integer id,
       @ModelAttribute("themaLinkDTO") LinkDto dto, OAuth2AuthenticationToken auth) {
@@ -105,11 +145,25 @@ public class BetreuendeThemaEditorController {
     return "redirect:/themaEdit/" + id;
   }
 
+  /**
+   * Stellt ein Thema dar.
+   *
+   * @param id Die id des Themas.
+   * @return thema.html
+   */
   @PostMapping("/themaAnsicht/{id}")
   public String returnToThema(@PathVariable String id) {
     return "redirect:/thema/" + id;
   }
 
+  /**
+   * Methode für PostMapping, um Voraussetzungen an einem Thema zu editieren.
+   *
+   * @param voraussetzungen Die Voraussetzung
+   * @param id Die Id des Themas.
+   * @param auth {@link OAuth2AuthenticationToken} um auf Github-Id zuzugreifen
+   * @return themaEdit.html mit editierter Voraussetzung.
+   */
   @PostMapping("/themaEdit/{id}/editVoraussetzung")
   public String editVoraussetzung(@RequestParam(required = false) Set<String> voraussetzungen,
       @PathVariable Integer id, OAuth2AuthenticationToken auth) {
@@ -122,6 +176,14 @@ public class BetreuendeThemaEditorController {
     return "redirect:/themaEdit/" + id;
   }
 
+  /**
+   * Ein GetMapping zu einer Konfirmationsseite.
+   *
+   * @param id Die Id des Themas.
+   * @param auth {@link OAuth2AuthenticationToken} um auf Github-Id zuzugreifen
+   * @param model {@link Model}
+   * @return Ein Redirect, um ein Thema endgültig zu löschen.
+   */
   @GetMapping("/thema/{id}/confirmDeletion")
   public String checkDeleteThema(@PathVariable Integer id, OAuth2AuthenticationToken auth,
       Model model) {
@@ -136,6 +198,13 @@ public class BetreuendeThemaEditorController {
     return "themen/confirmThemaDeletion";
   }
 
+  /**
+   * PostMapping, um ein Thema zu löschen.
+   *
+   * @param id Die Id des Themas.
+   * @param auth {@link OAuth2AuthenticationToken} um auf Github-Id zuzugreifen
+   * @return Die profilEdit.html.
+   */
   @PostMapping("/thema/{id}/deleteThema")
   public String deleteThema(@PathVariable Integer id, OAuth2AuthenticationToken auth) {
     Integer profilId = auth.getPrincipal().getAttribute("id");
@@ -147,10 +216,20 @@ public class BetreuendeThemaEditorController {
     return "redirect:/betreuende/profilEdit";
   }
 
+  /**
+   * PostMapping, um zu einem Thema ein Fachgebiet hinzuzufügen.
+   *
+   * @param id Die Id des Themas
+   * @param fachgebietDto {@link FachgebietDto}  Um Fachgebiete zu erhalten.
+   * @param result {@link BindingResult} um mit fehlschlagender Validierung umzugehen
+   * @param model {@link Model}
+   * @param auth {@link OAuth2AuthenticationToken} um auf Github-Id zuzugreifen
+   * @return themaEdit.htm
+   */
   @PostMapping("/themaEdit/{id}/addFachgebiet")
   public String addFachgebiet(@PathVariable Integer id,
-                              @Valid @ModelAttribute FachgebietDto fachgebietDto, BindingResult result, Model model,
-                              OAuth2AuthenticationToken auth) {
+      @Valid @ModelAttribute FachgebietDto fachgebietDto, BindingResult result, Model model,
+      OAuth2AuthenticationToken auth) {
     Integer profilId = auth.getPrincipal().getAttribute("id");
     Thema thema = themaEditor.getThema(id);
     if (!themaEditor.allowedEdit(profilId, thema)) {
@@ -169,6 +248,14 @@ public class BetreuendeThemaEditorController {
     return "redirect:/themaEdit/" + id;
   }
 
+  /**
+   * PostMapping, um ein Fachgebiet von einem Thema zu löschen.
+   *
+   * @param id Die Id des Themas.
+   * @param fachgebiet Das Fachgebiet, welches gelöscht werden soll.
+   * @param auth {@link OAuth2AuthenticationToken} um auf Github-Id zuzugreifen
+   * @return themaEdit.html
+   */
   @PostMapping("/themaEdit/{id}/removeFachgebiet")
   public String removeFachgebiet(@PathVariable Integer id, String fachgebiet,
       OAuth2AuthenticationToken auth) {
