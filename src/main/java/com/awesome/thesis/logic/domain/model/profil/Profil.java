@@ -55,11 +55,11 @@ public class Profil {
                 Set<ProfilThemaValue> themen, Set<ProfilDateiValue> dateien) {
     this.id = id;
     this.name = name;
-    this.kontakte = kontakte;
-    this.fachgebiete = fachgebiete;
-    this.links = links;
-    this.themen = themen;
-    this.dateien = dateien;
+    this.kontakte = Set.copyOf(kontakte);
+    this.fachgebiete = Set.copyOf(fachgebiete);
+    this.links = Set.copyOf(links);
+    this.themen = Set.copyOf(themen);
+    this.dateien = Set.copyOf(dateien);
   }
   
   public int getId() {
@@ -147,7 +147,7 @@ public class Profil {
   }
   
   public void setLinks(Set<ProfilLink> links) {
-    this.links = links;
+    this.links = Set.copyOf(links);
   }
   
   public void addLink(ProfilLink link) {
@@ -163,7 +163,7 @@ public class Profil {
   }
   
   public void setThemen(Set<ProfilThemaValue> themen) {
-    this.themen = themen;
+    this.themen = Set.copyOf(themen);
   }
   
   public void addThema(ProfilThemaValue thema) {
