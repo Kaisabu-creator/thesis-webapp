@@ -4,6 +4,7 @@ import com.awesome.thesis.logic.application.service.profiles.ProfileRepoI;
 import com.awesome.thesis.logic.application.service.themen.ThemaRepoI;
 import com.awesome.thesis.logic.domain.model.fachgebiete.Fachgebiet;
 import com.awesome.thesis.logic.domain.model.themen.ThemaFachgebiet;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
@@ -13,8 +14,14 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class FachgebieteEditor {
+  @SuppressFBWarnings(value = "EI_EXPOSE_REP",
+      justification = "Spring Konstruktor Injection")
   private final FachgebieteRepoI repo;
+  @SuppressFBWarnings(value = "EI_EXPOSE_REP",
+      justification = "Spring Konstruktor Injection")
   private final ProfileRepoI profileRepo;
+  @SuppressFBWarnings(value = "EI_EXPOSE_REP",
+      justification = "Spring Konstruktor Injection")
   private final ThemaRepoI themaRepo;
   
   /**

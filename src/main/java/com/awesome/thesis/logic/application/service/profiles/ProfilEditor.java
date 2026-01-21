@@ -6,6 +6,7 @@ import com.awesome.thesis.logic.domain.model.profil.ProfilDateiValue;
 import com.awesome.thesis.logic.domain.model.profil.ProfilKontakt;
 import com.awesome.thesis.logic.domain.model.profil.ProfilLink;
 import com.awesome.thesis.logic.domain.model.profil.ProfilThemaValue;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.List;
 import java.util.Set;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ProfilEditor {
+  @SuppressFBWarnings(value = "EI_EXPOSE_REP",
+      justification = "Spring Konstruktor Injection")
   private final ProfileRepoI profile;
+  @SuppressFBWarnings(value = "EI_EXPOSE_REP",
+      justification = "Spring Konstruktor Injection")
   private final FachgebieteEditor fachgebieteEditor;
   
   public ProfilEditor(ProfileRepoI profile, FachgebieteEditor fachgebieteEditor) {

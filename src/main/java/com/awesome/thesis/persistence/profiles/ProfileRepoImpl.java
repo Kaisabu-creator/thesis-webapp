@@ -17,6 +17,8 @@ import com.awesome.thesis.persistence.profiles.dtos.ProfilThemaValueDto;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -25,6 +27,8 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class ProfileRepoImpl implements ProfileRepoI {
+  @SuppressFBWarnings(value = "EI_EXPOSE_REP2",
+      justification = "Spring Konstruktor Injection")
   ProfileDbRepository dbRepository;
   
   public ProfileRepoImpl(ProfileDbRepository dbRepository) {

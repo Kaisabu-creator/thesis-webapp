@@ -5,6 +5,8 @@ import com.awesome.thesis.logic.domain.model.fachgebiete.Fachgebiet;
 import com.awesome.thesis.persistence.fachgebiete.dto.FachgebietDto;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -13,6 +15,8 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class FachgebieteRepoImpl implements FachgebieteRepoI {
+  @SuppressFBWarnings(value = "EI_EXPOSE_REP2",
+      justification = "Spring Konstruktor Injection")
   private final FachgebieteDbRepository dbRepository;
   
   public FachgebieteRepoImpl(FachgebieteDbRepository dbRepository) {
