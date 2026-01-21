@@ -65,7 +65,7 @@ public class Thema {
   }
 
   public Set<ThemaFachgebiet> getFachgebiete() {
-    return fachgebiete;
+    return Set.copyOf(fachgebiete);
   }
 
   /**
@@ -129,7 +129,7 @@ public class Thema {
   }
 
   public Set<ThemaVoraussetzung> getVoraussetzungen() {
-    return voraussetzungen;
+    return Set.copyOf(voraussetzungen);
   }
 
   /**
@@ -174,7 +174,7 @@ public class Thema {
   }
 
   public Set<ThemaLink> getLinks() {
-    return links;
+    return Set.copyOf(links);
   }
 
   /**
@@ -235,7 +235,7 @@ public class Thema {
   }
 
   public Set<ThemaDateiValue> getDateien() {
-    return dateien;
+    return Set.copyOf(dateien);
   }
 
   /**

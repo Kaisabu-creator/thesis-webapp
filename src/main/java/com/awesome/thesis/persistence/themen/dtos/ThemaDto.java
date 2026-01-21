@@ -25,4 +25,23 @@ public record ThemaDto(@Id Integer id,
                        Set<ThemaVoraussetzungDto> voraussetzungen,
                        Set<ThemaFachgebietDto> fachgebiete,
                        Set<ThemaDateiValueDto> dateien) {
+  @Override
+  public Set<ThemaLinkDto> links() {
+    return Set.copyOf(links);
+  }
+
+  @Override
+  public Set<ThemaVoraussetzungDto> voraussetzungen() {
+    return Set.copyOf(voraussetzungen);
+  }
+
+  @Override
+  public Set<ThemaFachgebietDto> fachgebiete() {
+    return Set.copyOf(fachgebiete);
+  }
+
+  @Override
+  public Set<ThemaDateiValueDto> dateien() {
+    return Set.copyOf(dateien);
+  }
 }
