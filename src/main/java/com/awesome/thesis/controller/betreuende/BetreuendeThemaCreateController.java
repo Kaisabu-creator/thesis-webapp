@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+/**
+ * Controller zum Erstellen von Themen.
+ */
 @Controller
 @Secured("ROLE_BETREUENDE")
 public class BetreuendeThemaCreateController {
@@ -22,12 +25,27 @@ public class BetreuendeThemaCreateController {
   @Autowired
   ThemaEditor themaEditor;
 
+  /**
+   * GetMapping auf die themaCreate-Seite.
+   *
+   * @param model {@link Model}
+   * @return themaCreate.html
+   */
   @GetMapping("/thema/create")
   public String getSite(Model model) {
     model.addAttribute(new ThemaInfoDto("", ""));
     return "betreuende/themaCreate";
   }
 
+  /**
+   * Ein PostMapping, um ein Thema zu erstellen.
+   *
+   * @param redirect {@link RedirectAttributes} Zur Umleitung auf themaEdit
+   * @param dto {@link ThemaInfoDto} Für Informationen zum Thema.
+   * @param result {@link BindingResult} um mit fehlschlagender Validierung umzugehen
+   * @param auth {@link OAuth2AuthenticationToken} um auf Github-Id zuzugreifen
+   * @return themaEdit.html um weitere Informationen zum Thema hinzuzufügen.
+   */
   @PostMapping("/thema/create")
   public String postThema(RedirectAttributes redirect,
       @Valid @ModelAttribute("themaInfoDTO") ThemaInfoDto dto, BindingResult result,
