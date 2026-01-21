@@ -13,33 +13,51 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * Controller für /admin Seite.
+ */
 @Controller
 @RequestMapping("/admin")
 @Secured("ROLE_ADMIN")
 public class AdminProfilCreator {
-    @Autowired
-    ProfilEditor editor;
-
-    @GetMapping()
-    public String createProfile(Model model) {
-        model.addAttribute("profil", new ProfilCreateDto(null, ""));
-        model.addAttribute("profile", editor.getAll());
-        return "admin/profileAdmin";
+  @Autowired
+  ProfilEditor editor;
+  
+  /**
+   * Methode für Get-Mapping auf /admin.
+   *
+   * @param model {@link Model}
+   * @return gibt profileAdmin.html zurück
+   */
+  @GetMapping()
+  public String admin(Model model) {
+    model.addAttribute("profil", new ProfilCreateDto(null, ""));
+    model.addAttribute("profile", editor.getAll());
+    return "admin/profileAdmin";
+  }
+  
+  /**
+   * Methode Post-Mapping um ein neues Profil hinzuzufügen.
+   *
+   * @param profil        {@link ProfilCreateDto} zur Validierung
+   * @param bindingResult {@link BindingResult}
+   * @param model         {@link Model}
+   * @return redirect auf /admin und bei Fehler gibt profileAdmin.html
+   */
+  @PostMapping("createBetreuende")
+  public String createProfile(@Valid @ModelAttribute("profil") ProfilCreateDto profil,
+                              BindingResult bindingResult, Model model) {
+    if (bindingResult.hasErrors()) {
+      model.addAttribute("profile", editor.getAll());
+      return "admin/profileAdmin";
     }
-
-    @PostMapping("createBetreuende")
-    public String createProfile(@Valid @ModelAttribute("profil") ProfilCreateDto profil, BindingResult bindingResult, Model model) {
-        if  (bindingResult.hasErrors()) {
-            model.addAttribute("profile", editor.getAll());
-            return "admin/profileAdmin";
-        }
-        editor.create(profil.id(), profil.name());
-        return "redirect:/admin";
-    }
-
-    @PostMapping("/betreuendeDelete")
-    public String deleteBetreuende(int id) {
-        editor.delete(id);
-        return "redirect:/admin";
-    }
+    editor.create(profil.id(), profil.name());
+    return "redirect:/admin";
+  }
+  
+  @PostMapping("/betreuendeDelete")
+  public String deleteBetreuende(int id) {
+    editor.delete(id);
+    return "redirect:/admin";
+  }
 }
