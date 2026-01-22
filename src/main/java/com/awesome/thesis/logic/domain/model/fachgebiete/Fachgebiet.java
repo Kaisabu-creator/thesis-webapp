@@ -10,13 +10,24 @@ import java.util.Objects;
 @AggregateRoot
 public class Fachgebiet {
   private final String name;
+  private final Integer version;
   
   public Fachgebiet(String name) {
     this.name = name;
+    this.version = null;
+  }
+  
+  public Fachgebiet(String name, Integer version) {
+    this.name = name;
+    this.version = version;
   }
   
   public String getName() {
     return name;
+  }
+  
+  public Integer getVersion() {
+    return version;
   }
   
   @Override

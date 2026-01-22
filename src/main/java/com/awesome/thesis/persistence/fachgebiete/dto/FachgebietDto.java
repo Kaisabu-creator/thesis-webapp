@@ -1,6 +1,7 @@
 package com.awesome.thesis.persistence.fachgebiete.dto;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Version;
 import org.springframework.data.relational.core.mapping.Table;
 
 /**
@@ -9,5 +10,5 @@ import org.springframework.data.relational.core.mapping.Table;
  * @param name Name des Fachgebietes
  */
 @Table("fachgebiet")
-public record FachgebietDto(@Id String name){
+public record FachgebietDto(@Id String name, @Version Integer version){
 }

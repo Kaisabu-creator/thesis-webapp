@@ -14,8 +14,4 @@ import org.springframework.lang.NonNull;
 public interface FachgebieteDbRepository extends CrudRepository<FachgebietDto, String> {
   @NonNull
   Set<FachgebietDto> findAll();
-  
-  @Modifying
-  @Query("insert into fachgebiet values (:name)")
-  void insert(@Param("name") String name);
 }

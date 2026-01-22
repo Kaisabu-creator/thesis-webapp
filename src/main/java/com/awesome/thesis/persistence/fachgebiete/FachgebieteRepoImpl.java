@@ -25,7 +25,7 @@ public class FachgebieteRepoImpl implements FachgebieteRepoI {
   
   @Override
   public void add(Fachgebiet fachgebiet) {
-    dbRepository.insert(fachgebiet.getName());
+    dbRepository.save(toFachgebietDto(fachgebiet));
   }
   
   @Override
@@ -46,6 +46,10 @@ public class FachgebieteRepoImpl implements FachgebieteRepoI {
   }
   
   private Fachgebiet toFachgebiet(FachgebietDto dto) {
-    return new Fachgebiet(dto.name());
+    return new Fachgebiet(dto.name(), dto.version());
+  }
+  
+  private FachgebietDto toFachgebietDto(Fachgebiet fachgebiet) {
+    return new FachgebietDto(fachgebiet.getName(), fachgebiet.getVersion());
   }
 }
