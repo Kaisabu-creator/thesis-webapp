@@ -1,6 +1,5 @@
 package com.awesome.thesis.persistence.fachgebiete;
 
-import com.awesome.thesis.logic.application.exceptions.FachgebietLockingException;
 import com.awesome.thesis.logic.application.service.fachgebiete.FachgebieteRepoI;
 import com.awesome.thesis.logic.domain.model.fachgebiete.Fachgebiet;
 import com.awesome.thesis.persistence.fachgebiete.dto.FachgebietDto;
@@ -59,7 +58,7 @@ public class FachgebieteRepoImpl implements FachgebieteRepoI {
     try {
       dbRepository.save(toFachgebietDto(fachgebiet));
     } catch (OptimisticLockingFailureException e) {
-      throw new FachgebietLockingException();
+      // Ignored due to fachgebiet save being a background process
     }
   }
 }
