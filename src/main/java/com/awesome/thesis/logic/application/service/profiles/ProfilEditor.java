@@ -42,7 +42,7 @@ public class ProfilEditor {
     if (profile.containsKey(id)) {
       return profile.get(id);
     }
-    throw new IllegalArgumentException("No such id " + id);
+    throw new IllegalArgumentException("Es existiert kein Profil mit der Id " + id);
   }
   
   /**

@@ -6,9 +6,11 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Controller für Betreuendenansicht.
@@ -40,5 +42,18 @@ public class ProfilController {
   public String getProfil(@PathVariable int id, Model model) {
     model.addAttribute("profil", profilEditor.get(id));
     return "profiles/profil";
+  }
+  
+  /**
+   * ExceptionHandling für nicht existierende Profil-Id.
+   *
+   * @param e {@link IllegalArgumentException}
+   * @return {@link ModelAndView} fügt eine
+   */
+  @ExceptionHandler(IllegalArgumentException.class)
+  public ModelAndView getProfil(IllegalArgumentException e) {
+    ModelAndView mav = new ModelAndView("profiles/profilError");
+    mav.addObject("errorMessage", e.getMessage());
+    return mav;
   }
 }
