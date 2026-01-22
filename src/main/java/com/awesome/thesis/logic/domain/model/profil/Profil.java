@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 @AggregateRoot
 public class Profil {
   private final int id;
+  private final Integer version;
   private String name;
   private final Set<ProfilKontakt> kontakte;
   private final Set<ProfilFachgebiet> fachgebiete;
@@ -29,6 +30,7 @@ public class Profil {
   public Profil(int id, String name) {
     this.id = id;
     this.name = name;
+    this.version = null;
     this.kontakte = new HashSet<>();
     this.fachgebiete = new HashSet<>();
     this.links = new HashSet<>();
@@ -48,10 +50,11 @@ public class Profil {
    * @param themen speichert ein Set von {@link ProfilThemaValue}
    * @param dateien speichert ein Set von {@link ProfilDateiValue}
   */
-  public Profil(int id, String name, Set<ProfilKontakt> kontakte,
+  public Profil(int id, int version, String name, Set<ProfilKontakt> kontakte,
                 Set<ProfilFachgebiet> fachgebiete, Set<ProfilLink> links,
                 Set<ProfilThemaValue> themen, Set<ProfilDateiValue> dateien) {
     this.id = id;
+    this.version = version;
     this.name = name;
     this.kontakte = new HashSet<>(kontakte);
     this.fachgebiete = new HashSet<>(fachgebiete);
@@ -62,6 +65,10 @@ public class Profil {
   
   public int getId() {
     return id;
+  }
+  
+  public Integer getVersion() {
+    return version;
   }
   
   public String getName() {

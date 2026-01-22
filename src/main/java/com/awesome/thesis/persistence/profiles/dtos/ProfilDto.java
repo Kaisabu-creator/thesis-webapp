@@ -2,12 +2,14 @@ package com.awesome.thesis.persistence.profiles.dtos;
 
 import java.util.Set;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Version;
 import org.springframework.data.relational.core.mapping.Table;
 
 /**
  * Diese Klasse ist ein technisches DTO für die Persistenz-Schicht.
  *
  * @param id Github ID als natürlicher Schlüssel
+ * @param version Version für optimistisches Locking
  * @param name Name des Betreuenden
  * @param kontakte Set von Kontakten
  * @param fachgebiete Set von Fachgebieten
@@ -16,13 +18,15 @@ import org.springframework.data.relational.core.mapping.Table;
  * @param dateien Set von Dateien
  */
 @Table("profil")
-public record ProfilDto(@Id int id, String name, Set<ProfilKontaktDto> kontakte,
-                        Set<ProfilFachgebietDto> fachgebiete, Set<ProfilLinkDto> links,
-                        Set<ProfilThemaValueDto> themen, Set<ProfilDateiValueDto> dateien) {
+public record ProfilDto(@Id int id, @Version Integer version, String name,
+                        Set<ProfilKontaktDto> kontakte, Set<ProfilFachgebietDto> fachgebiete,
+                        Set<ProfilLinkDto> links, Set<ProfilThemaValueDto> themen,
+                        Set<ProfilDateiValueDto> dateien) {
   /**
    * Konstruktor für ProfilDto der die Sets vor dem Speichern kopiert.
    *
    * @param id Profil-Id
+   * @param version Version für optimistisches Locking
    * @param name Name des Profils
    * @param kontakte Set von Kontakten
    * @param fachgebiete Set von Fachgebieten
@@ -30,10 +34,11 @@ public record ProfilDto(@Id int id, String name, Set<ProfilKontaktDto> kontakte,
    * @param themen Set von Themen
    * @param dateien Set von Dateien
    */
-  public ProfilDto(int id, String name, Set<ProfilKontaktDto> kontakte,
+  public ProfilDto(int id, Integer version, String name, Set<ProfilKontaktDto> kontakte,
                    Set<ProfilFachgebietDto> fachgebiete, Set<ProfilLinkDto> links,
                    Set<ProfilThemaValueDto> themen, Set<ProfilDateiValueDto> dateien) {
     this.id = id;
+    this.version = version;
     this.name = name;
     this.kontakte = Set.copyOf(kontakte);
     this.fachgebiete = Set.copyOf(fachgebiete);

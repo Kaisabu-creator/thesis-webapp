@@ -46,7 +46,7 @@ public class ProfileRepoImpl implements ProfileRepoI {
   
   @Override
   public void save(Profil profil) {
-    dbRepository.insert(profil.getId(), profil.getName());
+    dbRepository.save(toProfilDto(profil));
   }
   
   @Override
@@ -68,7 +68,7 @@ public class ProfileRepoImpl implements ProfileRepoI {
   
   //Mapping Profil -> ProfilDto
   private ProfilDto toProfilDto(Profil profil) {
-    return new ProfilDto(profil.getId(), profil.getName(),
+    return new ProfilDto(profil.getId(), profil.getVersion(), profil.getName(),
         translateKontakte(profil.getKontakte()), translateFachgebiete(profil.getFachgebiete()),
         translateLinks(profil.getLinks()), translateThemen(profil.getThemen()),
         translateDateien(profil.getDateien()));
@@ -128,7 +128,8 @@ public class ProfileRepoImpl implements ProfileRepoI {
   
   //Mapping ProfilDto -> Profil
   private Profil toProfil(ProfilDto profilDto) {
-    return new Profil(profilDto.id(), profilDto.name(), translateKontaktDtos(profilDto.kontakte()),
+    return new Profil(profilDto.id(), profilDto.version(), profilDto.name(),
+        translateKontaktDtos(profilDto.kontakte()),
         translateFachgebietDtos(profilDto.fachgebiete()), translateLinkDtos(profilDto.links()),
         translateThemaDtos(profilDto.themen()), translateDateiDtos(profilDto.dateien()));
   }

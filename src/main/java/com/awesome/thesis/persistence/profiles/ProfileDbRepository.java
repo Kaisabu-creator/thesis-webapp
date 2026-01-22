@@ -16,8 +16,4 @@ public interface ProfileDbRepository extends CrudRepository<ProfilDto, Integer> 
   List<ProfilDto> findAll();
   
   ProfilDto findById(int id);
-  
-  @Modifying
-  @Query("insert into profil (id, name) values (:id, :name)")
-  void insert(@Param("id") int id, @Param("name") String name);
 }
