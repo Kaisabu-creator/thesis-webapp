@@ -56,7 +56,11 @@ dependencies {
 	implementation 'org.flywaydb:flyway-core'
 	implementation "org.flywaydb:flyway-database-postgresql"
 
-	//Test
+    //Markdown zu Html
+    implementation 'org.commonmark:commonmark:0.21.0'
+    implementation 'org.jsoup:jsoup:1.22.1'
+
+    //Test
 	compileOnly 'com.github.spotbugs:spotbugs-annotations:4.8.3'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

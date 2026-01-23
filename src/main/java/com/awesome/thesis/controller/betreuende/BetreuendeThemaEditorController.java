@@ -3,6 +3,7 @@ package com.awesome.thesis.controller.betreuende;
 import com.awesome.thesis.controller.dto.FachgebietDto;
 import com.awesome.thesis.controller.dto.LinkDto;
 import com.awesome.thesis.controller.dto.ThemaInfoDto;
+import com.awesome.thesis.logic.application.service.html.HtmlService;
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
 import com.awesome.thesis.logic.application.service.voraussetzungen.VoraussetzungenEditor;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
@@ -36,6 +37,9 @@ public class BetreuendeThemaEditorController {
   @Autowired
   VoraussetzungenEditor vorEditor;
 
+  @Autowired
+  HtmlService service;
+
   /**
    * Methode für GetMapping auf die ThemaEdit-Seite.
    *
@@ -56,7 +60,7 @@ public class BetreuendeThemaEditorController {
     model.addAttribute("themaInfoDTO", info);
     model.addAttribute("thema", themaEditor.getThema(id));
     model.addAttribute("themaLinkDTO", new LinkDto("", ""));
-    model.addAttribute("fachgebietDTO", new FachgebietDto(""));
+    model.addAttribute("fachgebietDto", new FachgebietDto(""));
     model.addAttribute("themaVoraussetzungen", themaEditor.getVoraussetzungen(id));
     model.addAttribute("voraussetzungen", vorEditor.getAll());
     return "betreuende/themaEdit";
@@ -86,11 +90,11 @@ public class BetreuendeThemaEditorController {
       model.addAttribute("thema", thema);
       model.addAttribute("themaVoraussetzungen", themaEditor.getVoraussetzungen(id));
       model.addAttribute("voraussetzungen", vorEditor.getAll());
-      model.addAttribute("fachgebietDTO", new FachgebietDto(""));
+      model.addAttribute("fachgebietDto", new FachgebietDto(""));
       return "betreuende/themaEdit";
     }
     themaEditor.editTitel(profilId, id, themaInfoDto.titel());
-    themaEditor.editBeschreibung(id, themaInfoDto.beschreibung());
+    themaEditor.editBeschreibung(id, service.markdownToHtml(themaInfoDto.beschreibung()));
     return "redirect:/themaEdit/" + id;
   }
 
@@ -117,7 +121,7 @@ public class BetreuendeThemaEditorController {
       ThemaInfoDto info = new ThemaInfoDto(thema.getTitel(), thema.getBeschreibung());
       model.addAttribute("themaInfoDTO", info);
       model.addAttribute("thema", themaEditor.getThema(id));
-      model.addAttribute("fachgebietDTO", new FachgebietDto(""));
+      model.addAttribute("fachgebietDto", new FachgebietDto(""));
       model.addAttribute("themaVoraussetzungen", themaEditor.getVoraussetzungen(id));
       model.addAttribute("voraussetzungen", vorEditor.getAll());
       return "betreuende/themaEdit";

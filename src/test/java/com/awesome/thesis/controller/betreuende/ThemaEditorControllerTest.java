@@ -17,6 +17,7 @@ import com.awesome.thesis.configurations.AppUserService;
 import com.awesome.thesis.configurations.MethodSecurityConfig;
 import com.awesome.thesis.configurations.SecurityConfig;
 import com.awesome.thesis.helper.WithMockOAuth2User;
+import com.awesome.thesis.logic.application.service.html.HtmlService;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
 import com.awesome.thesis.logic.application.service.voraussetzungen.VoraussetzungenEditor;
@@ -50,6 +51,9 @@ public class ThemaEditorControllerTest {
   @MockitoBean
   VoraussetzungenEditor vorEditor;
 
+  @MockitoBean
+  HtmlService service;
+
   @Test
   @DisplayName("Tests that /themaEdit is reachable")
   @WithMockOAuth2User(roles = {"BETREUENDE"}, id = 1)
@@ -78,11 +82,12 @@ public class ThemaEditorControllerTest {
   @WithMockOAuth2User(roles = {"BETREUENDE"}, id = 1)
   void test_4() throws Exception {
     Thema thema = mock(Thema.class);
+    when(service.markdownToHtml(any())).thenReturn("<p>egal</p>");
     when(themaEditor.getThema(2)).thenReturn(thema);
     when(themaEditor.allowedEdit(anyLong(), any())).thenReturn(true);
     mvc.perform(post("/themaEdit/2/editInfo").param("titel", "egal").param("beschreibung", "egal")
         .with(csrf()));
-    verify(themaEditor).editBeschreibung(2, "egal");
+    verify(themaEditor).editBeschreibung(2, "<p>egal</p>");
   }
 
   @Test

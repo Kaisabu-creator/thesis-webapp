@@ -1,6 +1,7 @@
 package com.awesome.thesis.controller.betreuende;
 
 import com.awesome.thesis.controller.dto.ThemaInfoDto;
+import com.awesome.thesis.logic.application.service.html.HtmlService;
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
 import jakarta.validation.Valid;
@@ -26,6 +27,9 @@ public class BetreuendeThemaCreateController {
 
   @Autowired
   ThemaEditor themaEditor;
+
+  @Autowired
+  HtmlService service;
 
   /**
    * GetMapping auf die themaCreate-Seite.
@@ -59,7 +63,7 @@ public class BetreuendeThemaCreateController {
     Thema thema = new Thema(dto.titel(), profilId);
     themaEditor.addThema(thema, profilId);
     Integer themaId = thema.getId();
-    themaEditor.editBeschreibung(themaId, dto.beschreibung());
+    themaEditor.editBeschreibung(themaId, service.markdownToHtml(dto.beschreibung()));
     redirect.addFlashAttribute("themaInfoDTO", dto);
     return "redirect:/themaEdit/" + themaId;
   }

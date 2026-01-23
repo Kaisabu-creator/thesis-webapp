@@ -11,6 +11,7 @@ import com.awesome.thesis.configurations.AppUserService;
 import com.awesome.thesis.configurations.MethodSecurityConfig;
 import com.awesome.thesis.configurations.SecurityConfig;
 import com.awesome.thesis.helper.WithMockOAuth2User;
+import com.awesome.thesis.logic.application.service.html.HtmlService;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
@@ -37,6 +38,9 @@ public class BetreuendeThemaCreateControllerTest {
 
   @MockitoBean
   ProfilEditor profilEditor;
+
+  @MockitoBean
+  HtmlService service;
 
   @Test
   @WithMockOAuth2User(roles = {"BETREUENDE"})
