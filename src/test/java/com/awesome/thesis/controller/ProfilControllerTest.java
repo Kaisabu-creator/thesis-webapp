@@ -15,8 +15,8 @@ import com.awesome.thesis.helper.WithMockOAuth2User;
 import com.awesome.thesis.logic.application.service.fachgebiete.FachgebieteEditor;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import com.awesome.thesis.logic.domain.model.profil.Profil;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,25 +39,55 @@ class ProfilControllerTest {
   
   @Test
   @WithMockOAuth2User()
+  @DisplayName("get auf /profile ohne Parameter")
+  void test_getProfile() throws Exception {
+    //Arrange
+    List<Profil> p = List.of(new Profil(1, "test"));
+    when(profilEditor.getFitting(null)).thenReturn(p);
+    Set<String> f = Set.of("fachgebiet");
+    when(fachgebieteEditor.getAll()).thenReturn(f);
+    
+    //Act + Assert
+    mockMvc.perform(get("/betreuende"))
+        .andExpect(model().attribute("fachgebiete", f))
+        .andExpect(model().attribute("profile", p))
+        .andExpect(status().isOk())
+        .andExpect(view().name("profiles/profile"));
+  }
+  
+  @Test
+  @WithMockOAuth2User()
+  @DisplayName("get auf /profile mit Parameter")
+  void test_getProfileParam() throws Exception {
+    //Arrange
+    List<Profil> p = List.of(new Profil(1, "test"));
+    when(profilEditor.getFitting(Set.of("test"))).thenReturn(p);
+    Set<String> f = Set.of("fachgebiet");
+    when(fachgebieteEditor.getAll()).thenReturn(f);
+    
+    //Act + Assert
+    mockMvc.perform(get("/betreuende")
+            .param("interessen", "test"))
+        .andExpect(model().attribute("fachgebiete", f))
+        .andExpect(model().attribute("profile", p))
+        .andExpect(status().isOk())
+        .andExpect(view().name("profiles/profile"));
+  }
+  
+  @Test
+  @WithMockOAuth2User()
   @DisplayName("get auf /betreuende/{id}")
   void test_getProfilId() throws Exception {
-    Profil profil = mock(Profil.class);
+    //Arrange
+    Profil profil = new Profil(1, "test");
     when(profilEditor.get(anyInt())).thenReturn(profil);
+    
+    //Act + Assert
     mockMvc.perform(get("/betreuende/1"))
         .andExpect(model().attribute("profil", profil))
         .andExpect(view().name("profiles/profil"))
         .andExpect(status().isOk());
   }
   
-  @Test
-  @WithMockOAuth2User()
-  @DisplayName("get auf /profile")
-  void test_getProfile() throws Exception {
-    List<Profil> profile = new ArrayList<>();
-    when(profilEditor.getAll()).thenReturn(profile);
-    mockMvc.perform(get("/betreuende"))
-        .andExpect(model().attribute("profile", profile))
-        .andExpect(status().isOk())
-        .andExpect(view().name("profiles/profile"));
-  }
+  
 }
