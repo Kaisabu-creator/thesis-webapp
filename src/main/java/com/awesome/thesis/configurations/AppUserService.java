@@ -4,7 +4,6 @@ import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,11 +20,14 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class AppUserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
-  @Value("${security.configuration.admin}")
-  private Set<Integer> ids;
+  private final Set<Integer> ids;
+  private final ProfilEditor editor;
   
-  @Autowired
-  ProfilEditor editor;
+  public AppUserService(@Value("${security.configuration.admin}") Set<Integer> ids,
+                        ProfilEditor editor) {
+    this.ids = ids;
+    this.editor = editor;
+  }
   
   private final DefaultOAuth2UserService defaultService = new DefaultOAuth2UserService();
   
