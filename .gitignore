@@ -38,3 +38,4 @@ out/
 .vscode/
 /dblogin.env
 /uploads/
+/htmlReport/
