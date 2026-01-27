@@ -2,10 +2,7 @@ package com.awesome.thesis.persistence.fachgebiete;
 
 import com.awesome.thesis.persistence.fachgebiete.dto.FachgebietDto;
 import java.util.Set;
-import org.springframework.data.jdbc.repository.query.Modifying;
-import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
 import org.springframework.lang.NonNull;
 
 /**
