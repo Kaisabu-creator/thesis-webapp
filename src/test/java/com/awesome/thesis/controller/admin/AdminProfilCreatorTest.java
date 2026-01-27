@@ -17,7 +17,9 @@ import com.awesome.thesis.configurations.MethodSecurityConfig;
 import com.awesome.thesis.configurations.SecurityConfig;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import com.awesome.thesis.logic.domain.model.profil.Profil;
+
 import java.util.List;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,7 +100,7 @@ class AdminProfilCreatorTest {
   @WithMockUser(roles = {"ADMIN"})
   @DisplayName("id darf nicht leer sein")
   void post_createProfil_backEnd_idCantBeEmpty() throws Exception {
-    mockMvc.perform(post("/admin")
+    mockMvc.perform(post("/admin/createBetreuende")
         .param("id", "")
         .param("name", "test")
         .with(csrf()));
@@ -109,7 +111,7 @@ class AdminProfilCreatorTest {
   @WithMockUser(roles = {"ADMIN"})
   @DisplayName("id muss ein positiver int sein")
   void post_createProfil_backEnd_idNeedsToBeInt() throws Exception {
-    mockMvc.perform(post("/admin")
+    mockMvc.perform(post("/admin/createBetreuende")
         .param("id", "0")
         .param("name", "test")
         .with(csrf()));
@@ -120,10 +122,30 @@ class AdminProfilCreatorTest {
   @WithMockUser(roles = {"ADMIN"})
   @DisplayName("name darf nicht leer sein")
   void post_createProfil_backEnd_NameCantBeEmpty() throws Exception {
-    mockMvc.perform(post("/admin")
+    mockMvc.perform(post("/admin/createBetreuende")
         .param("id", "1")
         .param("name", "")
         .with(csrf()));
     verify(editor, never()).create(anyInt(), any());
+  }
+  
+  @Test
+  @WithMockUser(roles = {"ADMIN"})
+  @DisplayName("Profil löschen")
+  void post_deleteProfil() throws Exception {
+    mockMvc.perform(post("/admin/betreuendeDelete")
+            .param("id", "1")
+            .with(csrf()))
+        .andExpect(status().is3xxRedirection());
+  }
+  
+  @Test
+  @WithMockUser(roles = {"ADMIN"})
+  @DisplayName("Profil löschen")
+  void post_deleteProfil_backEnd() throws Exception {
+    mockMvc.perform(post("/admin/betreuendeDelete")
+            .param("id", "1")
+            .with(csrf()))
+        .andExpect(status().is3xxRedirection());
   }
 }
