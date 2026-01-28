@@ -230,7 +230,7 @@ public class ThemaEditor {
    * @param voraussetzungen Das eingegebene Set.
    * @return Set von ThemaVoraussetzung.
    */
-  public Set<ThemaVoraussetzung> mapToThemaVoraussetzung(Set<String> voraussetzungen) {
+  private Set<ThemaVoraussetzung> mapToThemaVoraussetzung(Set<String> voraussetzungen) {
     if (!(voraussetzungen == null)) {
       return voraussetzungen.stream()
           .map(ThemaVoraussetzung::new)

@@ -13,8 +13,16 @@ import static org.mockito.Mockito.when;
 import com.awesome.thesis.logic.application.service.fachgebiete.FachgebieteEditor;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
+import com.awesome.thesis.logic.domain.model.themen.ThemaDateiValue;
+import com.awesome.thesis.logic.domain.model.themen.ThemaFachgebiet;
 import com.awesome.thesis.logic.domain.model.themen.ThemaLink;
+import com.awesome.thesis.logic.domain.model.themen.ThemaVoraussetzung;
+import com.awesome.thesis.logic.domain.model.voraussetzungen.Voraussetzung;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -139,4 +147,115 @@ public class ThemaEditorTest {
     assertThrows(NoSuchElementException.class, () -> editor.getThema(2));
   }
 
+  @Test
+  @DisplayName("editBeschreibung edits the description")
+  public void test_9() {
+    //Arrange
+    Thema thema = neuesThema();
+    when(repo.containsKey(anyInt())).thenReturn(true);
+    when(repo.get(anyInt())).thenReturn(thema);
+    when(editor.getThema(anyInt())).thenReturn(thema);
+
+    //Act
+    editor.editBeschreibung(1, "Hallo");
+
+    //Assert
+    assertThat(thema.getBeschreibung()).isEqualTo("Hallo");
+  }
+
+  @Test
+  @DisplayName("allowedEdit returns true when profilId matches")
+  public void test_10() {
+    //Arrange
+    Thema thema = neuesThema();
+
+    //Act && Assert
+    assertThat(editor.allowedEdit(180645494, thema)).isTrue();
+  }
+
+  @Test
+  @DisplayName("deleteThema removes a Thema")
+  public void test_11() {
+    //Arrange
+    Thema thema = neuesThema();
+    thema.setId(2);
+    when(repo.containsKey(anyInt())).thenReturn(true);
+    when(repo.get(anyInt())).thenReturn(thema);
+    when(editor.getThema(anyInt())).thenReturn(thema);
+
+    //Act
+    editor.deleteThema(2, 180645494);
+
+    //Assert
+    verify(repo).delete(2);
+  }
+
+  @Test
+  @DisplayName("removeAllVoraussetzung removes a Voraussetzung from all Themas")
+  void test_12() {
+    //Arrange
+    Thema thema = neuesThema();
+    thema.updateVoraussetzungen(Set.of(new ThemaVoraussetzung("Propra")));
+    when(repo.getThemen()).thenReturn(List.of(thema));
+
+    //Act
+    editor.removeAllVoraussetzung(new Voraussetzung("Propra"));
+
+    //Assert
+    assertThat(thema.getVoraussetzungen()).doesNotContain(new ThemaVoraussetzung("Propra"));
+
+  }
+
+  @Test
+  @DisplayName("updateVoraussetzungen updates Voraussetzungen for Thema")
+  void test_13() {
+    //Arrange
+    Thema thema = neuesThema();
+    Set<String> voraussetzungen = (Set.of("Propra"));
+    when(repo.containsKey(anyInt())).thenReturn(true);
+    when(repo.get(anyInt())).thenReturn(thema);
+
+    //Act
+    editor.updateVoraussetzungen(2, voraussetzungen);
+
+    //Assert
+    assertThat(thema.getVoraussetzungen()).contains(new ThemaVoraussetzung("Propra"));
+  }
+
+  @Test
+  @DisplayName("removeFachgebiet removes a Fachgebiet from Thema")
+  void test_14() {
+    //Arrange
+    Thema thema = neuesThema();
+    thema.addFachgebiet(new ThemaFachgebiet("Fach"));
+    when(repo.containsKey(anyInt())).thenReturn(true);
+    when(repo.get(anyInt())).thenReturn(thema);
+
+    //Act
+    editor.removeFachgebiet(2, "Fach");
+
+    //Assert
+    assertThat(thema.getFachgebiete()).doesNotContain(new ThemaFachgebiet("a"));
+  }
+
+  @Test
+  @DisplayName("You can add files to Thema")
+  void test_15() {
+    //Arrange
+    Thema thema = neuesThema();
+    when(repo.containsKey(anyInt())).thenReturn(true);
+    when(repo.get(anyInt())).thenReturn(thema);
+    ThemaDateiValue datei = new ThemaDateiValue("1", "hallo", "hallo");
+
+    //Act
+    editor.addDatei(1, datei);
+    assertThat(thema.getDateien()).contains(datei);
+  }
+
+  @Test
+  @DisplayName("getFitting actually retuns the fitting Thema")
+  void test_16() {
+    //Arrange
+
+  }
 }
