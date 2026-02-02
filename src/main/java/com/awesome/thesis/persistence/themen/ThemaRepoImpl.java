@@ -117,6 +117,7 @@ public class ThemaRepoImpl implements ThemaRepoI {
 
   private ThemaDto toThemaDto(Thema thema) {
     return new ThemaDto(thema.getId(),
+        thema.getVersion(),
         thema.getTitel(),
         thema.getBeschreibung(),
         thema.getProfilId(),
@@ -128,6 +129,7 @@ public class ThemaRepoImpl implements ThemaRepoI {
 
   private Thema toThema(ThemaDto themaDto) {
     return new Thema(themaDto.id(),
+        themaDto.version(),
         themaDto.titel(),
         themaDto.beschreibung(),
         themaDto.profilId(),

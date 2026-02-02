@@ -15,6 +15,7 @@ public class Thema {
 
   @Id
   private final Integer id;
+  private final Integer version;
   private String titel;
   private String beschreibung;
   private Set<ThemaLink> links;
@@ -35,10 +36,11 @@ public class Thema {
    * @param fachgebiete Die dem Thema zugeordneten Fachgebiete.
    * @param dateien Die dem Thema zugeordneten Dateien.
    */
-  public Thema(Integer id, String titel, String beschreibung, int profilId, Set<ThemaLink> links,
-      Set<ThemaVoraussetzung> voraussetzungen, Set<ThemaFachgebiet> fachgebiete,
-      Set<ThemaDateiValue> dateien) {
+  public Thema(Integer id, Integer version, String titel, String beschreibung, int profilId,
+      Set<ThemaLink> links, Set<ThemaVoraussetzung> voraussetzungen,
+      Set<ThemaFachgebiet> fachgebiete, Set<ThemaDateiValue> dateien) {
     this.id = id;
+    this.version = version;
     this.titel = titel;
     this.beschreibung = beschreibung;
     this.links = new HashSet<>(links);
@@ -56,6 +58,7 @@ public class Thema {
    */
   public Thema(String titel, int profilId) {
     this.id = null;
+    this.version = null;
     this.titel = titel;
     this.profilId = profilId;
     this.beschreibung = "";
@@ -63,6 +66,10 @@ public class Thema {
     this.voraussetzungen = new HashSet<>();
     this.fachgebiete = new HashSet<>();
     this.dateien = new HashSet<>();
+  }
+
+  public Integer getVersion() {
+    return version;
   }
 
   public Set<ThemaFachgebiet> getFachgebiete() {

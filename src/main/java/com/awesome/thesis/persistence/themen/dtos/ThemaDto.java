@@ -3,6 +3,7 @@ package com.awesome.thesis.persistence.themen.dtos;
 import java.util.HashSet;
 import java.util.Set;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Version;
 import org.springframework.data.relational.core.mapping.Table;
 
 /**
@@ -19,6 +20,7 @@ import org.springframework.data.relational.core.mapping.Table;
  */
 @Table("thema")
 public record ThemaDto(@Id Integer id,
+                       @Version Integer version,
                        String titel,
                        String beschreibung,
                        int profilId,
@@ -39,12 +41,13 @@ public record ThemaDto(@Id Integer id,
    * @param fachgebiete Die Fachgebiete des Themas.
    * @param dateien Dei Dateien des Themas.
    */
-  public ThemaDto(Integer id, String titel, String beschreibung, int profilId,
+  public ThemaDto(Integer id, Integer version, String titel, String beschreibung, int profilId,
       Set<ThemaLinkDto> links,
       Set<ThemaVoraussetzungDto> voraussetzungen,
       Set<ThemaFachgebietDto> fachgebiete,
       Set<ThemaDateiValueDto> dateien) {
     this.id = id;
+    this.version = version;
     this.titel = titel;
     this.beschreibung = beschreibung;
     this.profilId = profilId;
