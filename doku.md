@@ -43,3 +43,17 @@
 ## Qualitätsanforderungen
 ## Risiken
 ## Glossar
+<table>
+    <thead>
+        <tr>
+            <th>Begriff</th>
+            <th>Definition</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Profil</td>
+            <td>Profil eines Betreuenden </td>
+        </tr>
+    </tbody>
+</table>
