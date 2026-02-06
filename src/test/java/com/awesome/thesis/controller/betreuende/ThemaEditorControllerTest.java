@@ -11,7 +11,9 @@ import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import com.awesome.thesis.configurations.AppUserService;
 import com.awesome.thesis.configurations.MethodSecurityConfig;
@@ -31,6 +33,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 /**
  * Test für ThemaEditorController.
@@ -72,9 +75,24 @@ public class ThemaEditorControllerTest {
     Thema thema = mock(Thema.class);
     when(themaEditor.allowedEdit(anyLong(), any())).thenReturn(true);
     when(themaEditor.getThema(2)).thenReturn(thema);
-    mvc.perform(post("/themaEdit/2/editInfo").param("titel", "Changed Titel")
+    mvc.perform(post("/themaEdit/2/editInfo")
+        .param("titel", "Changed Titel")
         .with(csrf()));
     verify(themaEditor).editTitel(1, 2, "Changed Titel");
+  }
+
+  @Test
+  @WithMockOAuth2User(roles = {"BETREUENDE"}, id = 1)
+  @DisplayName("editInfo does not work when titel is empty")
+  void test_14() throws Exception {
+    Thema thema = mock(Thema.class);
+    when(themaEditor.getThema(2)).thenReturn(thema);
+    when(themaEditor.allowedEdit(1, thema)).thenReturn(true);
+    mvc.perform(post("/themaEdit/2/editInfo")
+            .param("titel", "")
+            .param("beschreibung", "")
+            .with(csrf()));
+    verify(themaEditor, never()).editTitel(1, 2, "Changed Titel");
   }
 
   @Test
@@ -101,6 +119,20 @@ public class ThemaEditorControllerTest {
         .param("urlBeschreibung", "egal")
         .with(csrf()));
     verify(themaEditor).addLink(2, "https://www.google.com/", "egal");
+  }
+
+  @Test
+  @WithMockOAuth2User(roles = {"BETREUENDE"}, id = 1)
+  @DisplayName("editLink does not work when beschreibung of the link is empty")
+  void test_15() throws Exception {
+    Thema thema = mock(Thema.class);
+    when(themaEditor.getThema(2)).thenReturn(thema);
+    when(themaEditor.allowedEdit(1, thema)).thenReturn(true);
+    mvc.perform(post("/themaEdit/2/editLink")
+        .param("url", "https://www.google.com/")
+        .param("urlBeschreibung", "")
+        .with(csrf()));
+    verify(themaEditor, never()).addLink(2, "https://www.google.com/", "");
   }
 
   @Test
@@ -180,6 +212,19 @@ public class ThemaEditorControllerTest {
   }
 
   @Test
+  @WithMockOAuth2User(roles = {"BETREUENDE"}, id = 1)
+  @DisplayName("addFachgebiet does not work when fachgebiet empty")
+  void test_16() throws Exception {
+    Thema thema = mock(Thema.class);
+    when(themaEditor.getThema(2)).thenReturn(thema);
+    when(themaEditor.allowedEdit(1, thema)).thenReturn(true);
+    mvc.perform(post("/themaEdit/2/addFachgebiet")
+        .param("fachgebiet", "")
+        .with(csrf()));
+    verify(themaEditor, never()).addFachgebiet(2, "");
+  }
+
+  @Test
   @DisplayName("You can remove a Fachgebiet")
   @WithMockOAuth2User(roles = {"BETREUENDE"}, id = 1)
   void test_13() throws Exception {
@@ -189,4 +234,16 @@ public class ThemaEditorControllerTest {
     mvc.perform(post("/themaEdit/2/removeFachgebiet").param("fachgebiet", "das").with(csrf()));
     verify(themaEditor).removeFachgebiet(2, "das");
   }
+
+  @Test
+  @DisplayName("confirmDeletion returns themen/confirmThemaDeletion")
+  @WithMockOAuth2User(roles = {"BETREUENDE"}, id = 1)
+  void test_17() throws Exception {
+    Thema thema = mock(Thema.class);
+    when(themaEditor.getThema(2)).thenReturn(thema);
+    when(themaEditor.allowedEdit(anyLong(), any())).thenReturn(true);
+    mvc.perform(get("/thema/2/confirmDeletion"))
+        .andExpect(view().name("themen/confirmThemaDeletion"));
+  }
+
 }
