@@ -175,7 +175,9 @@ Prozess:
    2. Application-Schicht lädt die Profile aus der Persistenz-Schicht
 
 ## Verteilungssicht
- - Anwendung wird mit Gradle bootJar gebaut und mit Docker Compose gestartet
+Die Anwendung kann mit docker compose up gestartet werden. Die Anwendung läuft dann unabhängig von dem
+Hostsystem in einem möglichst minimalem Linux-Alpine-Betriebsystem.
+
 ## Querschnittliche Konzepte 
 ## Entscheidungen
 <table>
