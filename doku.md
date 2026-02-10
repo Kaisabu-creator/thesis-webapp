@@ -36,9 +36,32 @@
 - Tests folgen der AAA-Struktur
 
 ## Kontextabgrenzungen
+```text
++------------------------------+
+|            Nutzer            |
+| (Student, Admin, Betreuende) |
++------------------------------+
+               | HTTP
+               v
++------------------------------+    API     +------------------------------+
+|            Thesis            |    --->    |         Github OAuth2        |
+|                              |            |  (Authentifizierungsservice) |
++------------------------------+            +------------------------------+
+               | Data JDBC / SQL
+               v
++------------------------------+
+|          Datenbank           |
+|  (technische Speicherung)    |
++------------------------------+
+```
+Nutzer: Nutzer verwenden die Applikation in verschiedenen Rollen. Je nach Rolle können neue Profile und
+Themen erstellen oder über die Filter oder Matching-Funktion Profile suchen. Die Verbindung
+funktioniert über HTTP.
 
-### Fremdsysteme
-- Github OAuth2 Login als Authentication token zum Anmelden
+Datenbank: Die Datenbank wird benutzt um Profile und Themen zu speichern. Die Verbindung funktioniert
+über Spring Data JDBC (bzw. SQL).
+
+Github OAuth2: Die Github API wird zur Authentifizierung genutzt.
 
 ## Lösungsstrategie
 <table>
@@ -150,6 +173,7 @@ Prozess:
 4. Security-Configuration reichert das Authentication-Token mit Rechten an
    1. Security-Configuration gibt Application-Schicht User Id um zu überprüfen ob der Nutzer ein/e Betreuer:in ist
    2. Application-Schicht lädt die Profile aus der Persistenz-Schicht
+
 ## Verteilungssicht
  - Anwendung wird mit Gradle bootJar gebaut und mit Docker Compose gestartet
 ## Querschnittliche Konzepte 
