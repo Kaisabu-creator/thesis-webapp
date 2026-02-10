@@ -42,6 +42,61 @@
 
 ## Lösungsstrategie
 ## Bausteinsicht
+### Level-1 Bausteinsicht
+```text
++-----------------------+
+|     Github-OAuth2     |
+|   (externes System)   |
++-----------------------+
+            ^
+            |
++-----------------------+
+| Security-Configuration|
+| (UserService, Config) |
++-----------------------+
+            
++-----------------------+            +-----------------------+
+|      Web-Schicht      |    --->    |  Application-Schicht  |
+|     (Controller)      |            | (Services, Aggregate) |
++-----------------------+            +-----------------------+
+                                                ^
+                                                |
+                                     +-----------------------+
+                                     |  Persistence-Schicht  |
+                                     |   (Repositories, DB)  |
+                                     +-----------------------+
+```
+<table>
+    <thead>
+        <tr>
+            <th>Subsystem</th>
+            <th>Kurzbeschreibung</th>
+        </tr>
+    </thead> 
+    <tbody>
+        <tr>
+            <td>Security-Configuration</td>
+            <td>Dient der Autorisierung und Authentifizierung über Github</td>
+        </tr>
+        <tr>
+            <td>Github OAuth2</td>
+            <td>externer Service für die Authentifizierung</td>
+        </tr>
+        <tr>
+            <td>Web-Schicht</td>
+            <td>Empfängt get und post Requests; zuständig für Templates</td>
+        </tr>
+        <tr>
+            <td>Application-Schicht</td>
+            <td>Geschäftslogik; enthält für Services und Aggregate</td>
+        </tr>
+        <tr>
+            <td>Persistence-Schicht</td>
+            <td>technische Datenspeicherung; zuständig für Speicherung und Laden aus der Datenbank</td>
+        </tr>
+    </tbody>
+</table>
+
 ## Laufzeitsicht
 ## Verteilungssicht
 ## Querschnittliche Konzepte 
