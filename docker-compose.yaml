@@ -7,3 +7,9 @@ services:
       - dblogin.env
     volumes:
       - ./data:/var/lib/postgresql/data
+  thesis-app:
+    image: thesis:boot
+    ports:
+      - "8080:8080"
+    env_file:
+      - applogin.env
