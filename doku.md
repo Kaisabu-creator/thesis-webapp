@@ -41,6 +41,43 @@
 - Github OAuth2 Login als Authentication token zum Anmelden
 
 ## Lösungsstrategie
+<table>
+    <thead>
+        <tr>
+            <th>Qualitätsziel</th>
+            <th>Szenario</th>
+            <th>Lösungsansatz</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Einheitliche Architektur</td>
+            <td>Onion-Architektur für Wartbarkeit und Testbarkeit</td>
+            <td>Dateien wurden in die passenden Schichten mit korrekten Referenzen eingeordnet.
+                Dient zur Isolierung von Geschäftslogik von der Infrastruktur und Persistenzebene.
+                Die Onion-Architektur wird zudem durch Architekturtests auf Korrektheit überprüft.</td>
+        </tr>
+        <tr>
+            <td>Sicherheit</td>
+            <td>Authentifizierung und Autorisierung durch OAuth2, SpotBugs</td>
+            <td>Identitätsprüfung durch die Github-Id mit OAuth2. Zugriffskontrolle durch @Secured in Klassen- und Methodenebene. 
+                Zusätzliche nötige Id-Prüfung bei Themen. Es wurde auf potenzielle Sicherheitslücken mit SpotBugs gesucht.</td>
+        </tr>
+        <tr>
+            <td>Datenbank-Integration</td>
+            <td>Strukturierte Speicherung von Daten</td>
+            <td>Anbindung der Datenbank durch Spring JDBC mit CrudRepository in der Persistenzschicht.
+                Verwendet relationale Datenbank PostgreSQL, welche über einem Docker Container bereitgestellt wurde.</td>
+        </tr>
+        <tr>
+            <td>Nebenläufigkeit</td>
+            <td>Konsistente Bearbeitung und Betrachtung von Daten in der Datenbnk</td>
+            <td>Optimistisches Locking durch zusätzliches Attribut version mit @version Annotation im DTO in der Persistenzschicht.
+                </td>
+        </tr>
+    </tbody>
+</table>
+
 ## Bausteinsicht
 ### Level-1 Bausteinsicht
 ```text
