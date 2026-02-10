@@ -1,7 +1,7 @@
 # Dokumentation - Thesis is coming!
 ## Einführung and Ziele
 ### Was ist Thesis?
-- Thesis ist eine Plattform um ein Thema und eine Betreuer:in für seine Bachelorarbeit zu finden
+- Thesis ist eine Plattform, mit der man ein Thema und eine Betreuer:in für seine Bachelorarbeit finden kann
 
 ### Wesentliche Features
 - Filter-Funktion für Betreuende und Themen
@@ -135,6 +135,21 @@
 </table>
 
 ## Laufzeitsicht
+### Szenario: Login
+Beteiligte Bausteine:
+- Web-Schicht
+- Security-Configuration
+- Github OAuth2
+- Application-Schicht
+- Persistence-Schicht
+
+Prozess:
+1. User geht auf eine geschützte Seite
+2. Security-Configuration fängt die Anfrage ab
+3. Security-Configuration leitet den Nutzer weiter zu Authentifizierung mit Github OAuth2
+4. Security-Configuration reichert das Authentication-Token mit Rechten an
+   1. Security-Configuration gibt Application-Schicht User Id um zu überprüfen ob der Nutzer ein/e Betreuer:in ist
+   2. Application-Schicht lädt die Profile aus der Persistenz-Schicht
 ## Verteilungssicht
 ## Querschnittliche Konzepte 
 ## Entscheidungen
