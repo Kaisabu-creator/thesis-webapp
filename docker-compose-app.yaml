@@ -1,0 +1,15 @@
+services:
+  thesis-postgres:
+    image: postgres:16
+    ports:
+      - "5432:5432"
+    env_file:
+      - dblogin.env
+    volumes:
+      - ./data:/var/lib/postgresql/data
+  thesis-app:
+    image: thesis:boot
+    ports:
+      - "8080:8080"
+    env_file:
+      - applogin.env
