@@ -21,8 +21,6 @@ class DateiServiceTest {
 
   private DateiService dateiService;
 
-  private Path dateiPfad;
-
   @BeforeEach
   void setUp() throws Exception {
     dateiService = new DateiService();
