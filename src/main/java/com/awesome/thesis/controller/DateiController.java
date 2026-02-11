@@ -8,6 +8,8 @@ import com.awesome.thesis.logic.domain.model.profil.ProfilDateiValue;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
 import com.awesome.thesis.logic.domain.model.themen.ThemaDateiValue;
 import java.util.UUID;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
@@ -26,8 +28,14 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 public class DateiController {
 
+  @SuppressFBWarnings(value = "EI_EXPOSE_REP",
+      justification = "Spring Konstruktor Injection")
   private final DateiService dateiService;
+  @SuppressFBWarnings(value = "EI_EXPOSE_REP",
+      justification = "Spring Konstruktor Injection")
   private final ProfilEditor profilEditor;
+  @SuppressFBWarnings(value = "EI_EXPOSE_REP",
+      justification = "Spring Konstruktor Injection")
   private final ThemaEditor themaEditor;
 
   /**
