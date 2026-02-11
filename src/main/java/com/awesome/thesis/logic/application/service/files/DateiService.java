@@ -2,6 +2,7 @@ package com.awesome.thesis.logic.application.service.files;
 
 import com.awesome.thesis.logic.domain.model.files.DateiInfos;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -41,7 +42,7 @@ public class DateiService {
   /**
    * Methode zum lokalen Speichern einer Datei.
    *
-   * @param datei Datei.
+   * @param datei        Datei.
    * @param beschreibung Beschreibung.
    * @return Gibt ein DateiInfos-Objekt zurück, nachdem die Datei gespeichert wurde.
    */
@@ -76,17 +77,18 @@ public class DateiService {
    * @return Gibt eine Resource zurück, wenn diese existiert.
    */
   public Resource dateiLaden(String filename) {
-    try {
-      Path file = Paths.get(uploadDirectory).resolve(filename).toAbsolutePath();
+    Path file = Paths.get(uploadDirectory).resolve(filename).toAbsolutePath();
 
-      Resource resource = new UrlResource(file.toUri());
-      if (resource.exists()) {
-        return resource;
-      } else {
-        throw new RuntimeException("Datei nicht vorhanden");
-      }
-    } catch (Exception e) {
-      throw new RuntimeException("Datei konnte nicht geladen werden");
+    Resource resource;
+    try {
+      resource = new UrlResource(file.toUri());
+    } catch (MalformedURLException e) {
+      throw new RuntimeException(e);
+    }
+    if (resource.exists()) {
+      return resource;
+    } else {
+      throw new RuntimeException("Datei nicht vorhanden");
     }
   }
 }
