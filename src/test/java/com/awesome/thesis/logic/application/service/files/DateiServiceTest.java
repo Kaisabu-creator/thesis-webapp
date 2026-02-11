@@ -7,6 +7,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.awesome.thesis.logic.domain.model.files.DateiInfos;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -35,7 +36,7 @@ class DateiServiceTest {
         "datei",
         "test.pdf",
         "text/plain",
-        "Hallo".getBytes()
+        "Hallo".getBytes(StandardCharsets.UTF_8)
     );
 
     DateiInfos infos = dateiService.dateiSpeichern(file, "Beschreibung");

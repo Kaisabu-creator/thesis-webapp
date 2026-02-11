@@ -24,6 +24,7 @@ import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
 import com.awesome.thesis.logic.domain.model.files.DateiInfos;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
@@ -116,7 +117,7 @@ class DateiControllerTest {
         "datei",
         "test.pdf",
         "text/plain",
-        "Hallo".getBytes()
+        "Hallo".getBytes(StandardCharsets.UTF_8)
     );
 
     when(dateiService.dateiSpeichern(any(), any()))
@@ -136,7 +137,7 @@ class DateiControllerTest {
         "datei",
         "test.pdf",
         "text/plain",
-        "Hallo".getBytes()
+        "Hallo".getBytes(StandardCharsets.UTF_8)
     );
 
     Thema thema = mock(Thema.class);
