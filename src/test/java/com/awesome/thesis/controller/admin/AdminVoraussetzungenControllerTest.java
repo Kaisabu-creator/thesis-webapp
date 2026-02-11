@@ -4,6 +4,7 @@ import static org.mockito.Mockito.verify;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.awesome.thesis.configurations.AppUserService;
@@ -21,6 +22,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * Test für AdminVoraussetzungController.
@@ -63,6 +67,14 @@ public class AdminVoraussetzungenControllerTest {
   void test_3() throws Exception {
     mvc.perform(post("/admin/removeVoraussetzung").param("voraussetzung", "a").with(csrf()));
     verify(vorEditor).remove(new Voraussetzung("a"));
+  }
+
+  @Test
+  @WithMockOAuth2User(roles = {"ADMIN"}, id = 1)
+  @DisplayName("checkRemoveVoraussetzung funktioniert wie erwartet")
+  void test_4() throws Exception {
+    mvc.perform(post("/admin/checkRemoveVoraussetzung").param("voraussetzung", "blah").with(csrf()))
+        .andExpect(model().attributeExists("voraussetzung"));
   }
 
 }
