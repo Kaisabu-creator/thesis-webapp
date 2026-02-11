@@ -18,6 +18,7 @@ java {
 
 spotbugs {
 	effort = com.github.spotbugs.snom.Effort.MAX
+	reportLevel = 'low'
 }
 
 spotbugsMain {
