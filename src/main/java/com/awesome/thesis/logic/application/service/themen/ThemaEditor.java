@@ -308,6 +308,12 @@ public class ThemaEditor {
     }
   }
 
+  /**
+   * Löscht eine Datei von einem Thema.
+   *
+   * @param themaId Die Id des Themas
+   * @param dateiId Die Id der Datei
+   */
   public void removeDatei(int themaId, String dateiId) {
     Thema thema = getThema(themaId);
     thema.removeDatei(new ThemaDateiValue(dateiId, "", ""));

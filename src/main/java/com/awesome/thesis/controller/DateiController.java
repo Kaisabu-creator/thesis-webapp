@@ -187,8 +187,17 @@ public class DateiController {
     return "redirect:/betreuende/profilEdit";
   }
 
+  /**
+   * PostMapping, um eine Datei von einem Thema zu löschen.
+   *
+   * @param id Die Id der Datei
+   * @param themaId Die Id des Themas
+   * @param auth Die Github-Id
+   * @return Datei wird gelöscht
+   */
   @PostMapping("/datei/{id}/{themaId}/delete")
-  public String deleteThemaDatei(@PathVariable("id") String id, @PathVariable("themaId") Integer themaId, OAuth2AuthenticationToken auth) {
+  public String deleteThemaDatei(@PathVariable("id") String id,
+      @PathVariable("themaId") Integer themaId, OAuth2AuthenticationToken auth) {
     Integer profilId = auth.getPrincipal().getAttribute("id");
     if (profilId == null) {
       throw new IllegalStateException("Keine Id vorhanden.");
