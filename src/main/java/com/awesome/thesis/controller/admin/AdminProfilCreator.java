@@ -2,6 +2,7 @@ package com.awesome.thesis.controller.admin;
 
 import com.awesome.thesis.controller.dto.ProfilCreateDto;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
+import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -22,6 +23,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AdminProfilCreator {
   @Autowired
   ProfilEditor editor;
+  
+  @Autowired
+  ThemaEditor themaEditor;
   
   /**
    * Methode für Get-Mapping auf /admin.
@@ -55,8 +59,15 @@ public class AdminProfilCreator {
     return "redirect:/admin";
   }
   
+  /**
+   * Methode löscht ein Profil und die zugehörigen Themen.
+   *
+   * @param id Profil Id
+   * @return Redirect auf /admin
+   */
   @PostMapping("/betreuendeDelete")
   public String deleteBetreuende(int id) {
+    themaEditor.deleteThemaFromProfil(id);
     editor.delete(id);
     return "redirect:/admin";
   }

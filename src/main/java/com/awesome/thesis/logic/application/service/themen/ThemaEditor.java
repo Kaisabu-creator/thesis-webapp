@@ -331,6 +331,6 @@ public class ThemaEditor {
     Set<ProfilThemaValue> themen = profil.getThemen();
     themen.stream()
         .map(ProfilThemaValue::id)
-        .forEach(e -> deleteThema(profilId, e));
+        .forEach(e -> deleteThema(e, profilId));
   }
 }
