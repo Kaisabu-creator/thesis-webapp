@@ -24,10 +24,21 @@ public class DateiService {
 
   HtmlService htmlService;
 
+  /**
+   * Konstruktor.
+   *
+   * @param htmlService HtmlService, der benötigt wird, um markdown zu html zu wandeln.
+   */
   public DateiService(HtmlService htmlService) {
     this.htmlService = htmlService;
   }
 
+  /**
+   * Eine Methode, die den Inhalt einer Markdown Datei zu Html umwandelt.
+   *
+   * @param dateiname Name der Datei.
+   * @return gibt die umgewandelte Datei zurück.
+   */
   public String markdownZuHtml(String dateiname) {
     Resource resource = dateiLaden(dateiname);
     try {

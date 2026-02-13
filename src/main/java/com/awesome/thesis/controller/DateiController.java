@@ -196,8 +196,8 @@ public class DateiController {
    * @return Datei wird gelöscht
    */
   @PostMapping("/datei/{id}/{themaId}/delete")
-  public String deleteThemaDatei(@PathVariable("id") String id,
-      @PathVariable("themaId") Integer themaId, OAuth2AuthenticationToken auth) {
+  public String deleteThemaDatei(@PathVariable String id,
+      @PathVariable Integer themaId, OAuth2AuthenticationToken auth) {
     Integer profilId = auth.getPrincipal().getAttribute("id");
     if (profilId == null) {
       throw new IllegalStateException("Keine Id vorhanden.");
@@ -222,6 +222,12 @@ public class DateiController {
         .body(datei);
   }
 
+  /**
+   * Eine Methode für das Umwandeln von Markdown in HTML.
+   *
+   * @param filename Name der Datei.
+   * @return gibt die umgewandelte Datei zurück für den Download.
+   */
   @GetMapping("/datei/view/{filename}")
   public ResponseEntity<?> markdownAlsHtml(@PathVariable String filename) {
     if (filename.toLowerCase().endsWith(".md")) {
