@@ -14,12 +14,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.core.io.Resource;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.web.multipart.MultipartFile;
 
 class DateiServiceTest {
 
+  @Mock
   private HtmlService htmlService;
 
   private DateiService dateiService;
@@ -32,7 +33,7 @@ class DateiServiceTest {
   }
 
   @Test
-  void dateiSpeichernFunktioniert() throws Exception {
+  void dateiSpeichernFunktioniert() {
     MockMultipartFile file = new MockMultipartFile(
         "datei",
         "test.pdf",
