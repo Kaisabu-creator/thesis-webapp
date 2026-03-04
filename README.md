@@ -7,12 +7,12 @@
 ![arc42](https://img.shields.io/badge/architecture-arc42-lightgrey.svg?style=for-the-badge)
 
 ![App Screenshot](./docs/images/screenshot-landingpage.png)
-**Thesis** is a web-application connecting students with tutors and topics for their bachelor-thesis. It uses matching as well as filtering functions and offers tutors a very flexible profil edit option.
+**Thesis** is a web application connecting students with tutors and topics for their bachelor's thesis. It uses matching as well as filtering functions and offers tutors a very flexible profile edit option.
 
 ## Features
 
- - **Filtering:** Filter tutors and topics based on specific research fields and completed modules
- - **Matching:** Matching ranks tutors and topics based on specific research fields and completed modules
+ - **Filtering:** Filter tutors and topics based on specific research fields and completed modules.
+ - **Matching:** Rank tutors and topics based on specific research fields and completed modules.
 
 
 ## Deployment
@@ -20,20 +20,20 @@ The project is dockerized for consistent deployment across different environment
 
 ### Environment
 
-The App needs a GitHub OAuth2 App and a PostgreSql Database Connection. The keys need to be entered in a env-file, that needs to contain the following information:
+The App needs a GitHub OAuth2 App and a PostgreSQL Database Connection. The keys need to be entered in an `.env` file, which needs to contain the following information:
 
 **applogin.env**
 ```env
-#GitHub OAuth2 Connection
+# GitHub OAuth2 Connection
 CLIENT_ID=your_client_id
 CLIENT_SECRET=your_client_secret
-#Database Connection
+# Database Connection
 POSTGRES_USER=your_db_user
 POSTGRES_PASSWORD=your_db_password
 ```
 
 ### Quick Start
-1. Clone the repository using git
+1. Clone the repository using `git clone <repository-url>`
 2. Configure your environment variables in the root directory as explained above
 3. Launch the application with `docker compose up [-d]`
 4. You can access the application under `http://localhost:8080`
@@ -46,13 +46,16 @@ POSTGRES_PASSWORD=your_db_password
 - Spring Data JDBC
 - Thymeleaf
 
-### Build management and automation
+### Build Management and Automation
 - Gradle
 - Docker
 - Docker Compose
 
+## Architecture 
+The Project follows the Onion Architecture.
+
 ## Documentation
-The Project was documented using the arc42-template.
+The Project was documented in German using the arc42-template.
 
 ## Credits
 The project was written as a university project by a team of three computer science students.
