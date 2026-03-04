@@ -36,7 +36,10 @@ out/
 
 ### VS Code ###
 .vscode/
+
+## Secrets ##
 /dblogin.env
 /applogin.env
+
 /uploads/
 /htmlReport/
