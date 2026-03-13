@@ -8,10 +8,13 @@ import com.awesome.thesis.logic.domain.model.profil.ProfilDateiValue;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
 import com.awesome.thesis.logic.domain.model.themen.ThemaDateiValue;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.util.Optional;
 import java.util.UUID;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -93,34 +96,18 @@ public class DateiController {
    * @return Redirected zur profilEdit.html bei erfolgreichem Upload.
    *              Sonst wird zu upload.html weitergeleitet.
    */
+  @Secured("ROLE_BETREUENDE")
   @PostMapping("/datei/create")
   public String annehmen(@RequestParam("datei") MultipartFile multipartFile,
                          @RequestParam(value = "beschreibung", required = false)
                          String beschreibung,
                          OAuth2AuthenticationToken auth,
                          Model model) {
-    try {
-      DateiInfos infos = dateiService.dateiSpeichern(multipartFile, beschreibung);
-
-      Integer id = auth.getPrincipal().getAttribute("id");
-      if (id == null) {
-        model.addAttribute("nachricht", "Bitte anmelden, um Dateien hochzuladen.");
-        return "redirect:/";
-      }
-      String dateiId = UUID.randomUUID().toString();
-      ProfilDateiValue dateiValue = new ProfilDateiValue(dateiId,
-          infos.getTitle(),
-          infos.getDescription());
-      profilEditor.addDatei(id, dateiValue.id(), dateiValue.name(), beschreibung);
-
-      model.addAttribute("dateiInfos", infos);
-      model.addAttribute("nachricht", infos.getTitle() + " wurde erfolgreich hochgeladen.");
-
-      return "redirect:/betreuende/profilEdit";
-    } catch (IllegalArgumentException e) {
-      model.addAttribute("nachricht", e.getMessage());
-      return "upload";
-    }
+    int id = getId(auth);
+    DateiInfos infos = dateiService.dateiSpeichernProfil(multipartFile, beschreibung, id);
+    model.addAttribute("dateiInfos", infos);
+    model.addAttribute("nachricht", infos.getTitle() + " wurde erfolgreich hochgeladen.");
+    return "redirect:/betreuende/profilEdit";
   }
 
   /**
@@ -239,4 +226,8 @@ public class DateiController {
     return downloadDatei(filename);
   }
 
+  private int getId(OAuth2AuthenticationToken auth) {
+    return (int) Optional.ofNullable(auth.getPrincipal().getAttribute("id"))
+            .orElseThrow(() -> new OAuth2AuthenticationException("Keine Github-Id"));
+  }
 }

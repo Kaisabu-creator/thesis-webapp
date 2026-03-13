@@ -1,6 +1,7 @@
 package com.awesome.thesis.controller;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
@@ -111,7 +112,7 @@ class DateiControllerTest {
   }
 
   @Test
-  @WithMockOAuth2User()
+  @WithMockOAuth2User(roles = {"BETREUENDE"})
   void annehmenErfolgreich() throws Exception {
     MockMultipartFile file = new MockMultipartFile(
         "datei",
@@ -120,7 +121,7 @@ class DateiControllerTest {
         "Hallo".getBytes(StandardCharsets.UTF_8)
     );
 
-    when(dateiService.dateiSpeichern(any(), any()))
+    when(dateiService.dateiSpeichernProfil(any(), any(), anyInt()))
         .thenReturn(new DateiInfos("test.pdf", "beschreibung"));
 
     mockMvc.perform(multipart("/datei/create")

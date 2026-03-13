@@ -1,12 +1,16 @@
 package com.awesome.thesis.logic.application.service.files;
 
 import com.awesome.thesis.logic.application.service.html.HtmlService;
+import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import com.awesome.thesis.logic.domain.model.files.DateiInfos;
+import com.awesome.thesis.logic.domain.model.profil.ProfilDateiValue;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.UUID;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -19,6 +23,9 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class DateiService {
 
+  @Autowired
+  ProfilEditor profilEditor;
+
   @Value("${upload.directory}")
   private String uploadDirectory;
 
@@ -27,7 +34,7 @@ public class DateiService {
   /**
    * Konstruktor.
    *
-   * @param htmlService HtmlService, der benötigt wird, um markdown zu html zu wandeln.
+   * @param htmlService HtmlService, der benötigt wird, um Markdown zu html zu wandeln.
    */
   public DateiService(HtmlService htmlService) {
     this.htmlService = htmlService;
@@ -124,5 +131,22 @@ public class DateiService {
     } else {
       throw new RuntimeException("Datei nicht vorhanden");
     }
+  }
+
+  /**
+   * Methode zum Speichern von Dateien für Profile.
+   *
+   * @param multipartFile Datei
+   * @param beschreibung Beschreibung
+   * @param id Profil ID
+   * @return DateiInfos-Objekt der gespeicherten Datei
+   */
+  public DateiInfos dateiSpeichernProfil(MultipartFile multipartFile, String beschreibung, int id) {
+    DateiInfos infos = dateiSpeichern(multipartFile, beschreibung);
+    String dateiId = UUID.randomUUID().toString();
+    ProfilDateiValue dateiValue = new ProfilDateiValue(dateiId, infos.getTitle(),
+            infos.getDescription());
+    profilEditor.addDatei(id, dateiValue.id(), dateiValue.name(), beschreibung);
+    return infos;
   }
 }
