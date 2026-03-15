@@ -51,7 +51,7 @@ public class DateiController {
    */
   @Secured("ROLE_BETREUENDE")
   @GetMapping("/betreuende/datei/create")
-  public String showForm() {
+  public String showFormProfil() {
     return "betreuende/upload";
   }
 
@@ -65,7 +65,7 @@ public class DateiController {
    */
   //TODO: move form in thema edit
   @GetMapping("/thema/datei/{id}/create")
-  public String showThemaForm(@PathVariable Integer id,
+  public String showFormThema(@PathVariable Integer id,
                               Model model,
                               OAuth2AuthenticationToken auth) {
     Thema thema = themaEditor.getThema(id);
@@ -88,10 +88,10 @@ public class DateiController {
    */
   @Secured("ROLE_BETREUENDE")
   @PostMapping("/betreuende/datei/create")
-  public String annehmen(@RequestParam("datei") MultipartFile multipartFile,
-                         @RequestParam(value = "beschreibung", required = false)
-                         String beschreibung,
-                         OAuth2AuthenticationToken auth) {
+  public String createDateiBetreuende(@RequestParam("datei") MultipartFile multipartFile,
+                                      @RequestParam(value = "beschreibung", required = false)
+                                      String beschreibung,
+                                      OAuth2AuthenticationToken auth) {
     int profilId = getId(auth);
     dateiService.dateiSpeichernProfil(multipartFile, beschreibung, profilId);
     return "redirect:/betreuende/profilEdit";
@@ -108,11 +108,11 @@ public class DateiController {
    *              Sonst wird themen/uploadThema.html aufgerufen.
    */
   @PostMapping("/thema/datei/{themaId}/create")
-  public String themaAnnehmen(@PathVariable Integer themaId,
-                              @RequestParam("datei") MultipartFile multipartFile,
-                              @RequestParam(value = "beschreibung", required = false)
-                                String beschreibung,
-                              OAuth2AuthenticationToken auth) {
+  public String createDateiThemen(@PathVariable Integer themaId,
+                                  @RequestParam("datei") MultipartFile multipartFile,
+                                  @RequestParam(value = "beschreibung", required = false)
+                                    String beschreibung,
+                                  OAuth2AuthenticationToken auth) {
     int profilId = getId(auth);
     dateiService.dateiSpeichernThema(multipartFile, beschreibung, themaId, profilId);
     return "redirect:/themaEdit/" + themaId;
@@ -128,7 +128,7 @@ public class DateiController {
    */
   @Secured("ROLE_BETREUENDE")
   @PostMapping("/betreuende/datei/delete/{id}")
-  public String deleteProfilDatei(@ModelAttribute ProfilDateiValue dateiValue,
+  public String deleteDateiProfil(@ModelAttribute ProfilDateiValue dateiValue,
                                   @PathVariable String id,
                                   OAuth2AuthenticationToken auth) {
     int profilId = getId(auth);
@@ -145,8 +145,8 @@ public class DateiController {
    * @return Datei wird gelöscht
    */
   @PostMapping("/datei/{id}/{themaId}/delete")
-  public String deleteThemaDatei(@PathVariable String id,
-      @PathVariable Integer themaId, OAuth2AuthenticationToken auth) {
+  public String deleteDateiThema(@PathVariable String id,
+                                 @PathVariable Integer themaId, OAuth2AuthenticationToken auth) {
     int profilId = getId(auth);
     dateiService.removeDateiThema(profilId, themaId, id);
     themaEditor.removeDatei(themaId, id);
@@ -178,8 +178,8 @@ public class DateiController {
    * @return gibt die umgewandelte Datei zurück für den Download.
    */
   @GetMapping(value = "/datei/view/{dateiId}", params = "name")
-  public ResponseEntity<?> markdownAlsHtml(@PathVariable String dateiId,
-                                           @RequestParam("name") String filename) {
+  public ResponseEntity<?> viewDatei(@PathVariable String dateiId,
+                                     @RequestParam("name") String filename) {
     if (filename.toLowerCase().endsWith(".md")) {
       String htmlString = dateiService.markdownZuHtml(dateiId);
       return ResponseEntity.ok()
