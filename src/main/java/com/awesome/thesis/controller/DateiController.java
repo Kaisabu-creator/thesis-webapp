@@ -1,9 +1,7 @@
 package com.awesome.thesis.controller;
 
 import com.awesome.thesis.logic.application.service.files.DateiService;
-import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
 import com.awesome.thesis.logic.domain.model.profil.ProfilDateiValue;
-import com.awesome.thesis.logic.domain.model.themen.Thema;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Optional;
 import org.springframework.core.io.Resource;
@@ -12,7 +10,6 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,10 +30,8 @@ public class DateiController {
    * Der Konstruktor, der benutzt wird, um ein DateiController-Objekt zu erstellen.
    *
    * @param dateiService Ein Objekt, das Dateien verwaltet.
-   * @param themaEditor Ein Objekt, das Thema-Dateien verwaltet.
    */
-  public DateiController(DateiService dateiService,
-                         ThemaEditor themaEditor) {
+  public DateiController(DateiService dateiService) {
     this.dateiService = dateiService;
   }
 
