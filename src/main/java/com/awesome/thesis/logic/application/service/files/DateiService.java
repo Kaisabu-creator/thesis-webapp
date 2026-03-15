@@ -174,14 +174,13 @@ public class DateiService {
    * Methode zum Speichern von Dateien für Profile.
    *
    * @param multipartFile Datei
-   * @param beschreibung Beschreibung
    * @param profilId Profil ID
    */
-  public void dateiSpeichernProfil(MultipartFile multipartFile, String beschreibung,
-                                         int profilId) {
+  public void dateiSpeichernProfil(MultipartFile multipartFile,
+                                   int profilId) {
     String dateiId = UUID.randomUUID().toString();
     String name = dateiSpeichern(dateiId, multipartFile);
-    profilEditor.addDatei(profilId, dateiId, name, beschreibung);
+    profilEditor.addDatei(profilId, dateiId, name, null);
   }
 
   /**
@@ -199,12 +198,10 @@ public class DateiService {
    * Methode zum Speichern von Dateien für Themen.
    *
    * @param multipartFile Dateien
-   * @param beschreibung Datei Beschreibung
    * @param themaId Thema-Id
    * @param profilId Profil-Id
    */
   public void dateiSpeichernThema(MultipartFile multipartFile,
-                                  String beschreibung,
                                   Integer themaId,
                                   int profilId) {
     Thema thema = themaEditor.getThema(themaId);
@@ -216,7 +213,7 @@ public class DateiService {
     ThemaDateiValue dateiValue = new ThemaDateiValue(
             dateiId,
             titel,
-            beschreibung);
+            null);
     themaEditor.addDatei(themaId, dateiValue);
   }
 

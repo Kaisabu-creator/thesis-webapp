@@ -39,7 +39,6 @@ public class DateiController {
    * PostMapping um Datei hochzuladen.
    *
    * @param multipartFile Datei.
-   * @param beschreibung Beschreibung.
    * @param auth Authentifizierungstoken.
    * @return Redirected zur profilEdit.html bei erfolgreichem Upload.
    *              Sonst wird zu upload.html weitergeleitet.
@@ -47,11 +46,9 @@ public class DateiController {
   @Secured("ROLE_BETREUENDE")
   @PostMapping("/betreuende/datei/create")
   public String createDateiBetreuende(@RequestParam("datei") MultipartFile multipartFile,
-                                      @RequestParam(value = "beschreibung", required = false)
-                                      String beschreibung,
                                       OAuth2AuthenticationToken auth) {
     int profilId = getId(auth);
-    dateiService.dateiSpeichernProfil(multipartFile, beschreibung, profilId);
+    dateiService.dateiSpeichernProfil(multipartFile, profilId);
     return "redirect:/betreuende/profilEdit";
   }
 
@@ -60,7 +57,6 @@ public class DateiController {
    *
    * @param themaId Die Id des Themas.
    * @param multipartFile Eine Datei.
-   * @param beschreibung Beschreibung.
    * @param auth Authentifizierungstoken.
    * @return Gibt die Startseite zurück, falls das Thema nicht editiert werden darf.
    *              Sonst wird themen/uploadThema.html aufgerufen.
@@ -68,11 +64,9 @@ public class DateiController {
   @PostMapping("/thema/datei/{themaId}/create")
   public String createDateiThemen(@PathVariable Integer themaId,
                                   @RequestParam("datei") MultipartFile multipartFile,
-                                  @RequestParam(value = "beschreibung", required = false)
-                                    String beschreibung,
                                   OAuth2AuthenticationToken auth) {
     int profilId = getId(auth);
-    dateiService.dateiSpeichernThema(multipartFile, beschreibung, themaId, profilId);
+    dateiService.dateiSpeichernThema(multipartFile, themaId, profilId);
     return "redirect:/themaEdit/" + themaId;
   }
 
