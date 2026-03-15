@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
+import java.util.stream.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -266,8 +267,8 @@ public class DateiService {
   private Path dateiPfadFinden(String dateiId) {
     Path root = Paths.get(uploadDirectory).toAbsolutePath().normalize();
 
-    try {
-      return Files.list(root)
+    try (Stream<Path> stream = Files.list(root)) {
+      return stream
               .filter(p -> p.getFileName().toString().startsWith(dateiId))
               .findFirst()
               .orElseThrow(() -> new RuntimeException("Datei nicht vorhanden"));
