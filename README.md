@@ -23,6 +23,7 @@ The project is dockerized for consistent deployment across different environment
 ### Environment
 
 The application requires a GitHub OAuth2 App and a PostgreSQL Database Connection. The database will be started with the app together. The credentials must be entered in two `.env` files, which needs to contain the following information:
+
 **dblogin.env**
 ```env
 POSTGRES_DB=thesis-postgres
