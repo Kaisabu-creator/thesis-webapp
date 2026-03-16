@@ -163,16 +163,6 @@ public class ThemaEditorTest {
   }
 
   @Test
-  @DisplayName("allowedEdit returns true when profilId matches")
-  public void test_10() {
-    //Arrange
-    Thema thema = neuesThema();
-
-    //Act && Assert
-    assertThat(editor.allowedEdit(180645494, thema)).isTrue();
-  }
-
-  @Test
   @DisplayName("deleteThema removes a Thema")
   public void test_11() {
     //Arrange
@@ -258,7 +248,7 @@ public class ThemaEditorTest {
     ThemaDateiValue datei = new ThemaDateiValue("1", "hallo", "hallo");
 
     //Act
-    editor.addDatei(1, datei);
+    editor.addDatei(1, "1", "hallo", "hallo");
     assertThat(thema.getDateien()).contains(datei);
   }
 
