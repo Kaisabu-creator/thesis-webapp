@@ -41,11 +41,10 @@ class DateiServiceTest {
         "Hallo".getBytes(StandardCharsets.UTF_8)
     );
 
-    DateiInfos infos = dateiService.dateiSpeichern(file, "Beschreibung");
+    String title = dateiService.dateiSpeichern("id", file);
 
-    assertEquals("test.pdf", infos.getTitle());
-    assertEquals("Beschreibung", infos.getDescription());
-    assertTrue(Files.exists(Paths.get(dateiService.getUploadDirectory(), "test.pdf")));
+    assertEquals("test.pdf", title);
+    assertTrue(Files.exists(Paths.get(dateiService.getUploadDirectory(), "id.pdf")));
   }
 
   @Test
@@ -54,7 +53,7 @@ class DateiServiceTest {
     when(file.getOriginalFilename()).thenReturn(null);
 
     assertThrows(RuntimeException.class, () ->
-        dateiService.dateiSpeichern(file, "beschreibung")
+        dateiService.dateiSpeichern("id", file)
     );
   }
 

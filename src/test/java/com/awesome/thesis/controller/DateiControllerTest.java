@@ -108,8 +108,6 @@ class DateiControllerTest {
 
     when(themaEditor.getThema(any())).thenReturn(thema);
     when(themaEditor.allowedEdit(anyLong(), eq(thema))).thenReturn(true);
-    when(dateiService.dateiSpeichern(any(MultipartFile.class), any()))
-        .thenReturn(new DateiInfos("test.pdf", "beschreibung"));
 
     mockMvc.perform(multipart("/thema/datei/1/create")
             .file(file)
