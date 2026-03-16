@@ -23,7 +23,6 @@ import com.awesome.thesis.helper.WithMockOAuth2User;
 import com.awesome.thesis.logic.application.service.files.DateiService;
 import com.awesome.thesis.logic.application.service.profiles.ProfilEditor;
 import com.awesome.thesis.logic.application.service.themen.ThemaEditor;
-import com.awesome.thesis.logic.domain.model.files.DateiInfos;
 import com.awesome.thesis.logic.domain.model.themen.Thema;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
