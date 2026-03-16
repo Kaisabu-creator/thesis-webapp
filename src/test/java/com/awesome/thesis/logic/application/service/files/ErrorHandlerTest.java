@@ -2,6 +2,7 @@ package com.awesome.thesis.logic.application.service.files;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.awesome.thesis.controller.advice.ErrorHandler;
 import org.junit.jupiter.api.Test;
 import org.springframework.ui.ConcurrentModel;
 import org.springframework.ui.Model;

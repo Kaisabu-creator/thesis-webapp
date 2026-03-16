@@ -20,7 +20,7 @@ spring:
 #    url: jdbc:postgresql://thesis-postgres:5432/thesis-postgres
 
 upload:
-  directory: ./uploads
+  directory: /thesis/uploads
 
 logging:
   level:

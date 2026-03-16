@@ -1,4 +1,4 @@
-package com.awesome.thesis.logic.application.service.files;
+package com.awesome.thesis.controller.advice;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;

@@ -7,10 +7,9 @@ import com.awesome.thesis.annotations.AggregateValue;
  *
  * @param id Schlüssel von Datei
  * @param name Name der Datei
- * @param beschreibung Beschreibung der Datei
  */
 @AggregateValue
-public record ProfilDateiValue(String id, String name, String beschreibung) {
+public record ProfilDateiValue(String id, String name) {
   @Override
   public boolean equals(Object object) {
     if (!(object instanceof ProfilDateiValue other)) {

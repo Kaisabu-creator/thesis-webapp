@@ -1,6 +1,7 @@
 package com.awesome.thesis.controller;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
@@ -39,6 +40,7 @@ import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Klasse zum Testen der DateiController-Klasse.
@@ -76,42 +78,7 @@ class DateiControllerTest {
   }
 
   @Test
-  @WithMockOAuth2User()
-  void get_auf_upload() throws Exception {
-    mockMvc.perform(get("/datei/create"))
-        .andExpect(status().isOk())
-        .andExpect(view().name("upload"));
-  }
-
-  @Test
-  void showThemaFormErlaubtDannWirdUploadThemaGezeigt() throws Exception {
-    Thema thema = mock(Thema.class);
-
-    when(themaEditor.getThema(1)).thenReturn(thema);
-    when(themaEditor.allowedEdit(2, 1)).thenReturn(true);
-
-    mockMvc.perform(get("/thema/datei/1/create")
-            .with(authentication(authToken(2))))
-        .andExpect(status().isOk())
-        .andExpect(view().name("themen/uploadThema"))
-        .andExpect(model().attribute("id", 1));
-  }
-
-  @Test
-  void showThemaForm_notAllowed_redirectsHome() throws Exception {
-    Thema thema = mock(Thema.class);
-
-    when(themaEditor.getThema(1)).thenReturn(thema);
-    when(themaEditor.allowedEdit(10, 1)).thenReturn(false);
-
-    mockMvc.perform(get("/thema/datei/1/create")
-            .with(authentication(authToken(10))))
-        .andExpect(status().is3xxRedirection())
-        .andExpect(redirectedUrl("/"));
-  }
-
-  @Test
-  @WithMockOAuth2User()
+  @WithMockOAuth2User(roles = {"BETREUENDE"})
   void annehmenErfolgreich() throws Exception {
     MockMultipartFile file = new MockMultipartFile(
         "datei",
@@ -120,10 +87,7 @@ class DateiControllerTest {
         "Hallo".getBytes(StandardCharsets.UTF_8)
     );
 
-    when(dateiService.dateiSpeichern(any(), any()))
-        .thenReturn(new DateiInfos("test.pdf", "beschreibung"));
-
-    mockMvc.perform(multipart("/datei/create")
+    mockMvc.perform(multipart("/betreuende/datei/create")
             .file(file)
             .with(csrf()))
         .andExpect(status().is3xxRedirection())
@@ -131,7 +95,7 @@ class DateiControllerTest {
   }
 
   @Test
-  @WithMockOAuth2User
+  @WithMockOAuth2User(roles = {"BETREUENDE"})
   void themaAnnehmenErfolgreich() throws Exception {
     MockMultipartFile file = new MockMultipartFile(
         "datei",
@@ -143,21 +107,21 @@ class DateiControllerTest {
     Thema thema = mock(Thema.class);
 
     when(themaEditor.getThema(any())).thenReturn(thema);
-    when(themaEditor.allowedEdit(any(), any())).thenReturn(true);
-    when(dateiService.dateiSpeichern(any(), any()))
+    when(themaEditor.allowedEdit(anyLong(), eq(thema))).thenReturn(true);
+    when(dateiService.dateiSpeichern(any(MultipartFile.class), any()))
         .thenReturn(new DateiInfos("test.pdf", "beschreibung"));
 
     mockMvc.perform(multipart("/thema/datei/1/create")
             .file(file)
             .with(csrf()))
-        .andExpect(status().isOk())
-        .andExpect(view().name("themen/uploadThema"));
+        .andExpect(status().is3xxRedirection())
+        .andExpect(view().name("redirect:/themaEdit/1"));
   }
 
   @Test
-  @WithMockOAuth2User
+  @WithMockOAuth2User(roles = {"BETREUENDE"})
   void deleteProfilDateiRedirectedZuProfilEdit() throws Exception {
-    mockMvc.perform(post("/datei/test/delete")
+    mockMvc.perform(post("/betreuende/datei/delete/test")
             .with(csrf()))
         .andExpect(status().is3xxRedirection())
         .andExpect(redirectedUrl("/betreuende/profilEdit"));
@@ -171,7 +135,8 @@ class DateiControllerTest {
     when(dateiService.dateiLaden("test.pdf"))
         .thenReturn(resource);
 
-    mockMvc.perform(get("/datei/download/test.pdf"))
+    mockMvc.perform(get("/datei/view/test")
+                    .param("name", "test.pdf"))
         .andExpect(status().isOk());
   }
 

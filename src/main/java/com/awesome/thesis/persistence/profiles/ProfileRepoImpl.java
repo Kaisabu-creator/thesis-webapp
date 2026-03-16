@@ -87,8 +87,7 @@ public class ProfileRepoImpl implements ProfileRepoI {
   }
   
   private ProfilDateiValueDto toDateiValueDto(ProfilDateiValue profilDateiValue) {
-    return new ProfilDateiValueDto(profilDateiValue.id(), profilDateiValue.name(),
-        profilDateiValue.beschreibung());
+    return new ProfilDateiValueDto(profilDateiValue.id(), profilDateiValue.name());
   }
   
   private Set<ProfilThemaValueDto> translateThemen(Set<ProfilThemaValue> profilThemaValues) {
@@ -147,8 +146,7 @@ public class ProfileRepoImpl implements ProfileRepoI {
   }
   
   private ProfilDateiValue toDateiValue(ProfilDateiValueDto profilDateiValueDto) {
-    return new ProfilDateiValue(profilDateiValueDto.id(), profilDateiValueDto.name(),
-        profilDateiValueDto.beschreibung());
+    return new ProfilDateiValue(profilDateiValueDto.id(), profilDateiValueDto.name());
   }
   
   private Set<ProfilThemaValue> translateThemaDtos(Set<ProfilThemaValueDto> profilThemaValueDtos) {

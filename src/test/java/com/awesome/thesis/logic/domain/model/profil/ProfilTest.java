@@ -141,10 +141,10 @@ class ProfilTest {
   @DisplayName("addDatei removes old Datei and adds new Datei")
   void addDatei() {
     //Arrange
-    profil.addDatei(new ProfilDateiValue("1", "test1", null));
+    profil.addDatei(new ProfilDateiValue("1", "test1"));
     
     //Act
-    profil.addDatei(new ProfilDateiValue("1", "test2", null));
+    profil.addDatei(new ProfilDateiValue("1", "test2"));
     
     //Assert
     assertThat(profil.getDateien().stream()

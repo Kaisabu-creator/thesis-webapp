@@ -370,11 +370,11 @@ class ProfilEditorTest {
     ProfilEditor editor = new ProfilEditor(profile, fachgebieteEditor);
     
     //Act
-    editor.addDatei(1, "id", "test", "test");
+    editor.addDatei(1, "id", "test");
     
     //Assert
     InOrder inOrder = inOrder(p, profile);
-    inOrder.verify(p).addDatei(new ProfilDateiValue("id", "test", "test"));
+    inOrder.verify(p).addDatei(new ProfilDateiValue("id", "test"));
     inOrder.verify(profile).save(p);
   }
   
@@ -386,7 +386,7 @@ class ProfilEditorTest {
     when(profile.containsKey(anyInt())).thenReturn(true);
     when(profile.get(anyInt())).thenReturn(p);
     ProfilEditor editor = new ProfilEditor(profile, fachgebieteEditor);
-    ProfilDateiValue datei = new ProfilDateiValue("id", "test", "test");
+    ProfilDateiValue datei = new ProfilDateiValue("id", "test");
     
     //Act
     editor.removeDatei(1, "id");
