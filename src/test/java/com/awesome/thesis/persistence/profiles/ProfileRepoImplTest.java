@@ -64,7 +64,7 @@ class ProfileRepoImplTest {
         Set.of(new ProfilFachgebietDto("fachgebiet")),
         Set.of(new ProfilLinkDto("url", "text")),
         Set.of(new ProfilThemaValueDto(1, "name")),
-        Set.of(new ProfilDateiValueDto("id", "name", "beschreibung"))));
+        Set.of(new ProfilDateiValueDto("id", "name"))));
     ProfileRepoImpl repo = new ProfileRepoImpl(dbRepository);
     
     //Act
@@ -80,7 +80,7 @@ class ProfileRepoImplTest {
     assertThat(p.getLinks()).containsExactly(new ProfilLink("url", "text"));
     assertThat(p.getThemen()).containsExactly(new ProfilThemaValue(1, "name"));
     assertThat(p.getDateien())
-        .containsExactly(new ProfilDateiValue("id", "name", "beschreibung"));
+        .containsExactly(new ProfilDateiValue("id", "name"));
   }
   
   @Test
@@ -120,7 +120,7 @@ class ProfileRepoImplTest {
         Set.of(new ProfilFachgebiet("fachgebiet")),
         Set.of(new ProfilLink("url", "text")),
         Set.of(new ProfilThemaValue(1, "name")),
-        Set.of(new ProfilDateiValue("id", "name", "beschreibung")));
+        Set.of(new ProfilDateiValue("id", "name")));
     ProfileRepoImpl repo = new ProfileRepoImpl(dbRepository);
     
     //Act
@@ -132,7 +132,7 @@ class ProfileRepoImplTest {
         Set.of(new ProfilFachgebietDto("fachgebiet")),
         Set.of(new ProfilLinkDto("url", "text")),
         Set.of(new ProfilThemaValueDto(1, "name")),
-        Set.of(new ProfilDateiValueDto("id", "name", "beschreibung"))));
+        Set.of(new ProfilDateiValueDto("id", "name"))));
   }
   
   @Test

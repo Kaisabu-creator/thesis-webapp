@@ -7,8 +7,7 @@ import org.springframework.data.relational.core.mapping.Table;
  *
  * @param id Schlüssel als Verbindung zu Datei
  * @param name Name der Datei
- * @param beschreibung Beschreibung der Datei
  */
 @Table("profil_datei_value")
-public record ProfilDateiValueDto(String id, String name, String beschreibung) {
+public record ProfilDateiValueDto(String id, String name) {
 }

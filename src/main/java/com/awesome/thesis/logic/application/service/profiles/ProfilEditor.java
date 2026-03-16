@@ -235,11 +235,10 @@ public class ProfilEditor {
    * @param id           Id des Profils
    * @param dateiId      Id der Datei
    * @param name         Name der Datei
-   * @param beschreibung Beschreibung der Datei
    */
-  public void addDatei(int id, String dateiId, String name, String beschreibung) {
+  public void addDatei(int id, String dateiId, String name) {
     Profil profil = get(id);
-    profil.addDatei(new ProfilDateiValue(dateiId, name, beschreibung));
+    profil.addDatei(new ProfilDateiValue(dateiId, name));
     profile.save(profil);
   }
   
@@ -251,7 +250,7 @@ public class ProfilEditor {
    */
   public void removeDatei(int id, String dateiId) {
     Profil profil = get(id);
-    profil.removeDatei(new ProfilDateiValue(dateiId, "", ""));
+    profil.removeDatei(new ProfilDateiValue(dateiId, ""));
     profile.save(profil);
   }
 }

@@ -180,7 +180,7 @@ public class DateiService {
                                    int profilId) {
     String dateiId = UUID.randomUUID().toString();
     String name = dateiSpeichern(dateiId, multipartFile);
-    profilEditor.addDatei(profilId, dateiId, name, null);
+    profilEditor.addDatei(profilId, dateiId, name);
   }
 
   /**
